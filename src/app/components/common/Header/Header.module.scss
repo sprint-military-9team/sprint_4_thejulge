@@ -1,0 +1,121 @@
+.wrapper {
+  width: 1440px;
+  margin: 0 auto;
+  display: grid;
+  grid-template: 'logo searchBar buttonWrapper'/ 7.5rem 28.125rem;
+  padding: 15px 200px;
+  gap: 1.25rem;
+  place-items: center;
+}
+
+.logo {
+  grid-area: logo;
+}
+
+.searchBarWrapper {
+  grid-area: searchBar;
+  width: 28.125rem;
+  height: 2.5rem;
+  position: relative;
+}
+
+.searchButton {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.625rem;
+}
+
+.searchBar {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.625rem;
+  padding: 0.625rem;
+  padding-left: 2.625rem;
+  background-color: #f2f2f3;
+  color: #a4a1aa;
+  outline: none;
+  border: 0;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.375rem;
+}
+
+.buttonWrapper {
+  grid-area: buttonWrapper;
+  width: 100%;
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+@mixin button {
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  color: #111322;
+
+  @media (max-width: 736px) {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+}
+
+.button {
+  @include button;
+}
+
+.notifiacation {
+  @include button;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+@media (max-width: 1440px) {
+  .wrapper {
+    width: 1040px;
+    padding: 15px 30px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 1040px) {
+  .wrapper {
+    width: 100%;
+    padding: 15px 30px;
+  }
+}
+
+/* tablet */
+@media (max-width: 1023px) {
+  .wrapper {
+    grid-template: 'logo searchBar buttonWrapper'/ 7.5rem 21.5rem;
+    padding: 15px 30px;
+    gap: 1rem;
+  }
+  .searchBarWrapper {
+    width: 21.5rem;
+  }
+  .buttonWrapper {
+    gap: 0.75rem;
+  }
+}
+
+/* mobile */
+@media (max-width: 767px) {
+  .wrapper {
+    min-width: none;
+    width: 100vw;
+    grid-template:
+      'logo buttonWrapper'
+      'searchBar searchBar'
+      /84px;
+  }
+  .searchBarWrapper {
+    width: 100%;
+  }
+  .logo {
+    width: 84px;
+    height: 30px;
+  }
+}
