@@ -128,7 +128,7 @@
   }
 }
 
-.notificationWrapper {
+@mixin notificationWrapper {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -138,6 +138,15 @@
   border: 1px solid #e5e4e7;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.notificationReadWrapper {
+  @include notificationWrapper;
+  opacity: 0.7;
+}
+
+.notificationWrapper {
+  @include notificationWrapper;
 }
 
 @mixin fin {

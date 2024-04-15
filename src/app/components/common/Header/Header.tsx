@@ -71,6 +71,16 @@ export default function Header({ memberType, notificationListData }: HeaderProps
   const handleClickCloseButton = () => {
     setIsOpen(false);
   };
+  const handleClickNotification = (event: React.MouseEvent<HTMLDivElement>) => {
+    /* api function */
+    const notificationId = event.currentTarget.id;
+    setNotificationData((previousData) =>
+      previousData.map((notification) =>
+        notification.id === notificationId ? { ...notification, read: true } : notification,
+      ),
+    );
+    console.log(notificationData);
+  };
   useEffect(() => {
     const handleClickOutside = (event: Event) => {
       if (isOpen && notificationRef.current && !notificationRef.current?.contains(event.target as Node)) {
@@ -99,13 +109,7 @@ export default function Header({ memberType, notificationListData }: HeaderProps
       <div className={styles.buttonWrapper}>
         {buttonType.buttonList.map((button) =>
           button.onClick ? (
-            <div
-              className={styles.button}
-              key={button.name}
-              onClick={button.onClick}
-              onKeyUp={button.onClick}
-              role="presentation"
-            >
+            <div className={styles.button} key={button.name} onClick={button.onClick} role="presentation">
               {button.name}
             </div>
           ) : (
@@ -117,12 +121,11 @@ export default function Header({ memberType, notificationListData }: HeaderProps
         {buttonType.notification && (
           <div className={styles.notification}>
             <Image
-              src="/notification_active.svg"
+              src={notificationNumber ? '/notification_active.svg' : '/notification_inactive.svg'}
               alt="notification"
               width={20}
               height={20}
               onClick={handleClickNotificationButton}
-              onKeyUp={handleClickNotificationButton}
               role="presentation"
             />
             {isOpen && (
@@ -140,7 +143,13 @@ export default function Header({ memberType, notificationListData }: HeaderProps
                 </div>
                 <div className={styles.notificationList}>
                   {notificationData.map((notification) => (
-                    <div key={notification.id} className={styles.notificationWrapper}>
+                    <div
+                      id={notification.id}
+                      key={notification.id}
+                      className={notification.read ? styles.notificationReadWrapper : styles.notificationWrapper}
+                      onClick={handleClickNotification}
+                      role="presentation"
+                    >
                       <div
                         className={
                           notification.result === 'accepted' ? styles.notificationBlueFin : styles.notificationRedFin
