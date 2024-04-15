@@ -61,9 +61,9 @@ interface HeaderProps {
 }
 export default function Header({ memberType, notificationListData }: HeaderProps) {
   const buttonType = BUTTON_LIST[memberType];
-  const [isOpen, setIsOpen] = useState(false);
-  const [notificationData, setNotificationData] = useState(notificationListData);
-  const notificationNumber = notificationData.length;
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [notificationData, setNotificationData] = useState<NotificationDataType[]>(notificationListData);
+  const [notificationNumber, setNotificationNumber] = useState(notificationData.length);
   const notificationRef = useRef<HTMLDivElement>(null);
   const handleClickNotificationButton = () => {
     setIsOpen((previousStatus) => !previousStatus);
@@ -71,7 +71,10 @@ export default function Header({ memberType, notificationListData }: HeaderProps
   const handleClickCloseButton = () => {
     setIsOpen(false);
   };
-  const handleClickNotification = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleClickNotification = (event: React.MouseEvent<HTMLDivElement>, isRead: boolean) => {
+    if (isRead) {
+      return;
+    }
     /* api function */
     const notificationId = event.currentTarget.id;
     setNotificationData((previousData) =>
@@ -79,11 +82,13 @@ export default function Header({ memberType, notificationListData }: HeaderProps
         notification.id === notificationId ? { ...notification, read: true } : notification,
       ),
     );
-    console.log(notificationData);
+    setNotificationNumber((previousCount) => previousCount - 1);
   };
   useEffect(() => {
     const handleClickOutside = (event: Event) => {
-      if (isOpen && notificationRef.current && !notificationRef.current?.contains(event.target as Node)) {
+      event.stopPropagation();
+      event.preventDefault();
+      if (isOpen && notificationRef.current && !notificationRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
@@ -92,7 +97,6 @@ export default function Header({ memberType, notificationListData }: HeaderProps
     return () => document.removeEventListener('click', handleClickOutside);
   }, [isOpen]);
 
-  /* 창 닫았을 때, 읽었던 데이터 삭제 */
   useEffect(() => {
     if (!isOpen) {
       setNotificationData((previousData) => previousData.filter((notification) => !notification.read && notification));
@@ -102,10 +106,10 @@ export default function Header({ memberType, notificationListData }: HeaderProps
   return (
     <div className={styles.wrapper}>
       <Image src="/header_logo.svg" alt="logo" width={112} height={40} className={styles.logo} priority />
-      <div className={styles.searchBarWrapper}>
+      <form className={styles.searchBarWrapper}>
         <Image src="/search.svg" alt="search" width={20} height={20} className={styles.searchButton} priority />
         <input className={styles.searchBar} placeholder="가게 이름으로 찾아보세요" />
-      </div>
+      </form>
       <div className={styles.buttonWrapper}>
         {buttonType.buttonList.map((button) =>
           button.onClick ? (
@@ -142,35 +146,43 @@ export default function Header({ memberType, notificationListData }: HeaderProps
                   />
                 </div>
                 <div className={styles.notificationList}>
-                  {notificationData.map((notification) => (
-                    <div
-                      id={notification.id}
-                      key={notification.id}
-                      className={notification.read ? styles.notificationReadWrapper : styles.notificationWrapper}
-                      onClick={handleClickNotification}
-                      role="presentation"
-                    >
-                      <div
-                        className={
-                          notification.result === 'accepted' ? styles.notificationBlueFin : styles.notificationRedFin
-                        }
-                      />
-                      <div className={styles.notificationText}>
-                        HS 과일주스(2023-01-14 15:00~18:00) 공고 지원이&nbsp;
-                        <span
-                          className={
-                            notification.result === 'accepted'
-                              ? styles.notificationBlueStatus
-                              : styles.notificationRedStatus
-                          }
+                  {notificationNumber ? (
+                    <>
+                      {notificationData.map((notification) => (
+                        <div
+                          id={notification.id}
+                          key={notification.id}
+                          className={notification.read ? styles.notificationReadWrapper : styles.notificationWrapper}
+                          onClick={(event) => handleClickNotification(event, notification.read)}
+                          role="presentation"
                         >
-                          {notification.result === 'accepted' ? '승인' : '거절'}
-                        </span>
-                        되었어요.
-                      </div>
-                      <div className={styles.notificationDate}>7분전</div>
-                    </div>
-                  ))}
+                          <div
+                            className={
+                              notification.result === 'accepted'
+                                ? styles.notificationBlueFin
+                                : styles.notificationRedFin
+                            }
+                          />
+                          <div className={styles.notificationText}>
+                            HS 과일주스(2023-01-14 15:00~18:00) 공고 지원이&nbsp;
+                            <span
+                              className={
+                                notification.result === 'accepted'
+                                  ? styles.notificationBlueStatus
+                                  : styles.notificationRedStatus
+                              }
+                            >
+                              {notification.result === 'accepted' ? '승인' : '거절'}
+                            </span>
+                            되었어요.
+                          </div>
+                          <div className={styles.notificationDate}>7분전</div>
+                        </div>
+                      ))}
+                    </>
+                  ) : (
+                    <div className={styles.notificationEmpty}>알림이 없습니다</div>
+                  )}
                 </div>
               </div>
             )}

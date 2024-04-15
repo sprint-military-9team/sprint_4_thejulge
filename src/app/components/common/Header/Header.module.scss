@@ -6,6 +6,7 @@
   padding: 15px 200px;
   gap: 1.25rem;
   place-items: center;
+  background-color: #ffffff;
 }
 
 .logo {
@@ -54,6 +55,7 @@
   font-size: 1rem;
   line-height: 1.25rem;
   color: #111322;
+  cursor: pointer;
 
   @media (max-width: 736px) {
     font-size: 0.875rem;
@@ -74,8 +76,8 @@
   box-shadow: 0px 2px 8px 0px rgba(120, 116, 134, 0.25);
   height: 419px;
   padding: 24px 20px;
-  top: 50px;
-  right: 0px;
+  top: 40px;
+  right: 5px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -126,6 +128,10 @@
   &::-webkit-scrollbar-thumb {
     background-color: #888; /* 스크롤바 색상을 지정 */
   }
+}
+
+.notificationEmpty {
+  margin: auto;
 }
 
 @mixin notificationWrapper {
