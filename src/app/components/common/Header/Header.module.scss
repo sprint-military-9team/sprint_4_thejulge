@@ -67,19 +67,22 @@
 
 .notificationWindow {
   position: absolute;
+  width: 368px;
   background-color: #ffebe7;
   border: 1px solid #cbc9cf;
   border-radius: 10px;
   box-shadow: 0px 2px 8px 0px rgba(120, 116, 134, 0.25);
-  width: 368px;
   height: 419px;
   padding: 24px 20px;
   top: 50px;
   right: 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   cursor: initial;
 }
 
-.notifiacation {
+.notification {
   @include button;
   position: relative;
   display: flex;
@@ -88,6 +91,90 @@
   width: 1.5rem;
   height: 1.5rem;
   cursor: pointer;
+}
+
+.notificationTitleWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.notificationTitle {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: #111322;
+}
+
+.notificationClose {
+  display: none;
+  cursor: pointer;
+}
+
+.notificationList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: auto;
+  height: 335px;
+
+  &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #888; /* 스크롤바 색상을 지정 */
+  }
+}
+
+.notificationWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 12px;
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #e5e4e7;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+@mixin fin {
+  width: 5px;
+  height: 5px;
+  border-radius: 5px;
+}
+
+.notificationRedFin {
+  @include fin;
+  background-color: #ff4040;
+}
+
+.notificationBlueFin {
+  @include fin;
+  background-color: #0080ff;
+}
+
+.notificationText {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.notificationBlueStatus {
+  color: #0080ff;
+}
+
+.notificationRedStatus {
+  color: #ff4040;
+}
+
+.notificationDate {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #a4a1aa;
 }
 
 @media (max-width: 1440px) {
@@ -136,5 +223,22 @@
   .logo {
     width: 84px;
     height: 30px;
+  }
+  .notification {
+    position: initial;
+  }
+  .notificationWindow {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    padding: 40px 20px;
+  }
+  .notificationClose {
+    display: block;
+  }
+  .notificationList {
+    height: 100%;
+    width: 100%;
   }
 }
