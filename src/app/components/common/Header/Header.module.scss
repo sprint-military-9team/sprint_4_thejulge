@@ -65,10 +65,29 @@
   @include button;
 }
 
+.notificationWindow {
+  position: absolute;
+  background-color: #ffebe7;
+  border: 1px solid #cbc9cf;
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px 0px rgba(120, 116, 134, 0.25);
+  width: 368px;
+  height: 419px;
+  padding: 24px 20px;
+  top: 50px;
+  right: 0px;
+  cursor: initial;
+}
+
 .notifiacation {
   @include button;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 1.5rem;
   height: 1.5rem;
+  cursor: pointer;
 }
 
 @media (max-width: 1440px) {

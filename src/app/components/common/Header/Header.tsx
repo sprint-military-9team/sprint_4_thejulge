@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState, useRef } from 'react';
 import styles from './Header.module.scss';
 
 interface HeaderProps {
@@ -51,6 +52,22 @@ const BUTTON_LIST: ButtonListType = {
 
 export default function Header({ memberType }: HeaderProps) {
   const buttonType = BUTTON_LIST[memberType];
+  const [isOpen, setIsOpen] = useState(false);
+  const notifiacationRef = useRef<HTMLDivElement>(null);
+  const handleClickNotificationButton = () => {
+    setIsOpen((prev) => !prev);
+  };
+  useEffect(() => {
+    const handleClickOutside = (event: Event) => {
+      if (isOpen && notifiacationRef.current && !notifiacationRef.current?.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('click', handleClickOutside);
+
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [isOpen]);
+
   return (
     <div className={styles.wrapper}>
       <Image src="/header_logo.svg" alt="logo" width={112} height={40} className={styles.logo} priority />
@@ -65,7 +82,7 @@ export default function Header({ memberType }: HeaderProps) {
               className={styles.button}
               key={button.name}
               onClick={button.onClick}
-              onKeyDown={button.onClick}
+              onKeyUp={button.onClick}
               role="presentation"
             >
               {button.name}
@@ -78,7 +95,20 @@ export default function Header({ memberType }: HeaderProps) {
         )}
         {buttonType.notification && (
           <div className={styles.notifiacation}>
-            <Image src="/notification_active.svg" alt="notification" width={20} height={20} />
+            <Image
+              src="/notification_active.svg"
+              alt="notification"
+              width={20}
+              height={20}
+              onClick={handleClickNotificationButton}
+              onKeyUp={handleClickNotificationButton}
+              role="presentation"
+            />
+            {isOpen && (
+              <div className={styles.notificationWindow} ref={notifiacationRef}>
+                test
+              </div>
+            )}
           </div>
         )}
       </div>
