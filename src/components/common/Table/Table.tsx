@@ -1,6 +1,11 @@
+'use client';
+
+import { useState } from 'react';
+import Pagination from '../Pagination';
 import styles from './TableStyled.module.scss';
 
 export default function Table() {
+  const [currentPage, setCurrentPage] = useState(1);
   return (
     <div className={styles.container}>
       <table className={styles.table}>
@@ -27,6 +32,7 @@ export default function Table() {
           </tr>
         </tbody>
       </table>
+      <Pagination perPageDataCount={4} allDataCount={60} currentPage={currentPage} onPageChange={setCurrentPage} />
     </div>
   );
 }
