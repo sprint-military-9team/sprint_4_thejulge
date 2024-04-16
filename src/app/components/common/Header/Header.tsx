@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState, useRef } from 'react';
+import getNotificationContent from '@/app/utils/getNotificationContent';
 import styles from './Header.module.scss';
 
 type NotificationDataType = {
@@ -10,6 +11,7 @@ type NotificationDataType = {
   name: string;
   startsAt: string;
   createdAt: string;
+  workhour: number;
   result: string;
   read: boolean;
 };
@@ -105,89 +107,92 @@ export default function Header({ memberType, notificationListData }: HeaderProps
 
   return (
     <div className={styles.wrapper}>
-      <Image src="/header_logo.svg" alt="logo" width={112} height={40} className={styles.logo} priority />
-      <form className={styles.searchBarWrapper}>
-        <Image src="/search.svg" alt="search" width={20} height={20} className={styles.searchButton} priority />
-        <input className={styles.searchBar} placeholder="가게 이름으로 찾아보세요" />
-      </form>
-      <div className={styles.buttonWrapper}>
-        {buttonType.buttonList.map((button) =>
-          button.onClick ? (
-            <div className={styles.button} key={button.name} onClick={button.onClick} role="presentation">
-              {button.name}
-            </div>
-          ) : (
-            <Link href={button.href} key={button.name}>
-              <div className={styles.button}>{button.name}</div>
-            </Link>
-          ),
-        )}
-        {buttonType.notification && (
-          <div className={styles.notification}>
-            <Image
-              src={notificationNumber ? '/notification_active.svg' : '/notification_inactive.svg'}
-              alt="notification"
-              width={20}
-              height={20}
-              onClick={handleClickNotificationButton}
-              role="presentation"
-            />
-            {isOpen && (
-              <div className={styles.notificationWindow} ref={notificationRef}>
-                <div className={styles.notificationTitleWrapper}>
-                  <div className={styles.notificationTitle}>{`알림 ${notificationNumber}개`}</div>
-                  <Image
-                    src="/close.svg"
-                    alt="close"
-                    width={24}
-                    height={24}
-                    className={styles.notificationClose}
-                    onClick={handleClickCloseButton}
-                  />
-                </div>
-                <div className={styles.notificationList}>
-                  {notificationNumber ? (
-                    <>
-                      {notificationData.map((notification) => (
-                        <div
-                          id={notification.id}
-                          key={notification.id}
-                          className={notification.read ? styles.notificationReadWrapper : styles.notificationWrapper}
-                          onClick={(event) => handleClickNotification(event, notification.read)}
-                          role="presentation"
-                        >
+      <div className={styles.contentWrapper}>
+        <Image src="/header_logo.svg" alt="logo" width={112} height={40} className={styles.logo} priority />
+        <form className={styles.searchBarWrapper}>
+          <Image src="/search.svg" alt="search" width={20} height={20} className={styles.searchButton} priority />
+          <input className={styles.searchBar} placeholder="가게 이름으로 찾아보세요" />
+        </form>
+        <div className={styles.buttonWrapper}>
+          {buttonType.buttonList.map((button) =>
+            button.onClick ? (
+              <div className={styles.button} key={button.name} onClick={button.onClick} role="presentation">
+                {button.name}
+              </div>
+            ) : (
+              <Link href={button.href} key={button.name}>
+                <div className={styles.button}>{button.name}</div>
+              </Link>
+            ),
+          )}
+          {buttonType.notification && (
+            <div className={styles.notification}>
+              <Image
+                src={notificationNumber ? '/notification_active.svg' : '/notification_inactive.svg'}
+                alt="notification"
+                width={20}
+                height={20}
+                onClick={handleClickNotificationButton}
+                role="presentation"
+              />
+              {isOpen && (
+                <div className={styles.notificationWindow} ref={notificationRef}>
+                  <div className={styles.notificationTitleWrapper}>
+                    <div className={styles.notificationTitle}>{`알림 ${notificationNumber}개`}</div>
+                    <Image
+                      src="/close.svg"
+                      alt="close"
+                      width={24}
+                      height={24}
+                      className={styles.notificationClose}
+                      onClick={handleClickCloseButton}
+                    />
+                  </div>
+                  <div className={styles.notificationList}>
+                    {notificationNumber ? (
+                      <>
+                        {notificationData.map((notification) => (
                           <div
-                            className={
-                              notification.result === 'accepted'
-                                ? styles.notificationBlueFin
-                                : styles.notificationRedFin
-                            }
-                          />
-                          <div className={styles.notificationText}>
-                            HS 과일주스(2023-01-14 15:00~18:00) 공고 지원이&nbsp;
-                            <span
+                            id={notification.id}
+                            key={notification.id}
+                            className={notification.read ? styles.notificationReadWrapper : styles.notificationWrapper}
+                            onClick={(event) => handleClickNotification(event, notification.read)}
+                            role="presentation"
+                          >
+                            <div
                               className={
                                 notification.result === 'accepted'
-                                  ? styles.notificationBlueStatus
-                                  : styles.notificationRedStatus
+                                  ? styles.notificationBlueFin
+                                  : styles.notificationRedFin
                               }
-                            >
-                              {notification.result === 'accepted' ? '승인' : '거절'}
-                            </span>
-                            되었어요.
+                            />
+                            <div className={styles.notificationText}>
+                              {getNotificationContent(notification.name, notification.startsAt, notification.workhour)}
+                              &nbsp;
+                              <span
+                                className={
+                                  notification.result === 'accepted'
+                                    ? styles.notificationBlueStatus
+                                    : styles.notificationRedStatus
+                                }
+                              >
+                                {notification.result === 'accepted' ? '승인' : '거절'}
+                              </span>
+                              되었어요.
+                            </div>
+                            <div className={styles.notificationDate}>7분전</div>
                           </div>
-                          <div className={styles.notificationDate}>7분전</div>
-                        </div>
-                      ))}
-                    </>
-                  ) : (
-                    <div className={styles.notificationEmpty}>알림이 없습니다</div>
-                  )}
+                        ))}
+                      </>
+                    ) : (
+                      <div className={styles.notificationEmpty}>알림이 없습니다</div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            )}
-          </div>
-        )}
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,8 @@
 .wrapper {
+  width: 100%;
+  background-color: #ffffff;
+}
+.contentWrapper {
   width: 1440px;
   margin: 0 auto;
   display: grid;
@@ -6,7 +10,6 @@
   padding: 15px 200px;
   gap: 1.25rem;
   place-items: center;
-  background-color: #ffffff;
 }
 
 .logo {
@@ -193,7 +196,7 @@
 }
 
 @media (max-width: 1440px) {
-  .wrapper {
+  .contentWrapper {
     width: 1040px;
     padding: 15px 30px;
     margin: 0 auto;
@@ -201,7 +204,7 @@
 }
 
 @media (max-width: 1040px) {
-  .wrapper {
+  .contentWrapper {
     width: 100%;
     padding: 15px 30px;
   }
@@ -209,7 +212,7 @@
 
 /* tablet */
 @media (max-width: 1023px) {
-  .wrapper {
+  .contentWrapper {
     grid-template: 'logo searchBar buttonWrapper'/ 7.5rem 21.5rem;
     padding: 15px 30px;
     gap: 1rem;
@@ -224,7 +227,7 @@
 
 /* mobile */
 @media (max-width: 767px) {
-  .wrapper {
+  .contentWrapper {
     min-width: none;
     width: 100vw;
     grid-template:
