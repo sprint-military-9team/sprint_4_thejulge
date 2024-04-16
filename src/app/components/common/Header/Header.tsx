@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState, useRef } from 'react';
 import getNotificationContent from '@/app/utils/getNotificationContent';
+import getTimeDifference from '@/app/utils/getTimeDifference';
 import styles from './Header.module.scss';
 
 type NotificationDataType = {
@@ -180,7 +181,7 @@ export default function Header({ memberType, notificationListData }: HeaderProps
                               </span>
                               되었어요.
                             </div>
-                            <div className={styles.notificationDate}>7분전</div>
+                            <div className={styles.notificationDate}>{getTimeDifference(notification.createdAt)}</div>
                           </div>
                         ))}
                       </>
