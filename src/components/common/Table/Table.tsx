@@ -32,7 +32,9 @@ export default function Table() {
           </tr>
         </tbody>
       </table>
-      <Pagination perPageDataCount={4} allDataCount={60} currentPage={currentPage} onPageChange={setCurrentPage} />
+      <div className={styles.paginationContainer}>
+        <Pagination perPageDataCount={4} allDataCount={60} currentPage={currentPage} onPageChange={setCurrentPage} />
+      </div>
     </div>
   );
 }
