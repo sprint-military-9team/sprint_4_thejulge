@@ -13,21 +13,10 @@ type Props = {
 const PAGE_LIMIT = 7;
 
 const createPageNumberList = (currentPage: number, totalPages: number): number[] => {
-  let startPage = 1;
+  const startPage = Math.max(1, Math.min(currentPage - 3, totalPages - PAGE_LIMIT + 1));
+  const endPage = Math.min(startPage + PAGE_LIMIT - 1, totalPages);
 
-  if (currentPage > 4) {
-    startPage = currentPage - 3;
-  }
-
-  let endPage = startPage + PAGE_LIMIT - 1;
-
-  if (endPage > totalPages) {
-    startPage -= endPage - totalPages;
-    endPage = totalPages;
-    startPage = startPage < 1 ? 1 : startPage;
-  }
-
-  return new Array(endPage - startPage + 1).fill(0).map((_, i) => i + startPage);
+  return new Array(endPage - startPage + 1).fill(0).map((_, index) => index + startPage);
 };
 
 export default function Pagination({ currentPage, onPageChange, allDataCount, perPageDataCount }: Props) {

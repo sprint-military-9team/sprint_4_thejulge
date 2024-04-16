@@ -19,7 +19,6 @@
   "rules": {
     "linebreak-style": "off",
     "react/react-in-jsx-scope": "off",
-    "prettier/prettier": "error",
-    "prefer-const": "off"
+    "prettier/prettier": "error"
   }
 }
