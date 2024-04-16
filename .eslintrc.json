@@ -19,6 +19,9 @@
   "rules": {
     "linebreak-style": "off",
     "react/react-in-jsx-scope": "off",
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "prefer-const": "off",
+    "react/require-default-props": "off",
+    "no-nested-ternary": "off"
   }
 }

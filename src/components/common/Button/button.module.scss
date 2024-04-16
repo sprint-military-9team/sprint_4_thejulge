@@ -1,0 +1,47 @@
+@use '@/styles/color' as c;
+@use '@/styles/mixins' as m;
+.buttonWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: 'Spoqa Han Sans Neo';
+  font-style: normal;
+  line-height: 2rem;
+  @include m.rounded-lg;
+}
+
+.large {
+  padding: 1.4rem 13.6rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+.medium {
+  padding: 1rem 2rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+.small {
+  padding: 0.8rem 1.2rem;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.orange {
+  background: c.$red-500;
+  color: c.$white;
+}
+.white {
+  border: 0.1rem solid c.$red-500;
+  background: c.$white;
+  color: c.$red-500;
+}
+.disabled {
+  background: c.$gray-500;
+  color: c.$white;
+}
+.blue {
+  border: 0.1rem solid c.$blue-200;
+  background: c.$white;
+  color: c.$blue-200;
+}
