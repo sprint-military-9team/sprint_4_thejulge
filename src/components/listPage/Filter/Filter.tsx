@@ -77,10 +77,10 @@ function Filter() {
         </div>
       </div>
       <div className={styles.buttonWrapper}>
-        <Button size="small" color="white">
+        <Button size="large" color="white" style={{ padding: '1.4rem' }}>
           초기화
         </Button>
-        <Button size="large" color="orange">
+        <Button size="large" color="orange" style={{ padding: '1.4rem' }}>
           적용하기
         </Button>
       </div>
