@@ -1,0 +1,45 @@
+.buttonWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  text-align: center;
+  font-family: 'Spoqa Han Sans Neo';
+  font-style: normal;
+  line-height: 20px;
+}
+
+.large {
+  padding: 14px 136px;
+  font-size: 16px;
+  font-weight: 700;
+}
+.medium {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 700;
+}
+.small {
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.orange {
+  background: var(--The-julge-primary, #ea3c12);
+  color: var(--The-julge-white, #fff);
+}
+.white {
+  border: 1px solid var(--The-julge-primary, #ea3c12);
+  background: var(--The-julge-white, #fff);
+  color: var(--The-julge-primary, #ea3c12);
+}
+.disabled {
+  background: var(--The-julge-gray-40, #a4a1aa);
+  color: var(--The-julge-white, #fff);
+}
+.blue {
+  border: 1px solid var(--The-julge-gray-20, #0080ff);
+  background: var(--The-julge-white, #fff);
+  color: var(--The-julge-blue-20, #0080ff);
+}

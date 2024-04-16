@@ -1,0 +1,162 @@
+@mixin common {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+@mixin font1 {
+  color: var(--The-julge-black, #111322);
+  font-family: 'Spoqa Han Sans Neo';
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+@mixin font2 {
+  color: #7d7986;
+  font-family: 'Spoqa Han Sans Neo';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  @media (max-width: 767px) {
+    font-size: 12px;
+    line-height: 16px;
+  }
+}
+
+.cardWrapper {
+  @include common;
+  padding: 16px;
+  width: 312px;
+  min-width: 312px;
+  height: 348px;
+  min-height: 348px;
+  gap: 20px;
+  border-radius: 12px;
+  border: 1px solid #e5e4e7;
+  background: #fff;
+  @media (max-width: 767px) {
+    padding: 12px;
+    width: 171px;
+    height: 260px;
+    min-width: 171px;
+    min-height: 260px;
+    gap: 12px;
+  }
+}
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  border-radius: 12px;
+  @media (max-width: 767px) {
+    height: 84px;
+  }
+}
+.contentWrapper {
+  @include common;
+  width: 100%;
+  gap: 16px;
+}
+.infoWrapper {
+  @include common;
+  gap: 8px;
+  .title {
+    @include font1;
+    font-size: 20px;
+    @media (max-width: 767px) {
+      font-size: 16px;
+    }
+  }
+  .info {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    .icon {
+      width: 16px;
+      height: 16px;
+    }
+    .time {
+      @include font2;
+    }
+    .location {
+      @include font2;
+    }
+  }
+}
+
+.salaryWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .salary {
+    @include font1;
+    font-size: 20px;
+  }
+  .raise {
+    display: flex;
+
+    @media (min-width: 768px) {
+      height: 36px;
+      padding: 12px;
+      gap: 6px;
+      align-items: center;
+      border-radius: 20px;
+      background: var(--The-julge-red-40, #ff4040);
+    }
+    span {
+      color: var(--The-julge-white, #fff);
+      text-align: center;
+      font-family: 'Spoqa Han Sans Neo';
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+      @media (max-width: 767px) {
+        color: var(--The-julge-red-40, #ff4040);
+        text-align: center;
+        font-family: 'Spoqa Han Sans Neo';
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 16px;
+      }
+    }
+    .raiseicon {
+      display: flex;
+      padding: 3.4px;
+      width: 20px;
+      height: 20px;
+      @media (max-width: 767px) {
+        padding: 2.67px;
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}
+
+.completeWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.7) 100%);
+  .complete {
+    color: var(--The-julge-gray-30, #cbc9cf);
+    text-align: center;
+    font-family: 'Spoqa Han Sans Neo';
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.56px;
+  }
+}
