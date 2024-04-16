@@ -4,8 +4,9 @@
 */
 
 // prettier-ignore
-
-html,
+html{
+  font-size: 10px;
+}
 body,
 div,
 span,
@@ -21,7 +22,9 @@ h6,
 p,
 blockquote,
 pre,
-a,
+a {
+  text-decoration: none;
+}
 abbr,
 acronym,
 address,
