@@ -2,14 +2,14 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import clockicon from '@/assets/clockicon.svg';
+import clockgrayicon from '@/assets/clockgrayicon.svg';
+import locationicon from '@/assets/locationicon.svg';
+import locationgrayicon from '@/assets/locationgrayicon.svg';
+import uparrow from '@/assets/uparrow.svg';
+import upmobilearrow from '@/assets/upmobilearrow.svg';
+import upcompletearrow from '@/assets/upcompletearrow.svg';
 import styles from './card.module.scss';
-import clockicon from '../../assets/clockicon.svg';
-import clockgrayicon from '../../assets/clockgrayicon.svg';
-import locationicon from '../../assets/locationicon.svg';
-import locationgrayicon from '../../assets/locationgrayicon.svg';
-import uparrow from '../../assets/uparrow.svg';
-import upmobilearrow from '../../assets/upmobilearrow.svg';
-import upcompletearrow from '../../assets/upcompletearrow.svg';
 
 interface CardProps {
   image: string;
@@ -22,10 +22,7 @@ interface CardProps {
   completed?: string;
 }
 
-interface CompletedMessageProps {
-  completed: string;
-}
-function CompletedMessage({ completed }: CompletedMessageProps) {
+function CompletedMessage({ completed }: Pick<CardProps, 'completed'>) {
   return (
     <div className={styles.completeWrapper}>
       <span className={styles.complete}>{completed}</span>
