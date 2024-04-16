@@ -1,0 +1,37 @@
+@mixin text-base {
+  font-size: 1rem;
+  line-height: 1.6rem;
+}
+
+@mixin text-lg {
+  font-size: 1.2rem;
+  line-height: 1.9rem;
+}
+
+@mixin font-normal {
+  font-weight: 400;
+}
+
+@mixin font-bold {
+  font-weight: 700;
+}
+
+@mixin rounded-xs {
+  border-radius: 4px;
+}
+
+@mixin rounded-sm {
+  border-radius: 5px;
+}
+
+@mixin rounded-lg {
+  border-radius: 6px;
+}
+
+@mixin rounded-xl {
+  border-radius: 20px;
+}
+
+@mixin rounded-full {
+  border-radius: 50%;
+}
