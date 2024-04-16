@@ -1,0 +1,205 @@
+@use '@/styles/color' as c;
+@use '@/styles/mixins' as m;
+@use '@/styles/media' as r;
+
+@mixin font1 {
+  color: c.$black;
+  font-family: 'Spoqa Han Sans Neo';
+  font-style: normal;
+  line-height: normal;
+}
+
+.filterWrapper {
+  display: flex;
+  width: 39rem;
+  padding: 2.4rem 2rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2.4rem;
+  border-radius: 1rem;
+  border: 0.1rem solid c.$gray-300;
+  background: c.$white;
+  box-shadow: 0px 2px 8px 0px rgba(120, 116, 134, 0.25);
+  //   position: absolute; 이부분은 page만들때 설정
+  //   top: 0;
+  //   left: 0;
+}
+.titleWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  font-size: 2rem;
+  font-weight: 700;
+  @include font1;
+  .icon {
+    width: 2.4rem;
+    height: 2.4rem;
+    cursor: pointer;
+  }
+}
+.filterContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.2rem;
+  padding-bottom: 2.4rem;
+  border-bottom: 0.2rem solid c.$gray-200;
+}
+.filterTitle {
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 400;
+  @include font1;
+}
+
+.filter {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  padding: 2rem;
+  width: 100%;
+  height: 25.8rem;
+  border-radius: 0.6rem;
+  border: 1px solid c.$gray-300;
+  background: c.$white;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 0.4rem;
+    height: 2rem;
+    border-radius: 4rem;
+    background: c.$gray-600;
+  }
+}
+
+.groupListWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  gap: 2rem;
+}
+
+.groupListWrapper > * {
+  flex: 1 1 30%;
+}
+.groupList {
+  display: inline-flex;
+  flex-direction: column;
+  font-size: 1.4rem;
+  font-weight: 400;
+  @include font1;
+  cursor: pointer;
+}
+
+.badgeWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.badge {
+  display: flex;
+  padding: 0.6rem 1rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  color: c.$red-500;
+  font-family: 'Spoqa Han Sans Neo';
+  font-size: 1.4rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  border-radius: 2rem;
+  background: c.$red-600;
+  img {
+    cursor: pointer;
+  }
+}
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  gap: 0.8rem;
+  border-bottom: 1px solid c.$gray-200;
+  padding-bottom: 2.4rem;
+  p {
+    @include font1;
+    font-size: 1.6rem;
+    font-weight: 400;
+  }
+}
+
+.input {
+  display: flex;
+  padding: 1.6rem 2rem;
+  border-radius: 0.6rem;
+  border: 1px solid c.$gray-400;
+  background: c.$white;
+  ::placeholder {
+    color: c.$gray-500;
+    font-family: 'Spoqa Han Sans Neo';
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 2.6rem;
+  }
+}
+
+.inputStart {
+  width: 100%;
+}
+.inputPrice {
+  position: relative;
+  .additionalPlaceholder {
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+.price {
+  border-bottom: none !important;
+}
+.priceInputWrapper {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  span {
+    @include font1;
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+}
+
+.buttonWrapper {
+  display: flex;
+  width: 35rem;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+@include r.media('mobile') {
+  .filterWrapper {
+    width: 100vw;
+    border: none;
+  }
+}
+
+// // $white: #ffffff;
+// $black: #111322;
+// $gray-100: #fafafa;
+// $gray-200: #f2f2f3;
+// $gray-300: #e5e4e7;
+// $gray-400: #cbc9cf;
+// $gray-500: #a4a1aa;
+// $gray-600: #7d7986;
+// $red-100: #ff3b37;
+// $red-200: #ffaf9b;
+// $red-300: #ff8d72;
+// $red-400: #ff4040;
+// $red-500: #ea3c12;
+//$red-600: #ffebe7;
+// $blue-100: #cce6ff;
+// $blue-200: #0080ff;
+// $green-100: #d4f7d4;
+// $green-200: #20a81e;
+// $yellow-kakao: #fee500;//
