@@ -54,7 +54,6 @@
   overflow: hidden;
   border-radius: 1.2rem;
   @include r.media('mobile') {
-    // height: 84rem;
     max-height: 9.1rem;
   }
 }
@@ -113,6 +112,7 @@
       border-radius: 2rem;
       background: c.$red-400;
     }
+
     span {
       color: c.$white;
       text-align: center;
@@ -142,7 +142,12 @@
     }
   }
 }
-
+.completedDesk {
+  background-color: c.$gray-300 !important;
+}
+.completedMobile {
+  background-color: c.$white;
+}
 .completeWrapper {
   display: flex;
   align-items: center;

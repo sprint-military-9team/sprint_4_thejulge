@@ -21,6 +21,7 @@
     "react/react-in-jsx-scope": "off",
     "prettier/prettier": "error",
     "prefer-const": "off",
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+    "no-nested-ternary": "off"
   }
 }

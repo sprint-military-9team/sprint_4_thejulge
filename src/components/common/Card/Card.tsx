@@ -33,26 +33,28 @@ function CompletedMessage({ completed }: Pick<CardProps, 'completed'>) {
 function Card({ image, title, time, location, salary, raise, isRaised, completed }: CardProps) {
   const [isMobile, setIsMobile] = useState(false);
   const style = completed ? { color: '#CBC9CF' } : {};
-  let raiseStyle = {};
-  let arrowSrc;
-  if (completed) {
-    if (isMobile) {
-      raiseStyle = { backgroundColor: '#FFFFFF' };
-      arrowSrc = upcompletearrow;
-    } else {
-      raiseStyle = { backgroundColor: '#E5E4E7' };
-      arrowSrc = uparrow;
-    }
-  } else if (!completed) {
-    if (isMobile) {
-      arrowSrc = upmobilearrow;
-    } else {
-      arrowSrc = uparrow;
-    }
-  }
+  const raiseClass = completed ? (isMobile ? styles.completedMobile : styles.completedDesk) : undefined;
+  const arrowSrc = completed ? (isMobile ? upcompletearrow : uparrow) : isMobile ? upmobilearrow : uparrow;
+
+  // let raiseClass;
+  // let arrowSrc;
+  // if (completed) {
+  //   if (isMobile) {
+  //     raiseClass = styles.completedMobile;
+  //     arrowSrc = upcompletearrow;
+  //   } else {
+  //     raiseClass = styles.completedDesk;
+  //     arrowSrc = uparrow;
+  //   }
+  // } else if (!completed) {
+  //   if (isMobile) {
+  //     arrowSrc = upmobilearrow;
+  //   } else {
+  //     arrowSrc = uparrow;
+  //   }
+  // }
   const clockSrc = completed ? clockgrayicon : clockicon;
   const locationSrc = completed ? locationgrayicon : locationicon;
-
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 767);
@@ -92,7 +94,7 @@ function Card({ image, title, time, location, salary, raise, isRaised, completed
             {salary}
           </span>
           {isRaised && (
-            <div style={raiseStyle} className={styles.raise}>
+            <div className={`${styles.raise} ${raiseClass}`}>
               <span style={style}>기존 시급보다 {raise}%</span>
               <Image className={styles.raiseicon} src={arrowSrc} alt="upmobilearrow" />
             </div>
