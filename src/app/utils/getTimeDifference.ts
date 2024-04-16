@@ -4,7 +4,7 @@ const getTimeDifference = (createdAt: string) => {
   const timeDifference = Math.floor((currentDate.getTime() - date.getTime()) / 1000);
   const minute = Math.floor(timeDifference / 60);
   if (!minute || minute < 0) {
-    return 'invaliedTime';
+    return 'InvalidTime';
   }
   if (minute < 60) {
     return `${minute}분 전`;
