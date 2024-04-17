@@ -1,0 +1,56 @@
+@import '@/styles/_index';
+
+.layout {
+  position: relative;
+  width: 100%;
+}
+
+.button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid $gray-500;
+  padding: 1rem;
+  width: 100%;
+  font-size: 1rem;
+  text-align: left;
+  background: none;
+
+  @include rounded-lg;
+}
+
+.optionsBox {
+  position: absolute;
+  height: 10rem;
+  margin: 0.6rem 0;
+  z-index: 1;
+  width: 100%;
+  overflow-y: scroll;
+  background: $white;
+  border: 1px solid $gray-300;
+
+  @include rounded-lg;
+  @include shadow;
+
+  &::-webkit-scrollbar {
+    width: 0.4rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $gray-600;
+    @include rounded-lg;
+  }
+}
+
+.option {
+  display: block;
+  width: 100%;
+  background: none;
+  border: 0.4px solid $gray-300;
+
+  &:hover {
+    background: $gray-100;
+  }
+
+  padding: 0.8rem 1rem;
+}
