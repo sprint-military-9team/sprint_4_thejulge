@@ -2,28 +2,23 @@ import { ENVELOPE, FACEBOOK, INSTAGRAM } from '@/utils/constants';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './Footer.module.scss';
-
-type SNSDataType = {
-  name: string;
-  src: string;
-  href: string;
-};
+import { SNSDataType } from './types';
 
 const SNS: SNSDataType[] = [
   {
     name: 'envelop',
     src: ENVELOPE,
-    href: '',
+    href: 'https://www.google.com',
   },
   {
     name: 'facebook',
     src: FACEBOOK,
-    href: '',
+    href: 'https://www.facebook.com',
   },
   {
     name: 'instagram',
     src: INSTAGRAM,
-    href: '',
+    href: 'https://www.instagram.com',
   },
 ];
 
@@ -33,8 +28,12 @@ export default function Footer() {
       <div className={styles.contentWrapper}>
         <div className={styles.copyLight}>©codeit - 2023</div>
         <div className={styles.privacyWrapper}>
-          <div className={styles.privacyButton}>Privacy Policy</div>
-          <div className={styles.privacyButton}>FAQ</div>
+          <Link href="/policy">
+            <div className={styles.privacyButton}>Privacy Policy</div>
+          </Link>
+          <Link href="/faq">
+            <div className={styles.privacyButton}>FAQ</div>
+          </Link>
         </div>
         <div className={styles.snsWrapper}>
           {SNS.map((sns) => (
