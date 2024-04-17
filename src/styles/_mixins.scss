@@ -35,3 +35,7 @@
 @mixin rounded-full {
   border-radius: 50%;
 }
+
+@mixin shadow {
+  box-shadow: 0 0.1rem 0.8rem rgb(0 0 0 / 8%);
+}
