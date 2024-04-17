@@ -1,3 +1,4 @@
-import Table from './Table';
+import UserApplyTable from './UserApplyTable';
+import AnnouncementApplyTable from './AnnouncementApplyTable';
 
-export default Table;
+export { UserApplyTable, AnnouncementApplyTable };

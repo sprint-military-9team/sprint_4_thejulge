@@ -1,0 +1,67 @@
+@import '@/styles/_index';
+@import '@/styles/_media';
+
+.container {
+  border: 1px solid $gray-400;
+  overflow: hidden;
+  @include rounded-lg;
+}
+
+.table {
+  width: 100%;
+  overflow-x: auto;
+  display: block;
+  /* white-space nowrap 시 필요 */
+  table-layout: fixed;
+  display: table;
+}
+
+.tr {
+  border-bottom: 1px solid $gray-400;
+}
+
+.th {
+  padding: 0.6rem 0;
+  background-color: #ffebe7;
+  @include font-normal;
+  font-size: 0.8rem;
+}
+
+.td {
+  padding: 0.9rem 0;
+  text-align: center;
+  font-size: 0.9rem;
+  background-color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.firstColumn {
+  width: 20%;
+}
+
+.secondColumn {
+  width: 30%;
+}
+
+.thirdColumn {
+  width: 25%;
+}
+
+.fourthColumn {
+  width: 25%;
+}
+
+@include media(mobile) {
+  .secondColumn,
+  .thirdColumn {
+    display: none;
+    width: 50%;
+  }
+
+  .firstColumn,
+  .fourthColumn {
+    width: 50%;
+  }
+}
