@@ -1,7 +1,6 @@
 @import '@/styles/_index';
 
 .notificationWindow {
-  box-sizing: border-box;
   position: absolute;
   width: 36.8rem;
   background-color: #ffebe7;
@@ -81,7 +80,6 @@
 }
 
 @mixin notificationWrapper {
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
