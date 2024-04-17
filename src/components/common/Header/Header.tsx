@@ -37,7 +37,7 @@ const BUTTON_LIST: ButtonListType = {
 };
 
 type HeaderProps = {
-  memberType: string;
+  memberType: 'none' | 'owner' | 'worker';
   notificationListData: NotificationDataType[];
 };
 export default function Header({ memberType, notificationListData }: HeaderProps) {
