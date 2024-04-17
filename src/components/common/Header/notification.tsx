@@ -3,8 +3,9 @@
 import Image from 'next/image';
 import getNotificationContent from '@/app/utils/getNotificationContent';
 import getTimeDifference from '@/app/utils/getTimeDifference';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { CLOSE_ICON, NOTIFICATION_ACTIVE, NOTIFICATION_INACTIVE } from '@/app/utils/constants';
+import useOutsideClick from '@/hooks/useOutsideClick';
 import { NotificationDataType } from './types';
 import styles from './Notification.module.scss';
 
@@ -32,18 +33,13 @@ export default function Notification({
     setIsOpen(false);
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event: Event) => {
-      event.stopPropagation();
-      event.preventDefault();
-      if (isOpen && notificationRef.current && !notificationRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener('click', handleClickOutside);
-
-    return () => document.removeEventListener('click', handleClickOutside);
+  const onClose = useCallback(() => {
+    if (isOpen) {
+      setIsOpen(false);
+    }
   }, [isOpen]);
+
+  useOutsideClick(notificationRef, onClose);
 
   useEffect(() => {
     if (!isOpen) {
