@@ -25,3 +25,4 @@ export const SEARCH = `${BASE_PATH}/search.svg`;
 export const CARDARROW = `${BASE_PATH}/cardarrow.svg`;
 export const CARDCOMPLETEARROW = `${BASE_PATH}/cardcompletearrow.svg`;
 export const CARDMOBILEARROW = `${BASE_PATH}/cardmobilearrow.svg`;
+export const PHONE = `${BASE_PATH}/phone.svg`;
