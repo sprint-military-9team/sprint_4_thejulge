@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Button from '@/components/common/Button';
 import closeicon from '@/assets/closeicon.svg';
 import badgeicon from '@/assets/badgecloseicon.svg';
-import { seoulGroupList } from '@/consts/seoul';
+import { SEOULGROUPLIST } from '@/constants/SEOUL';
 import styles from './filter.module.scss';
 
 interface BadgeProps {
@@ -18,7 +18,7 @@ function LocationFilter({ onClick }: { onClick: (location: string) => void }) {
   return (
     <div className={styles.filter}>
       <div className={styles.groupListWrapper}>
-        {seoulGroupList.map((item) => (
+        {SEOULGROUPLIST.map((item) => (
           <div className={styles.groupList} key={item} onClick={() => onClick(item)}>
             {item}
           </div>
