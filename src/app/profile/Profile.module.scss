@@ -1,13 +1,10 @@
 @import '@/styles/_index';
 
 .container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
 }
 
 .header {
-  height: 40px;
+  height: 4rem;
   background-color: rgb(168, 204, 240);
 }
 
@@ -27,6 +24,13 @@
   max-width: 980px;
   padding: 0 20px;
   margin: 0 auto;
+}
+
+.applyList {
+  background-color: $gray-100;
+  margin-top: 4rem;
+  padding-top: 6rem;
+  min-height: 46rem;
 }
 
 .footer {
