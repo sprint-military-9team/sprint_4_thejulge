@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ARROW_DOWN, ARROW_UP } from '@/utils/constants';
-import css from './Dropdown.module.scss';
 import Image from 'next/image';
+import css from './Dropdown.module.scss';
 
 type DropdownProps = {
   optionList: string[];
