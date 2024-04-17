@@ -40,8 +40,15 @@ function Badge({ children, onClick, removeLocation }: BadgeProps) {
 function Filter() {
   const [selectedLocationList, setSelectedLocationList] = useState<string[]>([]);
   const handleAddLocation = (location: string) => {
-    setSelectedLocationList([...selectedLocationList, location]);
+    setSelectedLocationList((prev) => {
+      if (!prev.includes(location)) {
+        return [...prev, location];
+      } else {
+        return prev;
+      }
+    });
   };
+
   const handleRemoveLocation = (location: string) => {
     setSelectedLocationList(selectedLocationList.filter((selectedLocation) => selectedLocation !== location));
   };
