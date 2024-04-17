@@ -10,58 +10,40 @@
 .table {
   width: 100%;
   overflow-x: auto;
-  display: block;
   /* white-space nowrap 시 필요 */
   table-layout: fixed;
-  display: table;
 }
 
 .tr {
   border-bottom: 1px solid $gray-400;
 }
 
+.thead .tr {
+  border: none;
+}
+
 .th {
-  padding: 0.6rem 0;
+  padding: 1.2rem 0;
   background-color: #ffebe7;
   @include font-normal;
-  font-size: 0.8rem;
+  font-size: 1.2rem;
+  text-align: left;
+  padding-left: 0.6rem;
 }
 
 .td {
-  padding: 0.9rem 0;
-  text-align: center;
-  font-size: 0.9rem;
+  text-align: left;
+  padding: 1.3rem 0;
+  font-size: 1.3rem;
   background-color: #fff;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.firstColumn {
-  width: 20%;
-}
-
-.secondColumn {
-  width: 30%;
-}
-
-.thirdColumn {
-  width: 25%;
-}
-
-.fourthColumn {
-  width: 25%;
+  padding-left: 0.6rem;
 }
 
 @include media(mobile) {
-  .secondColumn,
-  .thirdColumn {
+  .middles {
     display: none;
-    width: 50%;
-  }
-
-  .firstColumn,
-  .fourthColumn {
-    width: 50%;
   }
 }
