@@ -1,3 +1,4 @@
+import Footer from '@/components/common/Footer/Footer';
 import Banner from './Banner';
 import styles from './Profile.module.scss';
 
@@ -33,7 +34,7 @@ export default function Profile() {
           </div>
         </section>
       </main>
-      <div className={styles.footer}>..</div>
+      <Footer />
     </div>
   );
 }
