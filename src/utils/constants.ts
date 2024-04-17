@@ -10,6 +10,7 @@ export const CHECK_WHITE = `${BASE_PATH}/check_white.svg`;
 export const CHECK = `${BASE_PATH}/check.svg`;
 export const CLOCK = `${BASE_PATH}/clock.svg`;
 export const ENVELOPE = `${BASE_PATH}/envelope_square.svg`;
+export const EXCLAMATION = `${BASE_PATH}/exclamation.svg`;
 export const FACEBOOK = `${BASE_PATH}/facebook_square.svg`;
 export const GPS = `${BASE_PATH}/gps.svg`;
 export const INSTAGRAM = `${BASE_PATH}/instagram.svg`;
