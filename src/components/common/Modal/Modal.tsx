@@ -20,7 +20,7 @@ function ModalPortal({ children }: { children: React.ReactNode }) {
   return ReactDOM.createPortal(children, document.getElementById('modal') as HTMLElement) as JSX.Element;
 }
 
-function Modal({ children, onClose }: ModalProps) {
+export default function Modal({ children, onClose }: ModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   useOutsideClick(modalRef, onClose);
   useEffect(() => {
@@ -40,5 +40,3 @@ function Modal({ children, onClose }: ModalProps) {
     </ModalPortal>
   );
 }
-
-export default Modal;
