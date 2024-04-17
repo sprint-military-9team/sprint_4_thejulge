@@ -13,6 +13,7 @@ export const CLOCKGRAY = `${BASE_PATH}/clockgray.svg`;
 export const CLOSE = `${BASE_PATH}/close.svg`;
 export const BADGECLOSE = `${BASE_PATH}/badgeclose.svg`;
 export const ENVELOPE = `${BASE_PATH}/envelope_square.svg`;
+export const EXCLAMATION = `${BASE_PATH}/exclamation.svg`;
 export const FACEBOOK = `${BASE_PATH}/facebook_square.svg`;
 export const GPS = `${BASE_PATH}/gps.svg`;
 export const GPSGRAY = `${BASE_PATH}/gpsgray.svg`;
