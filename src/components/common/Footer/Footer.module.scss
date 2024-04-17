@@ -1,0 +1,79 @@
+@import '@/styles/_index';
+@import '@/styles/_media';
+
+.wrapper {
+  width: 100%;
+  padding: 3.7rem 23.8rem;
+  background-color: $gray-200;
+}
+
+.contentWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.copyLight {
+  @include font-normal;
+  font-size: 1.4rem;
+  line-height: 2.6rem;
+  color: $gray-600;
+}
+
+.privacyWrapper {
+  display: flex;
+  gap: 3rem;
+  width: 18.111rem;
+}
+
+.privacyButton {
+  @include font-normal;
+  font-size: 1.6rem;
+  line-height: 2.6rem;
+  color: $gray-600;
+  cursor: pointer;
+}
+
+.snsWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+@include media(tablet) {
+  .wrapper {
+    padding: 3.7rem 3.2rem;
+  }
+  .copyLight {
+    font-size: 1.6rem;
+  }
+}
+
+@include media(mobile) {
+  .wrapper {
+    padding: 3.2rem 2rem 1.6rem;
+  }
+  .contentWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4rem 0;
+  }
+
+  .copyLight {
+    width: 100%;
+    order: 3;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+  }
+
+  .privacyWrapper {
+    order: 1;
+    font-size: 1.4rem;
+    line-height: 2.2rem;
+  }
+
+  .snsWrapper {
+    order: 2;
+  }
+}
