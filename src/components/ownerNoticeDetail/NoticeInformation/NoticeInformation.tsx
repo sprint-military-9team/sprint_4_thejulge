@@ -3,7 +3,7 @@ import getTimeDifference from '@/utils/getTimeDifference';
 import { CLOCK, GPS, NOTICE_DETAIL_ARROW_UP } from '@/utils/constants';
 import Button from '@/components/common/Button';
 import styles from './NoticeInformation.module.scss';
-import { NoticeInformationDataType, StoreInformationDataType } from '../types';
+import { NoticeInformationDataType, StoreInformationDataType } from '../../../app/ownerNoticeDetail/types';
 
 type NoticeInformationProps = {
   noticeData: NoticeInformationDataType;

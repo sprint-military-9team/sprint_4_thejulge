@@ -2,8 +2,8 @@ import Header from '@/components/common/Header/Header';
 import Footer from '@/components/common/Footer/Footer';
 import { getShopData } from '@/apis/shop';
 import { getSpecifyNoticeData } from '@/apis/notice';
-import NoticeInformation from './NoticeInformation/NoticeInformation';
-import ApplicationList from './ApplicationList/ApplicationList';
+import NoticeInformation from '../../components/ownerNoticeDetail/NoticeInformation/NoticeInformation';
+import ApplicationList from '../../components/ownerNoticeDetail/ApplicationList/ApplicationList';
 
 export default async function ownerNoticeDetail() {
   const shopId = 'd3398bdc-4f7b-4457-b6b6-588928dc7e2f';
