@@ -32,7 +32,7 @@ export default function ownerNoticeDetail() {
     description:
       '알바하기 편한 너구리네 라면집!\n라면 올려두고 끓이기만 하면 되어서 쉬운 편에 속하는 가게입니다.\n라면 올려두고 끓이기만 하면 되어서 쉬운 편에 속하는 가게입니다.',
     imageUrl:
-      'https://bootcamp-project-api.s3.ap-northeast-2.amazonaws.com/0-1/the-julge/4d59a6de-2697-4780-836f-0462766209a4-%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202023-11-15%20232244.png',
+      'https://bootcamp-project-api.s3.ap-northeast-2.amazonaws.com/0-1/the-julge/1bdb43c8-ff08-4a46-81b0-7f91efced98c-jinju4.png',
     originalHourPay: 10100,
   };
 
