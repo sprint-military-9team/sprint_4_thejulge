@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import getTimeDifference from '@/utils/getTimeDifference';
-import { CLOCK, GPS, ARROW_UP } from '@/utils/constants';
+import { CLOCK, GPS, NOTICE_DETAIL_ARROW_UP } from '@/utils/constants';
 import Button from '@/components/common/Button';
 import styles from './NoticeInformation.module.scss';
 import { NoticeInformationDataType, StoreInformationDataType } from '../types';
@@ -38,7 +38,13 @@ export default function NoticeInformation({ noticeData, storeData }: NoticeInfor
                   {viewLabel && (
                     <div className={styles.hourlyPayLabel}>
                       <span>기존 시급보다 {additionRate}%</span>
-                      <Image width={20} height={20} src={ARROW_UP} alt="arrow-up" className={styles.arrowUp} />
+                      <Image
+                        width={20}
+                        height={20}
+                        src={NOTICE_DETAIL_ARROW_UP}
+                        alt="arrow-up"
+                        className={styles.arrowUp}
+                      />
                     </div>
                   )}
                 </div>
