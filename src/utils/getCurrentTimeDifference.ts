@@ -1,4 +1,4 @@
-const getTimeDifference = (createdAt: string) => {
+const getCurrentTimeDifference = (createdAt: string) => {
   const date = new Date(createdAt);
   const currentDate = new Date();
   const timeDifference = Math.floor((currentDate.getTime() - date.getTime()) / 1000);
@@ -25,4 +25,4 @@ const getTimeDifference = (createdAt: string) => {
   return `${year}년 전`;
 };
 
-export default getTimeDifference;
+export default getCurrentTimeDifference;
