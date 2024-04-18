@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import getTimeDifference from '@/app/utils/getTimeDifference';
-import { CLOCK, GPS } from '@/utils/constants';
+import { CLOCK, GPS, ARROW_UP } from '@/utils/constants';
 import Button from '@/components/common/Button';
 import styles from './NoticeInformation.module.scss';
 import { NoticeInformationDataType, StoreInformationDataType } from '../types';
@@ -11,6 +11,8 @@ type NoticeInformationProps = {
 };
 
 export default function NoticeInformation({ noticeData, storeData }: NoticeInformationProps) {
+  const additionRate = Math.ceil((noticeData.hourlyPay / storeData.originalHourPay) * 100) - 100;
+  const viewLabel = noticeData.hourlyPay > storeData.originalHourPay;
   return (
     <div className={styles.wrapper}>
       <div className={styles.storeWrapper}>
@@ -27,22 +29,30 @@ export default function NoticeInformation({ noticeData, storeData }: NoticeInfor
             priority
             className={styles.storeImage}
           />
-          <div className={styles.noticeContentWrapper}>
-            <div className={styles.noticeTitleWrapper}>
-              <div className={styles.noticeTitleText}>시급</div>
-              <div className={styles.noticeTitleContentWrapper}>
-                <p>{noticeData.hourlyPay}</p>
+          <div className={styles.noticeFlexWrapper}>
+            <div className={styles.noticeContentWrapper}>
+              <div className={styles.noticeTitleWrapper}>
+                <div className={styles.noticeTitleText}>시급</div>
+                <div className={styles.noticeTitleContentWrapper}>
+                  <p>{`${noticeData.hourlyPay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원`}</p>
+                  {viewLabel && (
+                    <div className={styles.hourlyPayLabel}>
+                      <span>기존 시급보다 {additionRate}%</span>
+                      <Image width={20} height={20} src={ARROW_UP} alt="arrow-up" className={styles.arrowUp} />
+                    </div>
+                  )}
+                </div>
               </div>
+              <div className={styles.noticeLabelWrapper}>
+                <Image src={CLOCK} alt="시간" width={20} height={20} className={styles.notionLabelImage} />
+                <span>{`${getTimeDifference(noticeData.startsAt, noticeData.workhour)} (${noticeData.workhour}시간)`}</span>
+              </div>
+              <div className={styles.noticeLabelWrapper}>
+                <Image src={GPS} alt="위치" width={20} height={20} className={styles.notionLabelImage} />
+                <span>{storeData.address1}</span>
+              </div>
+              <pre className={styles.storeDescription}>{storeData.description}</pre>
             </div>
-            <div className={styles.noticeFlexWrapper}>
-              <Image src={CLOCK} alt="시간" width={20} height={20} />
-              <span>{`${getTimeDifference(noticeData.startsAt, noticeData.workhour)} (${noticeData.workhour}시간)`}</span>
-            </div>
-            <div className={styles.noticeFlexWrapper}>
-              <Image src={GPS} alt="위치" width={20} height={20} />
-              <span>{storeData.address1}</span>
-            </div>
-            <pre className={styles.storeDescription}>{storeData.description}</pre>
             <Button color="white" size="large">
               공고 편집
             </Button>
