@@ -1,18 +1,26 @@
 import Footer from '@/components/common/Footer/Footer';
 import Button from '@/components/common/Button';
 import { GPS, PHONE } from '@/utils/constants';
+import Header from '@/components/common/Header/Header';
 import Banner from './Banner';
 import styles from './Profile.module.scss';
+import ProfileEdit from './ProfileEdit';
 
+const notificationList = [
+  { id: 'aef', name: 'asf', startsAt: 'awef', createdAt: 'awef', workhour: 2, result: 'af', read: false },
+];
+
+const isProfileExist = true;
 export default function Profile() {
-  const isProfileExist = true;
   /*
     받아온 데이터에 name, phone, address, bio가 없으면 isProfileExist를 false로
   */
+
   return (
     <div className={styles.container}>
-      <div className={styles.header}>..</div>
+      <Header memberType="none" notificationListData={notificationList} />
       <main className={styles.main}>
+        <ProfileEdit />
         <section className={styles.profile}>
           <div className={styles.wrapper}>
             <div className={`${isProfileExist && styles.profileContainer}`}>
