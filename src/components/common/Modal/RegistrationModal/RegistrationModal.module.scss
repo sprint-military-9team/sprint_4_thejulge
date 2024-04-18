@@ -1,0 +1,9 @@
+@import '@/styles/_index';
+
+.text {
+  @include font-normal;
+}
+
+.button {
+  @include color-box;
+}
