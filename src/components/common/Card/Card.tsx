@@ -2,13 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import clockicon from '@/assets/clockicon.svg';
-import clockgrayicon from '@/assets/clockgrayicon.svg';
-import locationicon from '@/assets/locationicon.svg';
-import locationgrayicon from '@/assets/locationgrayicon.svg';
-import uparrow from '@/assets/uparrow.svg';
-import upmobilearrow from '@/assets/upmobilearrow.svg';
-import upcompletearrow from '@/assets/upcompletearrow.svg';
+import { CLOCK, CLOCKGRAY, GPS, GPSGRAY, CARDARROW, CARDCOMPLETEARROW, CARDMOBILEARROW } from '@/utils/constants';
 import styles from './card.module.scss';
 
 interface CardProps {
@@ -34,27 +28,9 @@ function Card({ image, title, time, location, salary, raise, isRaised, completed
   const [isMobile, setIsMobile] = useState(false);
   const style = completed ? { color: '#CBC9CF' } : {};
   const raiseClass = completed ? (isMobile ? styles.completedMobile : styles.completedDesk) : undefined;
-  const arrowSrc = completed ? (isMobile ? upcompletearrow : uparrow) : isMobile ? upmobilearrow : uparrow;
-
-  // let raiseClass;
-  // let arrowSrc;
-  // if (completed) {
-  //   if (isMobile) {
-  //     raiseClass = styles.completedMobile;
-  //     arrowSrc = upcompletearrow;
-  //   } else {
-  //     raiseClass = styles.completedDesk;
-  //     arrowSrc = uparrow;
-  //   }
-  // } else if (!completed) {
-  //   if (isMobile) {
-  //     arrowSrc = upmobilearrow;
-  //   } else {
-  //     arrowSrc = uparrow;
-  //   }
-  // }
-  const clockSrc = completed ? clockgrayicon : clockicon;
-  const locationSrc = completed ? locationgrayicon : locationicon;
+  const arrowSrc = completed ? (isMobile ? CARDCOMPLETEARROW : CARDARROW) : isMobile ? CARDMOBILEARROW : CARDARROW;
+  const clockSrc = completed ? CLOCKGRAY : CLOCK;
+  const locationSrc = completed ? GPSGRAY : GPS;
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 767);
@@ -77,13 +53,13 @@ function Card({ image, title, time, location, salary, raise, isRaised, completed
             {title}
           </span>
           <div className={styles.info}>
-            <Image className={styles.icon} src={clockSrc} alt="clockicon" />
+            <Image width={24} height={24} className={styles.icon} src={clockSrc} alt="clockicon" />
             <span style={style} className={styles.time}>
               {time}
             </span>
           </div>
           <div className={styles.info}>
-            <Image className={styles.icon} src={locationSrc} alt="locationicon" />
+            <Image width={24} height={24} className={styles.icon} src={locationSrc} alt="locationicon" />
             <span style={style} className={styles.location}>
               {location}
             </span>
@@ -96,7 +72,7 @@ function Card({ image, title, time, location, salary, raise, isRaised, completed
           {isRaised && (
             <div className={`${styles.raise} ${raiseClass}`}>
               <span style={style}>기존 시급보다 {raise}%</span>
-              <Image className={styles.raiseicon} src={arrowSrc} alt="upmobilearrow" />
+              <Image width={24} height={24} className={styles.raiseicon} src={arrowSrc} alt="upmobilearrow" />
             </div>
           )}
         </div>

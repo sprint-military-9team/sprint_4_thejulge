@@ -3,8 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Button from '@/components/common/Button';
-import closeicon from '@/assets/closeicon.svg';
-import badgeicon from '@/assets/badgecloseicon.svg';
+import { CLOSE, BADGECLOSE } from '@/utils/constants';
 import { SEOULGROUPLIST } from '@/constants/SEOUL';
 import styles from './filter.module.scss';
 
@@ -32,7 +31,7 @@ function Badge({ children, onClick, removeLocation }: BadgeProps) {
   return (
     <div className={styles.badge}>
       {children}
-      <Image src={badgeicon} onClick={() => onClick(removeLocation)} alt="close" />
+      <Image src={BADGECLOSE} width={24} height={24} onClick={() => onClick(removeLocation)} alt="close" />
     </div>
   );
 }
@@ -56,7 +55,7 @@ function Filter() {
     <div className={styles.filterWrapper}>
       <div className={styles.titleWrapper}>
         <div className={styles.title}>상세 필터</div>
-        <Image className={styles.icon} src={closeicon} alt="close" />
+        <Image className={styles.icon} width={24} height={24} src={CLOSE} alt="close" />
       </div>
       <div className={styles.filterContent}>
         <p className={styles.filterTitle}>위치</p>
