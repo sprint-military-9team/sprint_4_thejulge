@@ -1,0 +1,49 @@
+@import '@/styles/_index';
+@import '@/styles/_media';
+
+.container {
+  border: 1px solid $gray-400;
+  overflow: hidden;
+  @include rounded-lg;
+}
+
+.table {
+  width: 100%;
+  overflow-x: auto;
+  /* white-space nowrap 시 필요 */
+  table-layout: fixed;
+}
+
+.tr {
+  border-bottom: 1px solid $gray-400;
+}
+
+.thead .tr {
+  border: none;
+}
+
+.th {
+  padding: 1.2rem 0;
+  background-color: #ffebe7;
+  @include font-normal;
+  font-size: 1.2rem;
+  text-align: left;
+  padding-left: 0.6rem;
+}
+
+.td {
+  text-align: left;
+  padding: 1.3rem 0;
+  font-size: 1.3rem;
+  background-color: $white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 0.6rem;
+}
+
+@include media(mobile) {
+  .middles {
+    display: none;
+  }
+}
