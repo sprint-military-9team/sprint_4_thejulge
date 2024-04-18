@@ -1,15 +1,11 @@
-'use client';
-
-import { useState } from 'react';
 import styles from './Table.module.scss';
-import Pagination from '../Pagination';
 
 /*
-datas = {
+const datas = {
   titles: ['신청자', '소개', '전화번호', '상태'],
   data: [
-    ['awef', '김태진', '안녕하세요', '010-3727-4228', 'pending'],
-    ['eioe', '김우기', '안녕하세요', '010-4987-4228', 'pending'],
+    ['id를 넣어주세요', '김태진', '안녕하세요', '010-3727-4228', 'pending'],
+    ['id를 넣어주세요', '김우기', '안녕하세요', '010-4987-4228', 'pending'],
   ],
 };
 */
@@ -24,8 +20,6 @@ type TableProps = {
 };
 
 export default function Table({ datas }: TableProps) {
-  const [currentPage, setCurrentPage] = useState(1);
-
   return (
     <div className={styles.container}>
       <table className={styles.table}>
@@ -56,7 +50,6 @@ export default function Table({ datas }: TableProps) {
           ))}
         </tbody>
       </table>
-      <Pagination perPageDataCount={5} allDataCount={30} currentPage={currentPage} onPageChange={setCurrentPage} />
     </div>
   );
 }
