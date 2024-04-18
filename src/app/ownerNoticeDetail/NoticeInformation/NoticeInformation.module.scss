@@ -1,0 +1,139 @@
+@import '@/styles/_index';
+
+.wrapper {
+  width: 100%;
+  background-color: #fafafa;
+  padding: 6rem 0;
+}
+
+.storeWrapper {
+  width: fit-content;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2.4rem;
+}
+
+.storeTitleWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  font-family: Spoqa Han Sans Neo;
+}
+
+.storeCategory {
+  @include font-bold;
+  font-size: 1.6rem;
+  line-height: 2rem;
+  color: $red-500;
+}
+
+.storeName {
+  @include font-bold;
+  font-size: 2.8rem;
+  line-height: 3.36rem;
+  letter-spacing: 2%;
+}
+
+.noticeWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 96.4rem;
+  border-radius: 1.2rem;
+  border: 0.1rem solid $gray-300;
+  background-color: $white;
+  padding: 2.4rem;
+}
+
+.storeImage {
+  border-radius: 1.2rem;
+}
+
+.noticeContentWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.2rem;
+  width: 34.6rem;
+  padding-top: 1.6rem;
+  font-family: Spoqa Han Sans Neo;
+}
+
+.noticeTitleWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.noticeTitleText {
+  @include font-bold;
+  font-size: 1.6rem;
+  line-height: 2rem;
+  color: $red-500;
+}
+
+.noticeTitleContentWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 29.3px;
+  gap: 8px;
+  @include font-bold;
+  font-size: 2.8rem;
+  line-height: 3.506rem;
+  letter-spacing: 2%;
+  color: $black;
+}
+
+.noticeFlexWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  @include font-normal;
+  font-size: 1.6rem;
+  line-height: 2.6rem;
+  color: $gray-600;
+}
+
+.storeDescription {
+  width: 34.6rem;
+  height: 7.8rems;
+  overflow: hidden;
+  word-break: break-all;
+  white-space: pre-wrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  @include font-normal;
+  font-size: 1.6rem;
+  line-height: 2.6rem;
+  color: $black;
+}
+
+.noticeDescription {
+  width: 96.4rem;
+  border-radius: 1.2rem;
+  padding: 3.2rem;
+  gap: 3.2rem;
+  background-color: $gray-200;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.descriptionTitlte {
+  @include font-bold;
+  font-size: 1.6rem;
+  line-height: 2rem;
+  color: $black;
+}
+
+.descriptionContent {
+  @include font-normal;
+  font-size: 1.6rem;
+  line-height: 2.6rem;
+  color: $black;
+}

@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import getNotificationContent from '@/app/utils/getNotificationContent';
-import getTimeDifference from '@/app/utils/getTimeDifference';
+import getCurrentTimeDifference from '@/app/utils/getCurrentTimeDifference';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { CLOSE_ICON, NOTIFICATION_ACTIVE, NOTIFICATION_INACTIVE } from '@/app/utils/constants';
 import useOutsideClick from '@/hooks/useOutsideClick';
@@ -99,7 +99,7 @@ export default function Notification({
                       </span>
                       되었어요.
                     </div>
-                    <div className={styles.notificationDate}>{getTimeDifference(notification.createdAt)}</div>
+                    <div className={styles.notificationDate}>{getCurrentTimeDifference(notification.createdAt)}</div>
                   </div>
                 ))}
               </>
