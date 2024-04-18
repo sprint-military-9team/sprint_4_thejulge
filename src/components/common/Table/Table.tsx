@@ -12,7 +12,7 @@ const datas = {
 
 type Datas = {
   titles: string[];
-  data: string[][];
+  data: (string | undefined)[][];
 };
 
 type TableProps = {
