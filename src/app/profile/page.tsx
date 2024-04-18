@@ -1,26 +1,84 @@
-import Footer from '@/components/common/Footer/Footer';
+'use client';
+
 import Button from '@/components/common/Button';
 import { GPS, PHONE } from '@/utils/constants';
-import Header from '@/components/common/Header/Header';
+import { useState } from 'react';
+import Table from '@/components/common/Table';
+import Pagination from '@/components/common/Pagination';
 import Banner from './Banner';
 import styles from './Profile.module.scss';
 import ProfileEdit from './ProfileEdit';
 
-const notificationList = [
-  { id: 'aef', name: 'asf', startsAt: 'awef', createdAt: 'awef', workhour: 2, result: 'af', read: false },
-];
-
 const isProfileExist = true;
+const isApplyHistoryExist = true;
+
+const data = {
+  items: [
+    {
+      item: {
+        id: 'string',
+        status: 'pending | accepted | rejected | canceled',
+        createdAt: 'string',
+        shop: {
+          item: {
+            id: 'string',
+            name: 'string',
+            category: 'string',
+            address1: 'string',
+            address2: 'string',
+            description: 'string',
+            imageUrl: 'string',
+            originalHourlyPay: 'number',
+          },
+          href: 'string',
+        },
+        notice: {
+          item: {
+            id: 'string',
+            hourlyPay: 'number',
+            description: 'string',
+            startsAt: 'string',
+            workhour: 'number',
+            closed: 'boolean',
+          },
+        },
+      },
+      links: [],
+    },
+  ],
+};
+
+const refinedData = data.items.map((item) => [
+  item.item.id,
+  item.item.shop.item.name,
+  item.item.notice.item.startsAt,
+  item.item.notice.item.hourlyPay,
+  item.item.status,
+]);
+
+const tableData = {
+  titles: ['가게', '일자', '시급', '상태'],
+  data: refinedData,
+};
+
+const LIMIT = 4;
+
 export default function Profile() {
-  /*
-    받아온 데이터에 name, phone, address, bio가 없으면 isProfileExist를 false로
-  */
+  const [isOpened, setIsOpend] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleCloseEdit = () => {
+    setIsOpend(false);
+  };
+
+  const handleOpendEdit = () => {
+    setIsOpend(true);
+  };
 
   return (
     <div className={styles.container}>
-      <Header memberType="none" notificationListData={notificationList} />
+      <ProfileEdit isOpend={isOpened} onClose={handleCloseEdit} />
       <main className={styles.main}>
-        <ProfileEdit />
         <section className={styles.profile}>
           <div className={styles.wrapper}>
             <div className={`${isProfileExist && styles.profileContainer}`}>
@@ -50,20 +108,36 @@ export default function Profile() {
                 <Banner
                   description="내 프로필을 등록하고 원하는 가게에 지원해 보세요."
                   buttonContent="내 프로필 등록하기"
-                  linkPath="/"
+                  onClick={handleOpendEdit}
                 />
               )}
             </div>
           </div>
         </section>
-        <section className={styles.applyList}>
-          <div className={styles.wrapper}>
-            <h2 className={styles.sectionTitle}>신청 내역</h2>
-            <Banner description="아직 신청 내역이 없어요." buttonContent="공고 보러가기" linkPath="/" />
-          </div>
-        </section>
+        {isApplyHistoryExist ? (
+          <section className={styles.applyList}>
+            <div className={styles.wrapper}>
+              <h2 className={styles.sectionTitle}>신청 내역</h2>
+              <div style={{ border: '1px solid red' }}>
+                <Table datas={tableData} />
+                <Pagination
+                  currentPage={currentPage}
+                  onPageChange={setCurrentPage}
+                  allDataCount={40}
+                  perPageDataCount={LIMIT}
+                />
+              </div>
+            </div>
+          </section>
+        ) : (
+          <section className={styles.applyList}>
+            <div className={styles.wrapper}>
+              <h2 className={styles.sectionTitle}>신청 내역</h2>
+              <Banner description="아직 신청 내역이 없어요." buttonContent="공고 보러가기" linkPath="/" />
+            </div>
+          </section>
+        )}
       </main>
-      <Footer />
     </div>
   );
 }
