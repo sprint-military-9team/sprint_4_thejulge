@@ -37,7 +37,7 @@
 @mixin rounded-full {
   border-radius: 50%;
 }
-
+  
 @mixin color-box($fill: false, $color: $red-400) {
   padding: 0.6rem 1rem;
   border: 1px solid $color;
@@ -53,3 +53,6 @@
     color: $color;
   }
 }
+
+@mixin shadow {
+  box-shadow: 0 0.1rem 0.8rem rgb(0 0 0 / 8%);
