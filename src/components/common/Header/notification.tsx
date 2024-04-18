@@ -1,11 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import getNotificationContent from '@/utils/getNotificationContent';
-import getTimeDifference from '@/utils/getTimeDifference';
+import getCurrentTimeDifference from '@/utils/getCurrentTimeDifference';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { CLOSE_ICON, NOTIFICATION_ACTIVE, NOTIFICATION_INACTIVE } from '@/utils/constants';
 import useOutsideClick from '@/hooks/useOutsideClick';
+import getTimeDifference from '@/utils/getTimeDifference';
 import { NotificationDataType } from './types';
 import styles from './Notification.module.scss';
 
@@ -86,7 +86,7 @@ export default function Notification({
                       }
                     />
                     <div className={styles.notificationText}>
-                      {getNotificationContent(notification.name, notification.startsAt, notification.workhour)}
+                      {`${notification.name}(${getTimeDifference(notification.startsAt, notification.workhour)}) 공고 지원이`}
                       &nbsp;
                       <span
                         className={
@@ -99,7 +99,7 @@ export default function Notification({
                       </span>
                       되었어요.
                     </div>
-                    <div className={styles.notificationDate}>{getTimeDifference(notification.createdAt)}</div>
+                    <div className={styles.notificationDate}>{getCurrentTimeDifference(notification.createdAt)}</div>
                   </div>
                 ))}
               </>

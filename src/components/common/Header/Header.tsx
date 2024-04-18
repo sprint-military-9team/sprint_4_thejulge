@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useCallback } from 'react';
-import { SEARCH_ICON, HEADER_LOGO } from '@/app/utils/constants';
+import { SEARCH_ICON, HEADER_LOGO } from '@/utils/constants';
 import Notification from './notification';
 import styles from './Header.module.scss';
 import { ButtonListType, NotificationDataType } from './types';
