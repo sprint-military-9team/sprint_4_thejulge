@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { CLOCK, CLOCKGRAY, GPS, GPSGRAY, CARDARROW, CARDCOMPLETEARROW, CARDMOBILEARROW } from '@/utils/constants';
 import styles from './card.module.scss';
@@ -11,9 +12,11 @@ interface CardProps {
   time: string;
   location: string;
   salary: string;
-  raise?: string;
+  raise?: number;
   isRaised?: boolean;
   completed?: string;
+  shopId: string;
+  noticeId: string;
 }
 
 function CompletedMessage({ completed }: Pick<CardProps, 'completed'>) {
@@ -24,13 +27,14 @@ function CompletedMessage({ completed }: Pick<CardProps, 'completed'>) {
   );
 }
 
-function Card({ image, title, time, location, salary, raise, isRaised, completed }: CardProps) {
+function Card({ image, title, time, location, salary, raise, isRaised, completed, shopId, noticeId }: CardProps) {
   const [isMobile, setIsMobile] = useState(false);
   const style = completed ? { color: '#CBC9CF' } : {};
   const raiseClass = completed ? (isMobile ? styles.completedMobile : styles.completedDesk) : undefined;
   const arrowSrc = completed ? (isMobile ? CARDCOMPLETEARROW : CARDARROW) : isMobile ? CARDMOBILEARROW : CARDARROW;
   const clockSrc = completed ? CLOCKGRAY : CLOCK;
   const locationSrc = completed ? GPSGRAY : GPS;
+  const router = useRouter();
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 767);
@@ -41,8 +45,11 @@ function Card({ image, title, time, location, salary, raise, isRaised, completed
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+  const handleRouteNotice = () => {
+    router.push(`/shop/${shopId}/notice/${noticeId}`);
+  };
   return (
-    <div className={styles.cardWrapper}>
+    <div className={styles.cardWrapper} onClick={handleRouteNotice}>
       <div className={styles.imageWrapper}>
         <Image src={image} layout="fill" objectFit="cover" alt="store image" />
         {completed && <CompletedMessage completed={completed} />}
@@ -67,7 +74,7 @@ function Card({ image, title, time, location, salary, raise, isRaised, completed
         </div>
         <div className={styles.salaryWrapper}>
           <span style={style} className={styles.salary}>
-            {salary}
+            {salary}원
           </span>
           {isRaised && (
             <div className={`${styles.raise} ${raiseClass}`}>

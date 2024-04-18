@@ -1,11 +1,21 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Button from '@/components/common/Button';
 import { CLOSE, BADGECLOSE } from '@/utils/constants';
 import { SEOULGROUPLIST } from '@/constants/SEOUL';
 import styles from './filter.module.scss';
+
+interface FilterInfo {
+  location: string[];
+  startAt: string | null;
+  pay: number | null;
+}
+interface FilterProps {
+  onClick: (filter: FilterInfo | null) => void;
+  removeFilter: () => void;
+}
 
 interface BadgeProps {
   children: React.ReactNode;
@@ -36,8 +46,11 @@ function Badge({ children, onClick, removeLocation }: BadgeProps) {
   );
 }
 
-function Filter() {
+function Filter({ onClick, removeFilter }: FilterProps) {
   const [selectedLocationList, setSelectedLocationList] = useState<string[]>([]);
+  const [startAt, setStartAt] = useState<string | null>(null);
+  const [pay, setPay] = useState<number | null>(null);
+  const [filterData, setFilterData] = useState<FilterInfo | null>(null);
   const handleAddLocation = (location: string) => {
     setSelectedLocationList((prev) => {
       if (!prev.includes(location)) {
@@ -51,11 +64,34 @@ function Filter() {
   const handleRemoveLocation = (location: string) => {
     setSelectedLocationList(selectedLocationList.filter((selectedLocation) => selectedLocation !== location));
   };
+
+  const handleInputStartChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const inputDateTime = event.target.value;
+    const dateObject = new Date(inputDateTime);
+    const formattedDateTime = dateObject.toISOString();
+    setStartAt(formattedDateTime);
+  };
+
+  const handlePayChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPay(Number(event.target.value));
+  };
+
+  const handleResetData = () => {
+    setSelectedLocationList([]);
+    setStartAt(null);
+    setPay(null);
+    setFilterData(null);
+  };
+
+  useEffect(() => {
+    setFilterData({ location: selectedLocationList, startAt, pay });
+  }, [selectedLocationList, startAt, pay]);
+
   return (
     <div className={styles.filterWrapper}>
       <div className={styles.titleWrapper}>
         <div className={styles.title}>상세 필터</div>
-        <Image className={styles.icon} width={24} height={24} src={CLOSE} alt="close" />
+        <Image onClick={removeFilter} className={styles.icon} width={24} height={24} src={CLOSE} alt="close" />
       </div>
       <div className={styles.filterContent}>
         <p className={styles.filterTitle}>위치</p>
@@ -70,25 +106,40 @@ function Filter() {
       </div>
       <div className={styles.inputWrapper}>
         <p>시작일</p>
-        <input type="text" className={`${styles.input} ${styles.inputStart}`} placeholder="입력" />
+        <input
+          type="datetime-local"
+          className={`${styles.input} ${styles.inputStart}`}
+          placeholder="입력"
+          onChange={handleInputStartChange}
+        />
       </div>
       <div className={`${styles.inputWrapper} ${styles.price}`}>
         <p>금액</p>
         <div className={styles.priceInputWrapper}>
           <div className={styles.inputPrice}>
-            <input type="text" className={styles.input} placeholder="입력" />
+            <input
+              type="text"
+              className={styles.input}
+              placeholder="입력"
+              onChange={handlePayChange}
+              value={pay || ''}
+            />
             <span className={styles.additionalPlaceholder}>원</span>
           </div>
           <span>이상부터</span>
         </div>
       </div>
       <div className={styles.buttonWrapper}>
-        <Button size="large" color="white" style={{ padding: '1.4rem' }}>
-          초기화
-        </Button>
-        <Button size="large" color="orange" style={{ padding: '1.4rem' }}>
-          적용하기
-        </Button>
+        <div onClick={handleResetData}>
+          <Button size="large" color="white" style={{ padding: '1.4rem' }}>
+            초기화
+          </Button>
+        </div>
+        <div onClick={() => onClick(filterData)}>
+          <Button size="large" color="orange" style={{ padding: '1.4rem' }}>
+            적용하기
+          </Button>
+        </div>
       </div>
     </div>
   );

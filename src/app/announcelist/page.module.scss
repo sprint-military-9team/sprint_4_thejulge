@@ -1,0 +1,22 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  gap: 40px;
+  background-color: #fff;
+}
+.suggestWrapper {
+  display: flex;
+  width: 100vw;
+  padding: 6rem calc(50vw - 48.2rem);
+  flex-direction: column;
+  align-items: flex-start;
+  background: #ffebe7;
+}
+.mainWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  padding: 6rem calc(50vw - 48.2rem);
+}
