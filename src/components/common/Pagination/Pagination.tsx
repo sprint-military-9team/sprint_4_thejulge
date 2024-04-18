@@ -1,7 +1,8 @@
 'use client';
 
+import { ARROW_NEXT, ARROW_PREV } from '@/utils/constants';
 import { Dispatch, SetStateAction } from 'react';
-import styles from './PaginationStyles.module.scss';
+import styles from './Pagination.module.scss';
 
 type Props = {
   currentPage: number;
@@ -26,8 +27,13 @@ export default function Pagination({ currentPage, onPageChange, allDataCount, pe
   return (
     <div className={styles.container}>
       {totalPages > PAGE_LIMIT && (
-        <button disabled={currentPage === 1} type="button" onClick={() => onPageChange(currentPage - 1)}>
-          {'<'}
+        <button
+          disabled={currentPage === 1}
+          type="button"
+          className={styles.button}
+          onClick={() => onPageChange((page) => page - 1)}
+        >
+          <img src={ARROW_PREV} alt="arrow_prev" />
         </button>
       )}
       <ul className={styles.list}>
@@ -44,8 +50,13 @@ export default function Pagination({ currentPage, onPageChange, allDataCount, pe
       </ul>
 
       {totalPages > PAGE_LIMIT && (
-        <button disabled={currentPage === totalPages} type="button" onClick={() => onPageChange(currentPage + 1)}>
-          {'>'}
+        <button
+          disabled={currentPage === totalPages}
+          type="button"
+          className={styles.button}
+          onClick={() => onPageChange((page) => page + 1)}
+        >
+          <img src={ARROW_NEXT} alt="arrow_prev" />
         </button>
       )}
     </div>

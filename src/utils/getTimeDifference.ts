@@ -1,4 +1,4 @@
-const getDate = (startsAt: string, workhour: number) => {
+const getTimeDifference = (startsAt: string, workhour: number) => {
   const startDate = new Date(startsAt);
   const localStartDate = new Date(startDate.getTime() - 9 * 60 * 60000);
   const localEndDate = new Date(localStartDate.getTime() + 60000 * workhour * 60);
@@ -22,9 +22,4 @@ const getDate = (startsAt: string, workhour: number) => {
   return `${formattedDate}~${endHour}:${endMinute}`;
 };
 
-const getNotificationContent = (name: string, startsAt: string, workhour: number) => {
-  const date = getDate(startsAt, workhour);
-  return `${name}(${date}) 공고 지원이`;
-};
-
-export default getNotificationContent;
+export default getTimeDifference;

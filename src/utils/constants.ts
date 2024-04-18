@@ -27,3 +27,6 @@ export const CARDARROW = `${BASE_PATH}/cardarrow.svg`;
 export const CARDCOMPLETEARROW = `${BASE_PATH}/cardcompletearrow.svg`;
 export const CARDMOBILEARROW = `${BASE_PATH}/cardmobilearrow.svg`;
 export const PHONE = `${BASE_PATH}/phone.svg`;
+export const CLOSE_ICON = `${BASE_PATH}/close_icon.svg`;
+export const HEADER_LOGO = `${BASE_PATH}/header_logo.svg`;
+export const SEARCH_ICON = `${BASE_PATH}/search_icon.svg`;
