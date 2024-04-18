@@ -1,10 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import getNotificationContent from '@/app/utils/getNotificationContent';
-import getTimeDifference from '@/app/utils/getTimeDifference';
+import getNotificationContent from '@/utils/getNotificationContent';
+import getTimeDifference from '@/utils/getTimeDifference';
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { CLOSE_ICON, NOTIFICATION_ACTIVE, NOTIFICATION_INACTIVE } from '@/app/utils/constants';
+import { CLOSE_ICON, NOTIFICATION_ACTIVE, NOTIFICATION_INACTIVE } from '@/utils/constants';
 import useOutsideClick from '@/hooks/useOutsideClick';
 import { NotificationDataType } from './types';
 import styles from './Notification.module.scss';
