@@ -115,7 +115,9 @@ export default function Header({ memberType, notificationListData }: HeaderProps
   return (
     <div className={styles.wrapper}>
       <div className={styles.contentWrapper}>
-        <Image src={HEADER_LOGO} alt="logo" width={112} height={40} className={styles.logo} priority />
+        <Link href="/">
+          <Image src={HEADER_LOGO} alt="logo" width={112} height={40} className={styles.logo} priority />
+        </Link>
         <form className={styles.searchBarWrapper}>
           <Image src={SEARCH_ICON} alt="search" width={20} height={20} className={styles.searchButton} priority />
           <input className={styles.searchBar} placeholder="가게 이름으로 찾아보세요" />

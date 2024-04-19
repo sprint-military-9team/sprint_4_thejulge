@@ -2,9 +2,7 @@
 @import '@/styles/_media';
 
 .container {
-  border: 1px solid $gray-400;
   overflow: hidden;
-  @include rounded-lg;
 }
 
 .table {

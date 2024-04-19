@@ -1,0 +1,30 @@
+@import '@/styles/_index';
+
+.layout {
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  border: 1px solid $gray-500;
+  padding: 1rem;
+  margin-top: 0.8rem;
+
+  @include rounded-sm;
+}
+
+.error {
+  border: 1px solid $red-400;
+
+  &:focus {
+    border: 1px solid $red-400;
+    outline: none;
+  }
+}
+
+.errorMessage {
+  margin-right: auto;
+  margin-top: 0.8rem;
+  color: $red-400;
+  font-size: 1.2rem;
+}
