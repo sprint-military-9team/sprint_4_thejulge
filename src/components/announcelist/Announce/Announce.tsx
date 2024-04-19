@@ -96,7 +96,8 @@ function Announce({ data }: AnnounceProps) {
               key={cardData?.item.id}
               image={cardData?.item.shop.item.imageUrl}
               title={cardData?.item.shop.item.name}
-              time={cardData?.item.startsAt}
+              startTime={cardData?.item.startsAt}
+              workHour={cardData?.item.workhour}
               location={cardData?.item.shop.item.address1}
               salary={`${cardData?.item.hourlyPay}`}
               raise={cardData ? raisePercent(cardData.item.hourlyPay, cardData.item.shop.item.originalHourlyPay) : 0}
@@ -109,7 +110,7 @@ function Announce({ data }: AnnounceProps) {
         </div>
       </div>
       <div className={styles.paginate}>
-        <Pagination currentPage={1} onPageChange={() => {}} allDataCount={data?.count} perPageDataCount={1} />
+        <Pagination currentPage={1} onPageChange={() => {}} allDataCount={data?.count} perPageDataCount={6} />
       </div>
     </section>
   );

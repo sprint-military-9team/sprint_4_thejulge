@@ -4,12 +4,14 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { CLOCK, CLOCKGRAY, GPS, GPSGRAY, CARDARROW, CARDCOMPLETEARROW, CARDMOBILEARROW } from '@/utils/constants';
+import getWorkTime from '@/utils/getWorkTime';
 import styles from './card.module.scss';
 
 interface CardProps {
   image: string;
   title: string;
-  time: string;
+  startTime: string;
+  workHour: number;
   location: string;
   salary: string;
   raise?: number;
@@ -27,7 +29,19 @@ function CompletedMessage({ completed }: Pick<CardProps, 'completed'>) {
   );
 }
 
-function Card({ image, title, time, location, salary, raise, isRaised, completed, shopId, noticeId }: CardProps) {
+function Card({
+  image,
+  title,
+  startTime,
+  workHour,
+  location,
+  salary,
+  raise,
+  isRaised,
+  completed,
+  shopId,
+  noticeId,
+}: CardProps) {
   const [isMobile, setIsMobile] = useState(false);
   const style = completed ? { color: '#CBC9CF' } : {};
   const raiseClass = completed ? (isMobile ? styles.completedMobile : styles.completedDesk) : undefined;
@@ -62,7 +76,7 @@ function Card({ image, title, time, location, salary, raise, isRaised, completed
           <div className={styles.info}>
             <Image width={24} height={24} className={styles.icon} src={clockSrc} alt="clockicon" />
             <span style={style} className={styles.time}>
-              {time}
+              {getWorkTime(startTime, workHour)}
             </span>
           </div>
           <div className={styles.info}>

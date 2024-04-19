@@ -7,8 +7,8 @@ const mockData = {
   offset: 0,
   limit: 6,
   address: [],
-  count: 209,
-  hasNext: true,
+  count: 6,
+  hasNext: false,
   items: [
     {
       item: {

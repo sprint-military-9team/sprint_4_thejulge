@@ -27,7 +27,7 @@ function SuggestCard({ data, residence }: SuggestCardProps) {
     slidesToScroll: 1,
     autoplay: true,
     arrows: false,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 4000,
     initialSlide: 0,
     focusOnSelect: true,
   };
@@ -40,7 +40,8 @@ function SuggestCard({ data, residence }: SuggestCardProps) {
             key={cardData?.item.id}
             image={cardData?.item.shop.item.imageUrl}
             title={cardData?.item.shop.item.name}
-            time={cardData?.item.startsAt}
+            startTime={cardData?.item.startsAt}
+            workHour={cardData?.item.workhour}
             location={cardData?.item.shop.item.address1}
             salary={`${cardData?.item.hourlyPay}`}
             raise={cardData ? raisePercent(cardData.item.hourlyPay, cardData.item.shop.item.originalHourlyPay) : 0}
