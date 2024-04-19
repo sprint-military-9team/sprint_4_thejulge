@@ -7,20 +7,11 @@ import { getSpecifyNoticeApplicationData, setSpecifyNoticeApplicationStatus } fr
 import Modal from '@/components/common/Modal/Modal';
 import OwnerDetailModal from '@/components/common/Modal/ownerDetailModal/OwnerDetailModal';
 import styles from './ApplicationList.module.scss';
+import { ModalType, TableDataType } from './types';
 
 type ApplicationListProps = {
   shopId: string;
   noticeId: string;
-};
-
-type TableDataType = {
-  titles: string[];
-  data: (string | undefined)[][];
-};
-
-type ModalType = {
-  type: 'none' | 'accept' | 'reject';
-  onClick: () => void;
 };
 
 export default function ApplicationList({ shopId, noticeId }: ApplicationListProps) {
