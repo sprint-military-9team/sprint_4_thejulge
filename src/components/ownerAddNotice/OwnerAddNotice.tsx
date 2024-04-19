@@ -3,6 +3,9 @@
 import Image from 'next/image';
 import { CLOSE_ICON } from '@/utils/constants';
 import { useState } from 'react';
+import { NoticeUploadDataType } from '@/types';
+import { postNotice } from '@/apis/notice';
+import { useRouter } from 'next/router';
 import styles from './OwnerAddNotice.module.scss';
 import Input from '../common/Input/Input';
 import Button from '../common/Button';
@@ -12,6 +15,8 @@ type ErrorType = {
 };
 
 export default function OwnerAddNotice() {
+  const router = useRouter();
+  const shopId = 'd3398bdc-4f7b-4457-b6b6-588928dc7e2f';
   const [error, setError] = useState<ErrorType>({
     hourlyPay: false,
     startsAt: false,
@@ -45,10 +50,15 @@ export default function OwnerAddNotice() {
     },
   ];
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const inputError: ErrorType = {};
-    const inputData = {};
+    const inputData: NoticeUploadDataType = {
+      hourlyPay: 0,
+      startsAt: '',
+      workhour: 0,
+      description: '',
+    };
     INPUT_DATA.forEach((data) => {
       const { value } = document.getElementById(data.id) as HTMLFormElement;
       const dataValue = data.type === 'datetime-local' && value ? changeDateType(value) : value;
@@ -62,7 +72,11 @@ export default function OwnerAddNotice() {
     if (!flag) {
       return;
     }
-    console.log(inputData);
+    const APIFlag = await postNotice(shopId, inputData);
+    if (APIFlag) {
+      alert('등록이 완료되었습니다.');
+      router.push('/ownerNoticeDetail');
+    }
   };
 
   return (
