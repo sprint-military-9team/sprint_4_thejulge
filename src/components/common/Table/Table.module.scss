@@ -1,5 +1,6 @@
 @import '@/styles/_index';
 @import '@/styles/_media';
+@import '@/styles/_mixins';
 
 .container {
   overflow: hidden;
@@ -38,6 +39,29 @@
   overflow: hidden;
   text-overflow: ellipsis;
   padding-left: 0.6rem;
+}
+
+.btnContainer {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn {
+  background-color: inherit;
+  border: 1px solid currentColor;
+  border-radius: 0.5rem;
+  padding: 0.8rem 1.3rem;
+  font-size: 1.4rem;
+  @include font-bold;
+  cursor: pointer;
+}
+
+.btn.accept {
+  color: #0080ff;
+}
+
+.btn.reject {
+  color: #ea3c12;
 }
 
 @include media(mobile) {

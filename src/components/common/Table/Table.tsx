@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import styles from './Table.module.scss';
+import Status from '../Status';
 
 type Header<T> = {
   id: keyof T;
@@ -39,20 +40,22 @@ export default function Table<T>({ header, body, type, onClickRejectButton, onCl
         <tbody className={styles.tbody}>
           {body.map((item, index) => (
             <tr key={generateUniqueId(index)} className={styles.tr}>
-              {header.map(({ id }) => (
+              {header.map(({ id }, index_header) => (
                 <td
                   key={id as string}
-                  className={`${styles.td} ${index === 0 || index === header.length - 1 ? styles.edges : styles.middles}`}
+                  className={`${styles.td} ${index_header === 0 || index_header === header.length - 1 ? styles.edges : styles.middles}`}
                 >
                   {type === 'owner' && id === 'status' && item[id] === 'pending' ? (
-                    <>
-                      <button type="button" onClick={onClickAcceptButton}>
+                    <div className={styles.btnContainer}>
+                      <button className={`${styles.btn} ${styles.accept}`} type="button" onClick={onClickAcceptButton}>
                         승인하기
                       </button>
-                      <button type="button" onClick={onClickRejectButton}>
+                      <button className={`${styles.btn} ${styles.reject}`} type="button" onClick={onClickRejectButton}>
                         거절하기
                       </button>
-                    </>
+                    </div>
+                  ) : id === 'status' ? (
+                    <Status type={item[id] as 'pending' | 'rejected' | 'accepted'} />
                   ) : (
                     (item[id] as ReactNode)
                   )}
