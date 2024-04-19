@@ -24,7 +24,9 @@ export default function Input({ type, placeholder, label, id, onBlur, errorMessa
   return (
     <>
       <div className={styles.layout}>
-        <label htmlFor={id}>{label}</label>
+        <label htmlFor={id} className={styles.label}>
+          {label}
+        </label>
         <input
           id={id}
           name={id}

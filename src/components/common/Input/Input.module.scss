@@ -4,10 +4,19 @@
   width: 100%;
 }
 
+.label {
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2.6rem;
+}
+
 .input {
   width: 100%;
   border: 1px solid $gray-500;
-  padding: 1rem;
+  padding: 1.6rem 2rem;
+  @include font-normal;
+  font-size: 1.6rem;
+  line-height: 2.6rem;
   margin-top: 0.8rem;
 
   @include rounded-sm;

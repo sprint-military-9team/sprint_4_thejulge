@@ -1,0 +1,87 @@
+@import '@/styles/_index';
+@import '@/styles/_media';
+
+.wrapper {
+  width: 100%;
+  padding: 6rem 0;
+  background-color: $gray-100;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 96.4rem;
+  gap: 3.2rem;
+  margin: 0 auto;
+}
+
+.titleWrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  @include font-bold;
+  font-size: 2.8rem;
+  line-height: 3.36rem;
+  letter-spacing: 2%;
+}
+
+.button {
+  cursor: pointer;
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.4rem;
+}
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  width: 100%;
+}
+
+.inputFlexWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  width: 100%;
+}
+
+.inputComponentWrapper {
+  display: flex;
+  width: 38rem;
+  flex-direction: column;
+}
+.descriptionWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  width: 100%;
+}
+.descriptionLabel {
+  @include font-normal;
+  font-size: 1.6rem;
+  line-height: 2.6rem;
+  color: $black;
+}
+.textArea {
+  width: 100%;
+  height: 15.3rem;
+  border-radius: 0.6rem;
+  border: 0.1rem solid $gray-400;
+  padding: 1.6rem 2rem;
+  @include font-normal;
+  font-size: 1.6rem;
+  line-height: 2.6rem;
+  resize: none;
+  outline: none;
+}
+.buttonWrapper {
+  width: 31.2rem;
+}
