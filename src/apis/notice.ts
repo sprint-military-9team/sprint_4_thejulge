@@ -2,10 +2,14 @@ import BASE_URL from '@/constants/BASEURL';
 import { SpecifyNoticeDataType } from '@/types';
 
 export const getSpecifyNoticeData = async (shopId: string, noticeId: string): Promise<SpecifyNoticeDataType> => {
-  const data = await fetch(`${BASE_URL}/shops/${shopId}/notices/${noticeId}`, {
+  const response = await fetch(`${BASE_URL}/shops/${shopId}/notices/${noticeId}`, {
     method: 'GET',
     cache: 'no-store',
-  }).then((response) => response.json());
+  });
+  if (!response.ok) {
+    throw Error('API 오류');
+  }
+  const data = await response.json();
   return data.item;
 };
 
