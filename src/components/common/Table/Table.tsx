@@ -1,49 +1,61 @@
+import { ReactNode } from 'react';
 import styles from './Table.module.scss';
 
-/*
-const datas = {
-  titles: ['신청자', '소개', '전화번호', '상태'],
-  data: [
-    ['id를 넣어주세요', '김태진', '안녕하세요', '010-3727-4228', 'pending'],
-    ['id를 넣어주세요', '김우기', '안녕하세요', '010-4987-4228', 'pending'],
-  ],
-};
-*/
-
-type Datas = {
-  titles: string[];
-  data: string[][];
+type Header<T> = {
+  id: keyof T;
+  name: string;
 };
 
-type TableProps = {
-  datas: Datas;
+type TableProps<T> = {
+  header: Header<T>[];
+  body: T[];
+  type: string;
+  onClickRejectButton?: () => void;
+  onClickAcceptButton?: () => void;
 };
 
-export default function Table({ datas }: TableProps) {
+const generateUniqueId = (number: number) => {
+  const timestamp = Date.now().toString(36); // 현재 시간을 36진수로 변환
+  const randomStr = Math.random().toString(36).substr(2, 5); // 랜덤 숫자를 36진수로 변환
+  return timestamp + randomStr + number;
+};
+
+export default function Table<T>({ header, body, type, onClickRejectButton, onClickAcceptButton }: TableProps<T>) {
   return (
     <div className={styles.container}>
       <table className={styles.table}>
         <thead className={styles.thead}>
           <tr className={styles.tr}>
-            {datas.titles.map((title, index) => (
+            {header.map(({ id, name }, index) => (
               <th
-                key={title}
-                className={`${styles.th} ${index === 0 || index === datas.titles.length - 1 ? styles.edges : styles.middles}`}
+                key={id as string}
+                className={`${styles.th} ${index === 0 || index === header.length - 1 ? styles.edges : styles.middles}`}
               >
-                {title}
+                {name}
               </th>
             ))}
           </tr>
         </thead>
         <tbody className={styles.tbody}>
-          {datas.data.map((item) => (
-            <tr key={item[0]} className={styles.tr}>
-              {datas.titles.map((title, index) => (
+          {body.map((item, index) => (
+            <tr key={generateUniqueId(index)} className={styles.tr}>
+              {header.map(({ id }) => (
                 <td
-                  key={title}
-                  className={`${styles.td} ${index === 0 || index === datas.titles.length - 1 ? styles.edges : styles.middles}`}
+                  key={id as string}
+                  className={`${styles.td} ${index === 0 || index === header.length - 1 ? styles.edges : styles.middles}`}
                 >
-                  {item[index + 1]}
+                  {type === 'owner' && id === 'status' && item[id] === 'pending' ? (
+                    <>
+                      <button type="button" onClick={onClickAcceptButton}>
+                        승인하기
+                      </button>
+                      <button type="button" onClick={onClickRejectButton}>
+                        거절하기
+                      </button>
+                    </>
+                  ) : (
+                    (item[id] as ReactNode)
+                  )}
                 </td>
               ))}
             </tr>
