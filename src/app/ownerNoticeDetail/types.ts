@@ -14,5 +14,5 @@ export type StoreInformationDataType = {
   address1: string;
   description: string;
   imageUrl: string;
-  originalHourPay: number;
+  originalHourlyPay: number;
 };

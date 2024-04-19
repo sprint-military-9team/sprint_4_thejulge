@@ -11,8 +11,10 @@ type NoticeInformationProps = {
 };
 
 export default function NoticeInformation({ noticeData, storeData }: NoticeInformationProps) {
-  const additionRate = Math.ceil((noticeData.hourlyPay / storeData.originalHourPay) * 100) - 100;
-  const viewLabel = noticeData.hourlyPay > storeData.originalHourPay;
+  const additionRate = Math.ceil((noticeData.hourlyPay / storeData.originalHourlyPay) * 100) - 100;
+  const viewLabel = noticeData.hourlyPay > storeData.originalHourlyPay;
+  console.log(noticeData.hourlyPay);
+  console.log(storeData.originalHourlyPay);
   return (
     <div className={styles.wrapper}>
       <div className={styles.storeWrapper}>

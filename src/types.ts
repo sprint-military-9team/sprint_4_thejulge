@@ -12,7 +12,7 @@ export type ShopDataType = {
   address2: string;
   description: string;
   imageUrl: string;
-  originalHourPay: number;
+  originalHourlyPay: number;
   user: {
     item: UserData;
     href: string;
