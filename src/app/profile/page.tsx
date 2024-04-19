@@ -118,7 +118,7 @@ export default function Profile() {
           <section className={styles.applyList}>
             <div className={styles.wrapper}>
               <h2 className={styles.sectionTitle}>신청 내역</h2>
-              <div style={{ border: '1px solid red' }}>
+              <div className={styles.tableContainer}>
                 <Table datas={tableData} />
                 <Pagination
                   currentPage={currentPage}

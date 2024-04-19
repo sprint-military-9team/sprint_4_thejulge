@@ -95,6 +95,12 @@
   padding-top: 3rem;
 }
 
+.tableContainer {
+  border: 1px solid $gray-400;
+  @include rounded-lg;
+  overflow: hidden;
+}
+
 @include media(tablet) {
   .profileContainer {
     flex-direction: column;
