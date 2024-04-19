@@ -5,10 +5,11 @@ import css from './Dropdown.module.scss';
 
 type DropdownProps = {
   optionList: string[];
+  onClick: (option: string) => void;
   initialOption?: string | null;
 };
 
-export default function Dropdown({ optionList = [], initialOption = null }: DropdownProps) {
+export default function Dropdown({ optionList = [], onClick, initialOption = null }: DropdownProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(initialOption);
 
@@ -21,7 +22,7 @@ export default function Dropdown({ optionList = [], initialOption = null }: Drop
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
     setIsOpen(false);
-    setSelectedOption(option);
+    onClick(option);
   };
 
   return (
