@@ -9,7 +9,7 @@ import Banner from './Banner';
 import styles from './Profile.module.scss';
 import ProfileEdit from './ProfileEdit';
 
-const isProfileExist = true;
+const isProfileExist = false;
 const isApplyHistoryExist = true;
 
 const data = {
@@ -17,7 +17,7 @@ const data = {
     {
       item: {
         id: 'string',
-        status: 'pending | accepted | rejected | canceled',
+        status: 'canceled',
         createdAt: 'string',
         shop: {
           item: {

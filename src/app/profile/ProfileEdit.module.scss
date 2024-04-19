@@ -49,11 +49,11 @@
 .label {
   display: block;
   margin-bottom: 1rem;
-  font-size: 1.6rem;
 }
 
 .inputListArea {
   display: flex;
+  flex-wrap: wrap;
   margin: 0 -10px;
 }
 
@@ -72,6 +72,7 @@
   border-radius: 0.6rem;
   resize: none;
   padding: 2rem;
+  height: 14rem;
   @include font-bold;
 }
 
@@ -90,5 +91,23 @@
   outline: none;
 }
 
-.inputAreaWrapper {
+@include media(tablet) {
+  .inputArea {
+    width: 50%;
+    gap: 1rem;
+  }
+
+  .addressLabel {
+    margin-top: 1rem;
+  }
+}
+
+@include media(mobile) {
+  .inputArea {
+    width: 100%;
+    gap: 1rem;
+  }
+  .label:nth-child(1) {
+    margin-top: 1rem;
+  }
 }
