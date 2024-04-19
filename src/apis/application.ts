@@ -8,7 +8,6 @@ export const getSpecifyNoticeApplicationData = async (
   const data = await fetch(`${BASE_URL}/shops/${shopId}/notices/${noticeId}/applications`, {
     method: 'GET',
   }).then((response) => response.json());
-  console.log(data.items);
   return data.items;
 };
 

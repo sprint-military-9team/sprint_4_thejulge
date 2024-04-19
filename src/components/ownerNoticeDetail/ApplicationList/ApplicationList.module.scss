@@ -1,4 +1,5 @@
 @import '@/styles/_index';
+@import '@/styles/_media';
 
 .section {
   width: 100%;
@@ -22,4 +23,29 @@
   line-height: 3.36rem;
   letter-spacing: 2%;
   color: #000000;
+}
+
+@include media(tablet) {
+  .wrapper {
+    width: 68rem;
+  }
+  .title {
+    line-height: 3.506rem;
+  }
+}
+
+@include media(mobile) {
+  .section {
+    padding: 4rem 0;
+  }
+
+  .wrapper {
+    width: 37.5rem;
+    gap: 0.8rem;
+  }
+
+  .title {
+    font-size: 2rem;
+    line-height: 2.4rem;
+  }
 }
