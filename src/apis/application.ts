@@ -12,5 +12,16 @@ export const getSpecifyNoticeApplicationData = async (
   return data.items;
 };
 
-/* lint default 오류 방지 코드 -> 새로운 코드 추가 시 삭제 */
-export const error = 0;
+export const setSpecifyNoticeApplicationStatus = async (
+  shopId: string,
+  noticeId: string,
+  applicationId: string,
+  status: 'accepted' | 'rejected',
+) => {
+  await fetch(`${BASE_URL}/shops/${shopId}/notices/${noticeId}/applications/${applicationId}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      status,
+    }),
+  });
+};

@@ -3,7 +3,7 @@
 import Table from '@/components/common/Table';
 import Pagination from '@/components/common/Pagination';
 import { useEffect, useState } from 'react';
-import { getSpecifyNoticeApplicationData } from '@/apis/application';
+import { getSpecifyNoticeApplicationData, setSpecifyNoticeApplicationStatus } from '@/apis/application';
 import Modal from '@/components/common/Modal/Modal';
 import OwnerDetailModal from '@/components/common/Modal/ownerDetailModal/OwnerDetailModal';
 import styles from './ApplicationList.module.scss';
@@ -44,14 +44,13 @@ export default function ApplicationList({ shopId, noticeId }: ApplicationListPro
   const onClose = () => {
     setShowModal({ type: 'none', onClick: () => {} });
   };
-  const onAccept = (id: string) => {
-    /* api */
+  const onAccept = async (id: string) => {
+    await setSpecifyNoticeApplicationStatus(shopId, noticeId, id, 'accepted');
     console.log(`accept: ${id}`);
   };
 
-  const onReject = (id: string) => {
-    /* api */
-
+  const onReject = async (id: string) => {
+    await setSpecifyNoticeApplicationStatus(shopId, noticeId, id, 'rejected');
     console.log(`reject: ${id}`);
   };
 
@@ -85,10 +84,10 @@ export default function ApplicationList({ shopId, noticeId }: ApplicationListPro
     <div className={styles.section}>
       <div className={styles.wrapper}>
         <div className={styles.title}>신청자 목록</div>
-        <button type="button" onClick={() => onClickRejectButton('test')}>
+        <button type="button" onClick={() => onClickRejectButton('f99961ed-de1c-4ad9-b7ad-cffe97465dd4')}>
           거절하기
         </button>
-        <button type="button" onClick={() => onClickAcceptButton('test1')}>
+        <button type="button" onClick={() => onClickAcceptButton('f99961ed-de1c-4ad9-b7ad-cffe97465dd4')}>
           등록하기
         </button>
         <div>
