@@ -1,4 +1,5 @@
 import Header from '@/components/common/Header/Header';
+import Link from 'next/link';
 
 export default function Home() {
   const HEADER_DATA = [
@@ -48,5 +49,10 @@ export default function Home() {
       read: false,
     },
   ];
-  return <Header memberType="owner" notificationListData={HEADER_DATA} />;
+  return (
+    <>
+      <Header memberType="owner" notificationListData={HEADER_DATA} />
+      <Link href="/map">지도로 찾기</Link>
+    </>
+  );
 }
