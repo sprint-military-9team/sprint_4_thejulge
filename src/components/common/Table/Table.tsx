@@ -47,11 +47,11 @@ export default function Table<T>({ header, body, type, onClickRejectButton, onCl
                 >
                   {type === 'owner' && id === 'status' && item[id] === 'pending' ? (
                     <div className={styles.btnContainer}>
-                      <button className={`${styles.btn} ${styles.accept}`} type="button" onClick={onClickAcceptButton}>
-                        승인하기
-                      </button>
                       <button className={`${styles.btn} ${styles.reject}`} type="button" onClick={onClickRejectButton}>
                         거절하기
+                      </button>
+                      <button className={`${styles.btn} ${styles.accept}`} type="button" onClick={onClickAcceptButton}>
+                        승인하기
                       </button>
                     </div>
                   ) : id === 'status' ? (
