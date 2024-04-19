@@ -2,11 +2,21 @@
 
 import Image from 'next/image';
 import { CLOSE_ICON } from '@/utils/constants';
+import { useState } from 'react';
 import styles from './OwnerAddNotice.module.scss';
 import Input from '../common/Input/Input';
 import Button from '../common/Button';
 
+type ErrorType = {
+  [key: string]: boolean;
+};
+
 export default function OwnerAddNotice() {
+  const [error, setError] = useState<ErrorType>({
+    hourlyPay: false,
+    startsAt: false,
+    workhour: false,
+  });
   const changeDateType = (date: string) => {
     const inputDate = new Date(date);
     const formattedDate = `${inputDate.toISOString().slice(0, 19)}Z`;
@@ -17,10 +27,42 @@ export default function OwnerAddNotice() {
     console.log('close');
   };
 
+  const INPUT_DATA = [
+    { id: 'hourlyPay', type: 'number', label: '시급*', necessary: true, errorMessage: '제대로 된 값을 입력해주세요' },
+    {
+      id: 'startsAt',
+      type: 'datetime-local',
+      label: '시작 일시*',
+      necessary: true,
+      errorMessage: '제대로 된 값을 입력해주세요',
+    },
+    {
+      id: 'workhour',
+      type: 'number',
+      label: '업무 시간*',
+      necessary: true,
+      errorMessage: '제대로 된 값을 입력해주세요',
+    },
+  ];
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const dom = document.getElementById('date') as HTMLFormElement;
-    console.log(changeDateType(dom.value));
+    const inputError: ErrorType = {};
+    const inputData = {};
+    INPUT_DATA.forEach((data) => {
+      const { value } = document.getElementById(data.id) as HTMLFormElement;
+      const dataValue = data.type === 'datetime-local' && value ? changeDateType(value) : value;
+      Object.assign(inputError, { [data.id]: Boolean((value === '' || value === '0') && data.necessary) });
+      Object.assign(inputData, { [data.id]: data.type === 'number' ? Number(dataValue) : dataValue });
+    });
+    const { value } = document.getElementById('description') as HTMLFormElement;
+    Object.assign(inputData, { description: value });
+    setError(inputError);
+    const flag = Object.keys(inputError).every((data) => !inputError[data]);
+    if (!flag) {
+      return;
+    }
+    console.log(inputData);
   };
 
   return (
@@ -40,15 +82,17 @@ export default function OwnerAddNotice() {
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.inputWrapper}>
             <div className={styles.inputFlexWrapper}>
-              <div className={styles.inputComponentWrapper}>
-                <Input type="text" id="pay" label="시급" placeholder="" />
-              </div>
-              <div className={styles.inputComponentWrapper}>
-                <Input type="datetime-local" id="date" label="시급" placeholder="" />
-              </div>
-              <div className={styles.inputComponentWrapper}>
-                <Input type="text" id="tay" label="시급" placeholder="테스트" />
-              </div>
+              {INPUT_DATA.map((data) => (
+                <div className={styles.inputComponentWrapper} key={data.id}>
+                  <Input
+                    type={data.type}
+                    id={data.id}
+                    label={data.label}
+                    isError={error[data.id]}
+                    errorMessage={data.errorMessage}
+                  />
+                </div>
+              ))}
             </div>
           </div>
           <div className={styles.descriptionWrapper}>
