@@ -1,0 +1,18 @@
+.layout {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
+  min-height: 100vh;
+  height: 100vh;
+}
+
+.Wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: #fafafa;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 6rem calc((100vw - 96.3rem) / 2);
+}

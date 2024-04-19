@@ -1,0 +1,200 @@
+@import '@/styles/_index';
+
+.shopDetail {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  align-items: flex-start;
+  gap: 2.4rem;
+}
+.titleWrappper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+.title {
+  color: $red-500;
+  font-family: 'Spoqa Han Sans Neo';
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 2rem;
+}
+.shopTitle {
+  color: $black;
+  font-family: 'Spoqa Han Sans Neo';
+  font-size: 2.8rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 0.056rem;
+}
+.notice {
+  display: inline-flex;
+  align-items: flex-start;
+  width: 96.3rem;
+  padding: 2.4rem;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-radius: 1.2rem;
+  border: 1px solid $gray-300;
+  background: $white;
+  flex-wrap: wrap;
+}
+.shopImageWrapper {
+  position: relative;
+  width: 54.8rem;
+  height: 30.8rem;
+  border-radius: 1.2rem;
+  img {
+    border-radius: 1.2rem;
+  }
+}
+
+.completeWrapper {
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.7) 100%);
+  border-radius: 1.2rem;
+  .complete {
+    color: $gray-400;
+    text-align: center;
+    font-family: 'Spoqa Han Sans Neo';
+    font-size: 2.8rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.056rem;
+  }
+}
+
+.noticeContent {
+  display: flex;
+  width: 34.6rem;
+  height: 100%;
+  padding-top: 1.6rem;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.noticeInfo {
+  display: flex;
+  width: 34.6rem;
+  flex-direction: column;
+  gap: 1.7rem;
+}
+.noticeInfoTitle {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+
+.noticeInfoSalary {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  gap: 0.8rem;
+  .raise {
+    display: flex;
+    height: 3.6rem;
+    padding: 1.2rem;
+    align-items: center;
+    gap: 0.6rem;
+    border-radius: 2rem;
+    background: $red-500;
+    span {
+      color: $white;
+      text-align: center;
+      font-family: 'Spoqa Han Sans Neo';
+      font-size: 1.4rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+    }
+  }
+}
+
+.noticeInfoTimeLoc {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  span {
+    color: $gray-600;
+    font-family: 'Spoqa Han Sans Neo';
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 2.6rem;
+  }
+}
+.noticeInfoDescription {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  color: $black;
+  font-family: 'Spoqa Han Sans Neo';
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 2.6rem; /* 162.5% */
+}
+.shopDescription {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 3.2rem;
+  width: 100%;
+  gap: 1.2rem;
+  border-radius: 1.2rem;
+  background: $gray-200;
+  .titleDescription {
+    color: $black;
+    font-family: 'Spoqa Han Sans Neo';
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 2rem;
+  }
+  .description {
+    color: $black;
+    font-family: 'Spoqa Han Sans Neo';
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 2.6rem;
+  }
+}
+
+// $white: #ffffff;
+// $black: #111322;
+// $gray-100: #fafafa;
+// $gray-200: #f2f2f3;
+// $gray-300: #e5e4e7;
+// $gray-400: #cbc9cf;
+// $gray-500: #a4a1aa;
+// $gray-600: #7d7986;
+// $red-100: #ff3b37;
+// $red-200: #ffaf9b;
+// $red-300: #ff8d72;
+// $red-400: #ff4040;
+// $red-500: #ea3c12;
+// $red-600: #ffebe7;
+// $blue-100: #cce6ff;
+// $blue-200: #0080ff;
+// $green-100: #d4f7d4;
+// $green-200: #20a81e;
+// $yellow-kakao: #fee500;

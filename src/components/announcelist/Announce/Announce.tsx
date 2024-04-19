@@ -78,6 +78,8 @@ function Announce({ data }: AnnounceProps) {
     setIsFilterOpen(false);
   };
 
+  const today = new Date();
+
   return (
     <section className={styles.sectionWrapper}>
       <div className={styles.announceWrapper}>
@@ -102,7 +104,9 @@ function Announce({ data }: AnnounceProps) {
               salary={`${cardData?.item.hourlyPay}`}
               raise={cardData ? raisePercent(cardData.item.hourlyPay, cardData.item.shop.item.originalHourlyPay) : 0}
               isRaised={cardData?.item.hourlyPay > cardData?.item.shop.item.originalHourlyPay}
-              completed={cardData?.item.closed ? '모집 완료' : ''}
+              completed={
+                cardData?.item.closed ? '모집 완료' : today > new Date(cardData?.item.startsAt) ? '지난 공고' : ''
+              }
               shopId={cardData.item.shop.item.id}
               noticeId={cardData.item.id}
             />

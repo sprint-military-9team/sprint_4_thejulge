@@ -60,7 +60,26 @@ function Card({
     };
   }, []);
   const handleRouteNotice = () => {
-    router.push(`/shop/${shopId}/notice/${noticeId}`);
+    const cardData = {
+      image,
+      title,
+      startTime,
+      workHour,
+      location,
+      salary,
+      raise,
+      isRaised,
+      completed,
+      shopId,
+      noticeId,
+    };
+    const currentData = JSON.parse(localStorage.getItem('cardDataList') || '[]');
+    if (currentData.length >= 6) {
+      currentData.shift();
+    }
+    currentData.push(cardData);
+    localStorage.setItem('cardDataList', JSON.stringify(currentData));
+    router.push(`/shop?shopId=${shopId}&noticeId=${noticeId}`);
   };
   return (
     <div className={styles.cardWrapper} onClick={handleRouteNotice}>
