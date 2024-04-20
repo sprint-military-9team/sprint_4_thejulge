@@ -49,13 +49,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 2rem;
   width: 100%;
 }
 
 .inputComponentWrapper {
   display: flex;
-  width: 38rem;
+  width: 30.8rem;
   flex-direction: column;
 }
 .descriptionWrapper {
@@ -84,4 +85,40 @@
 }
 .buttonWrapper {
   width: 31.2rem;
+}
+
+@include media(tablet) {
+  .contentWrapper {
+    width: 68rem;
+  }
+  .inputFlexWrapper {
+    gap: 0.8rem;
+  }
+  .inputComponentWrapper {
+    width: 33rem;
+  }
+}
+
+@include media(mobile) {
+  .contentWrapper {
+    width: 35.1rem;
+  }
+
+  .titleWrapper {
+    font-size: 2rem;
+    line-height: 2.504rem;
+  }
+
+  .button {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .inputComponentWrapper {
+    width: 35.1rem;
+  }
+
+  .buttonWrapper {
+    width: 100%;
+  }
 }

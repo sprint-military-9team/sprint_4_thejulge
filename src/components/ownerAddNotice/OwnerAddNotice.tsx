@@ -173,7 +173,7 @@ export default function OwnerAddNotice() {
           </div>
           <div className={styles.buttonWrapper} onClick={handleSubmit}>
             <Button color="orange" size="large">
-              제출
+              등록하기
             </Button>
           </div>
         </form>
