@@ -14,7 +14,6 @@ type TableProps<T> = {
   onClickRejectButton?: (id: string) => void;
   onClickAcceptButton?: (id: string) => void;
 };
-
 export default function Table<T extends { id: string; status: 'pending' | 'rejected' | 'accepted' }>({
   header,
   body,
