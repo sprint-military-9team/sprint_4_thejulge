@@ -48,5 +48,6 @@ export default function Home() {
       read: false,
     },
   ];
+
   return <Header memberType="owner" notificationListData={HEADER_DATA} />;
 }
