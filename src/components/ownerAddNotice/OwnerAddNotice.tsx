@@ -2,77 +2,126 @@
 
 import Image from 'next/image';
 import { CLOSE_ICON } from '@/utils/constants';
-import { useState } from 'react';
-import { NoticeUploadDataType } from '@/types';
+import { useCallback, useState } from 'react';
 import { postNotice } from '@/apis/notice';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import styles from './OwnerAddNotice.module.scss';
 import Input from '../common/Input/Input';
 import Button from '../common/Button';
 
-type ErrorType = {
-  [key: string]: boolean;
+type InputDataType = {
+  id: string;
+  type: string;
+  value: string | number;
+  label: string;
+  errorMessage: string;
+  isError: boolean;
+  onChange: (value: string) => void;
+  onFocus: () => void;
+  unit?: string;
 };
 
 export default function OwnerAddNotice() {
   const router = useRouter();
   const shopId = 'd3398bdc-4f7b-4457-b6b6-588928dc7e2f';
-  const [error, setError] = useState<ErrorType>({
-    hourlyPay: false,
-    startsAt: false,
-    workhour: false,
-  });
-  const changeDateType = (date: string) => {
-    const inputDate = new Date(date);
-    const formattedDate = `${inputDate.toISOString().slice(0, 19)}Z`;
-    return formattedDate;
+  const [hourlyPay, setHourlyPay] = useState('');
+  const [startsAt, setStartsAt] = useState('');
+  const [workhour, setWorkhour] = useState('');
+  const [description, setDescription] = useState('');
+
+  const [hourlyPayError, setHourlyPayError] = useState(false);
+  const [startsAtError, setStartsAtError] = useState(false);
+  const [workhourError, setWorkhourError] = useState(false);
+
+  const changeHoulyPay = useCallback((value: string) => {
+    setHourlyPay(value);
+  }, []);
+  const changeStartsAt = useCallback((value: string) => {
+    setStartsAt(value);
+  }, []);
+  const changeWorkhour = useCallback((value: string) => {
+    setWorkhour(value);
+  }, []);
+
+  const changeHourlyPayError = useCallback(() => {
+    setHourlyPayError(false);
+  }, []);
+  const changeStartsAtError = useCallback(() => {
+    setStartsAtError(false);
+  }, []);
+  const changeWorkhourError = useCallback(() => {
+    setWorkhourError(false);
+  }, []);
+
+  const handleChangeDescription = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(event.target.value);
   };
 
   const handleClickCloseButton = () => {
     console.log('close');
   };
 
-  const INPUT_DATA = [
-    { id: 'hourlyPay', type: 'number', label: '시급*', necessary: true, errorMessage: '제대로 된 값을 입력해주세요' },
+  const changeDateType = (date: string) => {
+    const inputDate = new Date(date);
+    const formattedDate = `${inputDate.toISOString().slice(0, 19)}Z`;
+    return formattedDate;
+  };
+
+  const INPUT_DATA: InputDataType[] = [
+    {
+      id: 'hourlyPay',
+      type: 'number',
+      value: hourlyPay,
+      label: '시급*',
+      errorMessage: '제대로 된 값을 입력해주세요',
+      isError: hourlyPayError,
+      onChange: changeHoulyPay,
+      onFocus: changeHourlyPayError,
+      unit: '원',
+    },
     {
       id: 'startsAt',
       type: 'datetime-local',
+      value: startsAt,
       label: '시작 일시*',
-      necessary: true,
       errorMessage: '제대로 된 값을 입력해주세요',
+      isError: startsAtError,
+      onChange: changeStartsAt,
+      onFocus: changeStartsAtError,
     },
     {
       id: 'workhour',
       type: 'number',
+      value: workhour,
       label: '업무 시간*',
-      necessary: true,
       errorMessage: '제대로 된 값을 입력해주세요',
+      isError: workhourError,
+      onChange: changeWorkhour,
+      onFocus: changeWorkhourError,
+      unit: '시간',
     },
   ];
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const inputError: ErrorType = {};
-    const inputData: NoticeUploadDataType = {
-      hourlyPay: 0,
-      startsAt: '',
-      workhour: 0,
-      description: '',
-    };
-    INPUT_DATA.forEach((data) => {
-      const { value } = document.getElementById(data.id) as HTMLFormElement;
-      const dataValue = data.type === 'datetime-local' && value ? changeDateType(value) : value;
-      Object.assign(inputError, { [data.id]: Boolean((value === '' || value === '0') && data.necessary) });
-      Object.assign(inputData, { [data.id]: data.type === 'number' ? Number(dataValue) : dataValue });
-    });
-    const { value } = document.getElementById('description') as HTMLFormElement;
-    Object.assign(inputData, { description: value });
-    setError(inputError);
-    const flag = Object.keys(inputError).every((data) => !inputError[data]);
-    if (!flag) {
+    if (!hourlyPay) {
+      setHourlyPayError(true);
+    }
+    if (!startsAt) {
+      setStartsAtError(true);
+    }
+    if (!workhour) {
+      setWorkhourError(true);
+    }
+    if (!hourlyPay || !startsAt || !workhour) {
       return;
     }
-    const APIFlag = await postNotice(shopId, inputData);
+    const APIFlag = await postNotice(shopId, {
+      hourlyPay: Number(hourlyPay),
+      startsAt: changeDateType(startsAt),
+      workhour: Number(workhour),
+      description,
+    });
     if (APIFlag) {
       alert('등록이 완료되었습니다.');
       router.push('/ownerNoticeDetail');
@@ -99,10 +148,14 @@ export default function OwnerAddNotice() {
               {INPUT_DATA.map((data) => (
                 <div className={styles.inputComponentWrapper} key={data.id}>
                   <Input
-                    type={data.type}
                     id={data.id}
+                    type={data.type}
+                    value={String(data.value)}
                     label={data.label}
-                    isError={error[data.id]}
+                    unit={data.unit}
+                    onChange={data.onChange}
+                    onFocus={data.onFocus}
+                    isError={data.isError}
                     errorMessage={data.errorMessage}
                   />
                 </div>
@@ -111,7 +164,12 @@ export default function OwnerAddNotice() {
           </div>
           <div className={styles.descriptionWrapper}>
             <div className={styles.descriptionLabel}>공고 설명</div>
-            <textarea id="description" className={styles.textArea} />
+            <textarea
+              id="description"
+              className={styles.textArea}
+              onChange={handleChangeDescription}
+              value={description}
+            />
           </div>
           <div className={styles.buttonWrapper} onClick={handleSubmit}>
             <Button color="orange" size="large">
