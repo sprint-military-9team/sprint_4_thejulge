@@ -46,8 +46,6 @@ export default function Input({
     }
   };
 
-  console.log(label);
-
   return (
     <>
       <div className={styles.layout}>
