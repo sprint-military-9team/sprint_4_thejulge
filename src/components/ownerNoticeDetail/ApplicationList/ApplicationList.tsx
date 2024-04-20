@@ -19,7 +19,7 @@ type BodyType = {
   name: string | undefined;
   bio: string | undefined;
   phone: string | undefined;
-  status: 'pending' | 'rejected' | 'accepted';
+  status: 'pending' | 'rejected' | 'accepted' | 'canceled';
 };
 
 type TableData = {
