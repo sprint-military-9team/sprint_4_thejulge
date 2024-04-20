@@ -48,24 +48,17 @@ export default function ApplicationList({ shopId, noticeId }: ApplicationListPro
     body: [],
   });
 
-  /* const TableData = {
-    titles: ['신청자', '소개', '전화번호', '상태'],
-    data: [
-      ['0652132', '김태진', '안녕하세요', '010-3727-4228', 'pending'],
-      ['151522', '김우기', '안녕하세요1', '010-4987-4228', 'pending2'],
-    ],
-  }; */
   const onClose = () => {
     setShowModal({ type: 'none', onClick: () => {} });
   };
   const onAccept = async (id: string) => {
-    await setSpecifyNoticeApplicationStatus(shopId, noticeId, id, 'accepted');
     console.log(`accept: ${id}`);
+    await setSpecifyNoticeApplicationStatus(shopId, noticeId, id, 'accepted');
   };
 
   const onReject = async (id: string) => {
-    await setSpecifyNoticeApplicationStatus(shopId, noticeId, id, 'rejected');
     console.log(`reject: ${id}`);
+    await setSpecifyNoticeApplicationStatus(shopId, noticeId, id, 'rejected');
   };
 
   const onClickRejectButton = (id: string) => {

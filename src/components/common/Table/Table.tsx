@@ -30,7 +30,7 @@ export default function Table<T extends { id: string; status: 'pending' | 'rejec
             {header.map(({ id, name }, index) => (
               <th
                 key={id}
-                className={`${styles.th} ${index === 0 || index === header.length - 1 ? styles.edges : styles.middles}`}
+                className={`${styles.th} ${index === 0 || index === header.length - 1 ? styles.edges : index === header.length - 2 ? styles.penult : styles.middles}`}
               >
                 {name}
               </th>
@@ -43,7 +43,7 @@ export default function Table<T extends { id: string; status: 'pending' | 'rejec
               {header.map(({ id }, index_header) => (
                 <td
                   key={id}
-                  className={`${styles.td} ${index_header === 0 || index_header === header.length - 1 ? styles.edges : styles.middles}`}
+                  className={`${styles.td} ${index_header === 0 || index_header === header.length - 1 ? styles.edges : index_header === header.length - 2 ? styles.penult : styles.middles}`}
                 >
                   {type === 'owner' && id === 'status' && item[id] === 'pending' ? (
                     <div className={styles.btnContainer}>
