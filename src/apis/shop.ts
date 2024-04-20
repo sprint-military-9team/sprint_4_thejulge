@@ -7,7 +7,7 @@ export const getShopData = async (shopId: string): Promise<ShopDataType> => {
     cache: 'no-store',
   });
   if (!response.ok) {
-    throw Error('API 오류');
+    throw new Error('API 오류');
   }
   const data = await response.json();
   return data.item;

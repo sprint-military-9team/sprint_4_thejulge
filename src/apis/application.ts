@@ -9,7 +9,7 @@ export const getSpecifyNoticeApplicationData = async (
     method: 'GET',
   });
   if (!response.ok) {
-    throw Error('API 오류');
+    throw new Error('API 오류');
   }
   const data = await response.json();
   return data.items;
@@ -28,6 +28,6 @@ export const setSpecifyNoticeApplicationStatus = async (
     }),
   });
   if (!response.ok) {
-    throw Error('API 오류');
+    throw new Error('API 오류');
   }
 };
