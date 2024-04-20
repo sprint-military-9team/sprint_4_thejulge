@@ -4,15 +4,20 @@ import { SpecifyNoticeApplicationsDataType } from '@/types';
 export const getSpecifyNoticeApplicationData = async (
   shopId: string,
   noticeId: string,
-): Promise<SpecifyNoticeApplicationsDataType[]> => {
-  const response = await fetch(`${BASE_URL}/shops/${shopId}/notices/${noticeId}/applications`, {
-    method: 'GET',
-  });
+  offset: number,
+  limit: number,
+): Promise<{ count: number; items: SpecifyNoticeApplicationsDataType[] }> => {
+  const response = await fetch(
+    `${BASE_URL}/shops/${shopId}/notices/${noticeId}/applications?offset=${offset}&limit=${limit}`,
+    {
+      method: 'GET',
+    },
+  );
   if (!response.ok) {
     throw new Error('API 오류');
   }
   const data = await response.json();
-  return data.items;
+  return { count: data.count, items: data.items };
 };
 
 export const setSpecifyNoticeApplicationStatus = async (
@@ -23,6 +28,9 @@ export const setSpecifyNoticeApplicationStatus = async (
 ) => {
   const response = await fetch(`${BASE_URL}/shops/${shopId}/notices/${noticeId}/applications/${applicationId}`, {
     method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({
       status,
     }),

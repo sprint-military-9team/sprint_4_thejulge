@@ -34,6 +34,7 @@ type ApplicationListProps = {
 
 export default function ApplicationList({ shopId, noticeId }: ApplicationListProps) {
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
   const [showModal, setShowModal] = useState<ModalType>({
     type: 'none',
     onClick: () => {},
@@ -70,8 +71,13 @@ export default function ApplicationList({ shopId, noticeId }: ApplicationListPro
   };
   useEffect(() => {
     const getApplicationData = async (shopID: string, noticeID: string) => {
-      const applicationData = await getSpecifyNoticeApplicationData(shopID, noticeID);
-      const body = applicationData.map((application) => {
+      const applicationData = await getSpecifyNoticeApplicationData(
+        shopID,
+        noticeID,
+        7 * (currentPage - 1),
+        7 * currentPage,
+      );
+      const body = applicationData.items.map((application) => {
         const {
           item: {
             id,
@@ -84,9 +90,10 @@ export default function ApplicationList({ shopId, noticeId }: ApplicationListPro
         return { id, name, bio, phone, status };
       });
       setTableData((previousData) => ({ ...previousData, body }));
+      setTotalCount(applicationData.count);
     };
     getApplicationData(shopId, noticeId);
-  }, [noticeId, shopId]);
+  }, [noticeId, shopId, currentPage]);
 
   return (
     <div className={styles.section}>
@@ -103,7 +110,7 @@ export default function ApplicationList({ shopId, noticeId }: ApplicationListPro
           <Pagination
             currentPage={currentPage}
             onPageChange={setCurrentPage}
-            allDataCount={tableData.body.length}
+            allDataCount={totalCount}
             perPageDataCount={7}
           />
           {showModal.type !== 'none' && (
