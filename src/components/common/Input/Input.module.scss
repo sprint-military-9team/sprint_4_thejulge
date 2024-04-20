@@ -4,10 +4,17 @@
   width: 100%;
 }
 
+.label {
+  color: $black;
+  @include font-normal;
+  font-size: 1.6rem;
+  line-height: 2.6rem;
+}
+
 .input {
   width: 100%;
-  border: 1px solid $gray-500;
-  padding: 1rem;
+  border: 1px solid $gray-400;
+  padding: 1.6rem 2rem;
   margin-top: 0.8rem;
 
   @include rounded-sm;
@@ -23,8 +30,16 @@
 }
 
 .errorMessage {
-  margin-right: auto;
+  display: block;
+  width: 100%;
+  min-height: 1.2rem;
   margin-top: 0.8rem;
+  margin-left: 0.8rem;
   color: $red-400;
   font-size: 1.2rem;
+  line-height: 1.6rem;
+}
+
+.messageHidden {
+  visibility: hidden;
 }

@@ -64,11 +64,28 @@ export default function Home() {
       setError(false);
     }
   }, [value]);
+
+  const [value2, setValue2] = useState('');
+  const onChange2 = useCallback((inputValue: string) => {
+    setValue2(inputValue);
+  }, []);
   return (
     <>
       <Header memberType="owner" notificationListData={HEADER_DATA} />
       <div style={{ width: '300px' }}>
-        <Input id="test " type="text" value={value} onChange={onChange} isError={error} onBlur={onBlur} />
+        <Input
+          id="test "
+          type="text"
+          value={value}
+          onChange={onChange}
+          isError={error}
+          errorMessage="알알알아"
+          onBlur={onBlur}
+          label="테스트"
+        />
+      </div>
+      <div style={{ width: '300px' }}>
+        <Input id="test2" type="text" value={value2} onChange={onChange2} label="테스트2" />
       </div>
     </>
   );

@@ -40,10 +40,14 @@ export default function Input({
     }
   };
 
+  console.log(label);
+
   return (
     <>
       <div className={styles.layout}>
-        <label htmlFor={id}>{label}</label>
+        <label htmlFor={id} className={styles.label}>
+          {label}
+        </label>
         <input
           id={id}
           name={id}
@@ -56,7 +60,7 @@ export default function Input({
           onFocus={handleFocusIn}
         />
       </div>
-      {isError && <p className={styles.errorMessage}>{errorMessage}</p>}
+      <p className={cn(styles.errorMessage, !isError && styles.messageHidden)}>{errorMessage}</p>
     </>
   );
 }
