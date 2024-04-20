@@ -8,20 +8,13 @@ import { useRouter } from 'next/navigation';
 import styles from './OwnerAddNotice.module.scss';
 import Input from '../common/Input/Input';
 import Button from '../common/Button';
+import { InputDataType } from './types';
 
-type InputDataType = {
-  id: string;
-  type: string;
-  value: string | number;
-  label: string;
-  errorMessage: string;
-  isError: boolean;
-  onChange: (value: string) => void;
-  onFocus: () => void;
-  unit?: string;
+type OwnerAddNoticeProps = {
+  onClose: () => void;
 };
 
-export default function OwnerAddNotice() {
+export default function OwnerAddNotice({ onClose }: OwnerAddNoticeProps) {
   const router = useRouter();
   const shopId = 'd3398bdc-4f7b-4457-b6b6-588928dc7e2f';
   const [hourlyPay, setHourlyPay] = useState('');
@@ -58,7 +51,7 @@ export default function OwnerAddNotice() {
   };
 
   const handleClickCloseButton = () => {
-    console.log('close');
+    onClose();
   };
 
   const changeDateType = (date: string) => {

@@ -54,7 +54,7 @@ export default function Home() {
   return (
     <>
       <Header memberType="owner" notificationListData={HEADER_DATA} />
-      <OwnerAddNotice />
+      <OwnerAddNotice onClose={() => console.log('close')} />
     </>
   );
 }
