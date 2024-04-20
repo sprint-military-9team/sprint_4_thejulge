@@ -26,8 +26,19 @@ export default function OwnerAddNotice({ onClose }: OwnerAddNoticeProps) {
   const [startsAtError, setStartsAtError] = useState(false);
   const [workhourError, setWorkhourError] = useState(false);
 
+  const changeMoneyType = (number: string) => {
+    const realNumber = Number(number.replaceAll(',', ''));
+    const formattedNumber = realNumber.toLocaleString();
+    return formattedNumber;
+  };
+  const changeDateType = (date: string) => {
+    const inputDate = new Date(date);
+    const formattedDate = `${inputDate.toISOString().slice(0, 19)}Z`;
+    return formattedDate;
+  };
+
   const changeHoulyPay = useCallback((value: string) => {
-    setHourlyPay(value);
+    setHourlyPay(changeMoneyType(value));
   }, []);
   const changeStartsAt = useCallback((value: string) => {
     setStartsAt(value);
@@ -54,16 +65,10 @@ export default function OwnerAddNotice({ onClose }: OwnerAddNoticeProps) {
     onClose();
   };
 
-  const changeDateType = (date: string) => {
-    const inputDate = new Date(date);
-    const formattedDate = `${inputDate.toISOString().slice(0, 19)}Z`;
-    return formattedDate;
-  };
-
   const INPUT_DATA: InputDataType[] = [
     {
       id: 'hourlyPay',
-      type: 'number',
+      type: 'string',
       value: hourlyPay,
       label: '시급*',
       errorMessage: '제대로 된 값을 입력해주세요',
@@ -110,7 +115,7 @@ export default function OwnerAddNotice({ onClose }: OwnerAddNoticeProps) {
       return;
     }
     const APIFlag = await postNotice(shopId, {
-      hourlyPay: Number(hourlyPay),
+      hourlyPay: Number(hourlyPay.replaceAll(',', '')),
       startsAt: changeDateType(startsAt),
       workhour: Number(workhour),
       description,
