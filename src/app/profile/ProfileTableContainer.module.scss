@@ -6,3 +6,21 @@
   @include rounded-lg;
   overflow: hidden;
 }
+
+.wrapper {
+  max-width: 98rem;
+  padding: 0 2rem;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-size: 2.8rem;
+  margin-bottom: 3rem;
+}
+
+.applyList {
+  background-color: $gray-100;
+  margin-top: 5rem;
+  padding-top: 6rem;
+  min-height: 46rem;
+}
