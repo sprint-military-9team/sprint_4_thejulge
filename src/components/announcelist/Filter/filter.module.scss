@@ -199,6 +199,14 @@
   }
 }
 
+.alert {
+  color: c.$red-400;
+  font-family: 'Spoqa Han Sans Neo';
+  font-size: 1.2rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.6rem;
+}
 @include r.media('mobile') {
   .filterWrapper {
     width: 100vw;

@@ -1,4 +1,4 @@
-export interface Data {
+export interface AnnounceData {
   offset: number;
   limit: number;
   address: string[];
@@ -41,23 +41,4 @@ interface Link {
   description: string;
   method: string;
   href: string;
-}
-
-export interface SortButtonProps {
-  selected: string;
-  onClick: () => void;
-  isSortOpen: boolean;
-}
-export interface FilterButtonProps {
-  count: number | undefined;
-  onClick: () => void;
-}
-export interface SortListProps {
-  onClick: (sort: string) => void;
-}
-
-export interface FilterInfo {
-  location: string[] | null | undefined;
-  startAt: string | null;
-  pay: number | null;
 }

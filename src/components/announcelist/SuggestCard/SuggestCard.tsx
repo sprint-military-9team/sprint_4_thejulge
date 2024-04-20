@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Slider from 'react-slick';
 import Card from '@/components/common/Card';
 import raisePercent from '@/utils/getRaisePercent';
+import getAnnounceData from '@/apis/announce';
 import { CLOSELOCATIONLIST } from '@/constants/SEOUL';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -11,11 +12,12 @@ import styles from './suggest.module.scss';
 import { Data, MainData } from './type';
 
 interface SuggestCardProps {
-  data: Data;
   residence: string;
 }
 
-function SuggestCard({ data, residence }: SuggestCardProps) {
+function SuggestCard({ residence }: SuggestCardProps) {
+  const [data, setData] = React.useState<Data | null>(null);
+
   const suggestData = data?.items.filter((cardData) =>
     CLOSELOCATIONLIST[residence].includes(cardData.item.shop.item.address1),
   );
@@ -27,15 +29,24 @@ function SuggestCard({ data, residence }: SuggestCardProps) {
     slidesToScroll: 1,
     autoplay: true,
     arrows: false,
-    autoplaySpeed: 4000,
+    autoplaySpeed: 3500,
     initialSlide: 0,
     focusOnSelect: true,
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getAnnounceData(0, 100, null, null, null, null, 'time');
+      setData(response);
+    };
+    fetchData();
+  }, [residence]);
+
   return (
     <section className={styles.sectionWrapper}>
       <p className={styles.title}>맞춤 공고</p>
       <Slider {...settings} className={styles.cardWrapper}>
-        {suggestData.map((cardData: MainData) => (
+        {suggestData?.map((cardData: MainData) => (
           <Card
             key={cardData?.item.id}
             image={cardData?.item.shop.item.imageUrl}

@@ -77,14 +77,14 @@ function Card({
     if (currentData.length >= 6) {
       currentData.shift();
     }
-    currentData.push(cardData);
+    currentData.unshift(cardData);
     localStorage.setItem('cardDataList', JSON.stringify(currentData));
     router.push(`/shop?shopId=${shopId}&noticeId=${noticeId}`);
   };
   return (
     <div className={styles.cardWrapper} onClick={handleRouteNotice}>
       <div className={styles.imageWrapper}>
-        <Image src={image} layout="fill" objectFit="cover" alt="store image" />
+        <Image src={image} fill alt="store image" />
         {completed && <CompletedMessage completed={completed} />}
       </div>
       <div className={styles.contentWrapper}>

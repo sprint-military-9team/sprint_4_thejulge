@@ -16,6 +16,7 @@
   flex-direction: column;
   gap: 1.6rem;
   cursor: initial;
+  z-index: 1000;
 }
 
 @mixin button {

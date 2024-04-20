@@ -51,6 +51,7 @@ function Filter({ onClick, removeFilter }: FilterProps) {
   const [startAt, setStartAt] = useState<string | null>(null);
   const [pay, setPay] = useState<number | null>(null);
   const [filterData, setFilterData] = useState<FilterInfo | null>(null);
+  const [isSetTimeValid, setIsSetTimeValid] = useState<boolean>(true);
   const handleAddLocation = (location: string) => {
     setSelectedLocationList((prev) => {
       if (!prev.includes(location)) {
@@ -66,6 +67,12 @@ function Filter({ onClick, removeFilter }: FilterProps) {
   };
 
   const handleInputStartChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const inputTime = new Date(event.target.value);
+    const currentTime = new Date();
+    if (inputTime < currentTime) {
+      setIsSetTimeValid(false);
+    }
+
     const inputDateTime = event.target.value;
     const dateObject = new Date(inputDateTime);
     const formattedDateTime = dateObject.toISOString();
@@ -81,6 +88,14 @@ function Filter({ onClick, removeFilter }: FilterProps) {
     setStartAt(null);
     setPay(null);
     setFilterData(null);
+  };
+
+  const handleSubmitClick = (data: FilterInfo | null) => {
+    if (isSetTimeValid) {
+      onClick(data);
+    } else {
+      alert('시작일은 현재 시간 이후로 입력해주세요');
+    }
   };
 
   useEffect(() => {
@@ -112,6 +127,7 @@ function Filter({ onClick, removeFilter }: FilterProps) {
           placeholder="입력"
           onChange={handleInputStartChange}
         />
+        {!isSetTimeValid && <span className={styles.alert}>현재 시간 이후로 입력해주세요</span>}
       </div>
       <div className={`${styles.inputWrapper} ${styles.price}`}>
         <p>금액</p>
@@ -135,7 +151,7 @@ function Filter({ onClick, removeFilter }: FilterProps) {
             초기화
           </Button>
         </div>
-        <div onClick={() => onClick(filterData)}>
+        <div onClick={() => handleSubmitClick(filterData)}>
           <Button size="large" color="orange" style={{ padding: '1.4rem' }}>
             적용하기
           </Button>

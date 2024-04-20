@@ -1,20 +1,28 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Card from '@/components/common/Card';
 import Filter from '@/components/announcelist/Filter';
-import Pagination from '@/components/common/Pagination';
 import { ARROW_DOWN, ARROW_UP } from '@/utils/constants';
 import raisePercent from '@/utils/getRaisePercent';
+import getAnnounceData from '@/apis/announce';
+import Pagination from './Pagination';
 import styles from './announce.module.scss';
 import { Data, MainData, SortButtonProps, SortListProps, FilterButtonProps, FilterInfo } from './type';
 
-// 'https://bootcamp-api.codeit.kr/api/0-1/the-julge/notices?offset=0'
-
 interface AnnounceProps {
-  data: Data;
+  headerData: string;
 }
+interface SortOptions {
+  [key: string]: 'time' | 'pay' | 'hour' | 'shop';
+}
+const sortList: SortOptions = {
+  마감임박순: 'time',
+  시급많은순: 'pay',
+  시간적은순: 'hour',
+  가나다순: 'shop',
+};
 
 function SortButton({ selected, onClick, isSortOpen }: SortButtonProps) {
   return (
@@ -27,7 +35,7 @@ function SortButton({ selected, onClick, isSortOpen }: SortButtonProps) {
 function FilterButton({ count, onClick }: FilterButtonProps) {
   return (
     <button type="button" className={styles.filterButton} onClick={onClick}>
-      {`상세 필터${count ? ` (${count})` : ''}`}
+      {`상세 필터${count !== 0 ? ` (${count})` : ''}`}
     </button>
   );
 }
@@ -50,13 +58,15 @@ function SortList({ onClick }: SortListProps) {
   );
 }
 
-function Announce({ data }: AnnounceProps) {
-  // const [cardData, setCardData] = useState<Data>(data);
+function Announce({ headerData }: AnnounceProps) {
+  const [cardData, setCardData] = useState<Data>();
   const [selectedSort, setSelectedSort] = useState('마감임박순');
   const [selectedFilter, setSelectedFilter] = useState<FilterInfo | null>(null);
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false); // api연동시 filter링
-  const countSelectedLocation = selectedFilter?.location.length;
+  const [pageNumber, setPageNumber] = useState(1);
+  const countSelectedLocation =
+    (selectedFilter?.location?.length ?? 0) + (selectedFilter?.startAt ? 1 : 0) + (selectedFilter?.pay ? 1 : 0);
 
   const handleSortButtonClick = () => {
     setIsSortOpen((prev) => !prev);
@@ -80,6 +90,22 @@ function Announce({ data }: AnnounceProps) {
 
   const today = new Date();
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getAnnounceData(
+        6 * (pageNumber - 1),
+        6,
+        selectedFilter?.location ?? null,
+        headerData ?? null,
+        selectedFilter?.startAt ?? null,
+        selectedFilter?.pay ?? null,
+        sortList[selectedSort],
+      );
+      setCardData(response);
+    };
+    fetchData();
+  }, [headerData, selectedSort, selectedFilter, pageNumber]);
+
   return (
     <section className={styles.sectionWrapper}>
       <div className={styles.announceWrapper}>
@@ -93,28 +119,31 @@ function Announce({ data }: AnnounceProps) {
           </div>
         </div>
         <div className={styles.cardWrapper}>
-          {data.items.map((cardData: MainData) => (
+          {cardData?.items.map((data: MainData) => (
             <Card
-              key={cardData?.item.id}
-              image={cardData?.item.shop.item.imageUrl}
-              title={cardData?.item.shop.item.name}
-              startTime={cardData?.item.startsAt}
-              workHour={cardData?.item.workhour}
-              location={cardData?.item.shop.item.address1}
-              salary={`${cardData?.item.hourlyPay}`}
-              raise={cardData ? raisePercent(cardData.item.hourlyPay, cardData.item.shop.item.originalHourlyPay) : 0}
-              isRaised={cardData?.item.hourlyPay > cardData?.item.shop.item.originalHourlyPay}
-              completed={
-                cardData?.item.closed ? '모집 완료' : today > new Date(cardData?.item.startsAt) ? '지난 공고' : ''
-              }
-              shopId={cardData.item.shop.item.id}
-              noticeId={cardData.item.id}
+              key={data?.item.id}
+              image={data?.item.shop.item.imageUrl}
+              title={data?.item.shop.item.name}
+              startTime={data?.item.startsAt}
+              workHour={data?.item.workhour}
+              location={data?.item.shop.item.address1}
+              salary={`${data?.item.hourlyPay}`}
+              raise={data ? raisePercent(data.item.hourlyPay, data.item.shop.item.originalHourlyPay) : 0}
+              isRaised={data?.item.hourlyPay > data?.item.shop.item.originalHourlyPay}
+              completed={data?.item.closed ? '모집 완료' : today > new Date(data?.item.startsAt) ? '지난 공고' : ''}
+              shopId={data.item.shop.item.id}
+              noticeId={data.item.id}
             />
           ))}
         </div>
       </div>
       <div className={styles.paginate}>
-        <Pagination currentPage={1} onPageChange={() => {}} allDataCount={data?.count} perPageDataCount={6} />
+        <Pagination
+          currentPage={pageNumber}
+          onPageChange={setPageNumber}
+          allDataCount={cardData?.count}
+          perPageDataCount={6}
+        />
       </div>
     </section>
   );

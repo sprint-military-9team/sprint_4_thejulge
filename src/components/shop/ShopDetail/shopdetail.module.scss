@@ -30,6 +30,11 @@
   font-weight: 700;
   line-height: normal;
   letter-spacing: 0.056rem;
+  // display: -webkit-box;
+  // -webkit-line-clamp: 1;
+  // -webkit-box-orient: vertical;
+  // overflow: hidden;
+  // text-overflow: ellipsis;
 }
 .notice {
   display: inline-flex;
@@ -114,6 +119,11 @@
     border-radius: 2rem;
     background: $red-500;
     span {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
       color: $white;
       text-align: center;
       font-family: 'Spoqa Han Sans Neo';
