@@ -5,21 +5,41 @@
 }
 
 .label {
-  font-weight: 400;
+  color: $black;
+  @include font-normal;
   font-size: 1.6rem;
   line-height: 2.6rem;
 }
 
+.inputWrapper {
+  position: relative;
+}
+
 .input {
   width: 100%;
-  border: 1px solid $gray-500;
+  border: 1px solid $gray-400;
   padding: 1.6rem 2rem;
-  @include font-normal;
-  font-size: 1.6rem;
-  line-height: 2.6rem;
   margin-top: 0.8rem;
 
   @include rounded-sm;
+}
+
+.singleCharacterUnit {
+  padding-right: 4rem;
+}
+
+.doubleCharacterUnit {
+  padding-right: 6rem;
+}
+
+.unit {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  @include font-normal;
+  font-size: 1.6rem;
+  line-height: 2.6rem;
+  color: $black;
 }
 
 .error {
@@ -32,8 +52,16 @@
 }
 
 .errorMessage {
-  margin-right: auto;
+  display: block;
+  width: 100%;
+  min-height: 1.2rem;
   margin-top: 0.8rem;
+  margin-left: 0.8rem;
   color: $red-400;
   font-size: 1.2rem;
+  line-height: 1.6rem;
+}
+
+.messageHidden {
+  visibility: hidden;
 }
