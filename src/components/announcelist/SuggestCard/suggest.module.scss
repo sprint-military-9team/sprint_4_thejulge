@@ -19,7 +19,6 @@
 .cardWrapper {
   display: flex;
   width: 98rem;
-  align-items: flex-start;
   position: relative;
 
   :global {
@@ -28,7 +27,7 @@
       gap: 1.4rem;
     }
     .slick-slide {
-      width: 31.2rem !important;
+      width: 32rem !important;
     }
   }
 }

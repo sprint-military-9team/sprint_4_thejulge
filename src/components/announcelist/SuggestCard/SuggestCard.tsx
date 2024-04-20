@@ -18,10 +18,15 @@ interface SuggestCardProps {
 function SuggestCard({ residence }: SuggestCardProps) {
   const [data, setData] = React.useState<Data | null>(null);
 
-  const suggestData = data?.items.filter((cardData) =>
-    CLOSELOCATIONLIST[residence].includes(cardData.item.shop.item.address1),
-  );
   const today = new Date();
+
+  const suggestData = data?.items.filter(
+    (cardData) =>
+      CLOSELOCATIONLIST[residence].includes(cardData.item.shop.item.address1) &&
+      !cardData.item.closed &&
+      today <= new Date(cardData.item.startsAt),
+  );
+
   const settings = {
     dots: false,
     infinite: true,
@@ -29,14 +34,13 @@ function SuggestCard({ residence }: SuggestCardProps) {
     slidesToScroll: 1,
     autoplay: true,
     arrows: false,
-    autoplaySpeed: 3500,
     initialSlide: 0,
-    focusOnSelect: true,
+    autoplaySpeed: 3000,
   };
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getAnnounceData(0, 100, null, null, null, null, 'time');
+      const response = await getAnnounceData(0, 100, null, null, null, null, 'pay');
       setData(response);
     };
     fetchData();

@@ -67,7 +67,7 @@ export default function Home() {
       <div className={styles.content}>
         <div className={styles.wrapper}>
           <article className={headerDataExisted}>
-            <SuggestCard residence="서울시 서초구" />
+            <SuggestCard residence="서울시 중구" />
           </article>
           <main className={styles.mainWrapper}>
             <Announce headerData={headerData} />
