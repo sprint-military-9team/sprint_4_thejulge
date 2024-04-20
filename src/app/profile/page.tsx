@@ -3,69 +3,19 @@
 import Button from '@/components/common/Button';
 import { GPS, PHONE } from '@/utils/constants';
 import { useState } from 'react';
-import Table from '@/components/common/Table';
-import Pagination from '@/components/common/Pagination';
 import Banner from './Banner';
 import styles from './Profile.module.scss';
 import ProfileEdit from './ProfileEdit';
 
 const isProfileExist = false;
-const isApplyHistoryExist = true;
+const isApplyHistoryExist = false;
 
-const data = {
-  items: [
-    {
-      item: {
-        id: 'string',
-        status: 'canceled',
-        createdAt: 'string',
-        shop: {
-          item: {
-            id: 'string',
-            name: 'string',
-            category: 'string',
-            address1: 'string',
-            address2: 'string',
-            description: 'string',
-            imageUrl: 'string',
-            originalHourlyPay: 'number',
-          },
-          href: 'string',
-        },
-        notice: {
-          item: {
-            id: 'string',
-            hourlyPay: 'number',
-            description: 'string',
-            startsAt: 'string',
-            workhour: 'number',
-            closed: 'boolean',
-          },
-        },
-      },
-      links: [],
-    },
-  ],
-};
+const USER_ID = '04baf4be-52d7-4e0d-8da8-21a646d9a41c'; // user1
 
-const refinedData = data.items.map((item) => [
-  item.item.id,
-  item.item.shop.item.name,
-  item.item.notice.item.startsAt,
-  item.item.notice.item.hourlyPay,
-  item.item.status,
-]);
-
-const tableData = {
-  titles: ['가게', '일자', '시급', '상태'],
-  data: refinedData,
-};
-
-const LIMIT = 4;
+// const LIMIT = 4;
 
 export default function Profile() {
   const [isOpened, setIsOpend] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
 
   const handleCloseEdit = () => {
     setIsOpend(false);
@@ -118,15 +68,6 @@ export default function Profile() {
           <section className={styles.applyList}>
             <div className={styles.wrapper}>
               <h2 className={styles.sectionTitle}>신청 내역</h2>
-              <div className={styles.tableContainer}>
-                <Table datas={tableData} />
-                <Pagination
-                  currentPage={currentPage}
-                  onPageChange={setCurrentPage}
-                  allDataCount={40}
-                  perPageDataCount={LIMIT}
-                />
-              </div>
             </div>
           </section>
         ) : (
