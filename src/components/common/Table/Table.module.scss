@@ -63,6 +63,12 @@
   color: #ea3c12;
 }
 
+@include media(tablet) {
+  .penult {
+    display: none;
+  }
+}
+
 @include media(mobile) {
   .middles {
     display: none;

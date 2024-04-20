@@ -1,7 +1,7 @@
 import styles from './Status.module.scss';
 
 type StatusProps = {
-  type: 'pending' | 'accepted' | 'rejected';
+  type: 'pending' | 'accepted' | 'rejected' | 'canceled';
 };
 
 const statusType = {
@@ -21,6 +21,12 @@ const statusType = {
     color: '#0080FF',
     backgroundColor: '#CCE6FF',
     content: '승인 완료',
+  },
+
+  canceled: {
+    color: '#8a1cd6',
+    backgroundColor: '#c87aff',
+    content: '취소',
   },
 };
 
