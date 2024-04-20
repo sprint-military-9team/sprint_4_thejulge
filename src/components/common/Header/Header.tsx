@@ -38,7 +38,7 @@ const BUTTON_LIST: ButtonListType = {
 
 type HeaderProps = {
   memberType: 'none' | 'owner' | 'worker';
-  notificationListData: NotificationDataType[];
+  notificationListData?: NotificationDataType[];
 };
 export default function Header({ memberType, notificationListData }: HeaderProps) {
   /* 
@@ -91,7 +91,7 @@ export default function Header({ memberType, notificationListData }: HeaderProps
     },
   ]; */
   const buttonType = BUTTON_LIST[memberType];
-  const [notificationData, setNotificationData] = useState<NotificationDataType[]>(notificationListData);
+  const [notificationData, setNotificationData] = useState<NotificationDataType[]>(notificationListData ?? []);
   const [notificationNumber, setNotificationNumber] = useState(notificationData.length);
 
   const handleClickNotification = useCallback((event: React.MouseEvent<HTMLDivElement>, isRead: boolean) => {
