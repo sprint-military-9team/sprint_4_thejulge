@@ -1,4 +1,8 @@
+'use client';
+
 import Header from '@/components/common/Header/Header';
+import Input from '@/components/common/Input/Input';
+import { useCallback, useState } from 'react';
 
 export default function Home() {
   const HEADER_DATA = [
@@ -48,6 +52,24 @@ export default function Home() {
       read: false,
     },
   ];
-
-  return <Header memberType="owner" notificationListData={HEADER_DATA} />;
+  const [value, setValue] = useState('');
+  const [error, setError] = useState(false);
+  const onChange = useCallback((inputValue: string) => {
+    setValue(inputValue);
+  }, []);
+  const onBlur = useCallback(() => {
+    if (!value) {
+      setError(true);
+    } else {
+      setError(false);
+    }
+  }, [value]);
+  return (
+    <>
+      <Header memberType="owner" notificationListData={HEADER_DATA} />
+      <div style={{ width: '300px' }}>
+        <Input id="test " type="text" value={value} onChange={onChange} isError={error} onBlur={onBlur} />
+      </div>
+    </>
+  );
 }
