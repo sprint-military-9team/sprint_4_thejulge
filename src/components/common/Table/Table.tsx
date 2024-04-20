@@ -11,8 +11,8 @@ type TableProps<T> = {
   header: Header<T>[];
   body: T[];
   type: string;
-  onClickRejectButton?: () => void;
-  onClickAcceptButton?: () => void;
+  onClickRejectButton?: (id: string) => void;
+  onClickAcceptButton?: (id: string) => void;
 };
 
 const generateUniqueId = (number: number) => {
@@ -47,10 +47,24 @@ export default function Table<T>({ header, body, type, onClickRejectButton, onCl
                 >
                   {type === 'owner' && id === 'status' && item[id] === 'pending' ? (
                     <div className={styles.btnContainer}>
-                      <button className={`${styles.btn} ${styles.reject}`} type="button" onClick={onClickRejectButton}>
+                      <button
+                        className={`${styles.btn} ${styles.reject}`}
+                        type="button"
+                        onClick={() => {
+                          if (!onClickRejectButton) return;
+                          onClickRejectButton(id);
+                        }}
+                      >
                         거절하기
                       </button>
-                      <button className={`${styles.btn} ${styles.accept}`} type="button" onClick={onClickAcceptButton}>
+                      <button
+                        className={`${styles.btn} ${styles.accept}`}
+                        type="button"
+                        onClick={() => {
+                          if (!onClickAcceptButton) return;
+                          onClickAcceptButton(id);
+                        }}
+                      >
                         승인하기
                       </button>
                     </div>
