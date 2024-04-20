@@ -70,7 +70,7 @@ export default function Notification({
             />
           </div>
           <div className={styles.notificationList}>
-            {notificationNumber ? (
+            {notificationData.length > 0 ? (
               <>
                 {notificationData.map((notification) => (
                   <div

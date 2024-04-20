@@ -1,3 +1,5 @@
+'use client';
+
 import Header from '@/components/common/Header/Header';
 
 export default function Home() {
@@ -48,5 +50,6 @@ export default function Home() {
       read: false,
     },
   ];
+
   return <Header memberType="owner" notificationListData={HEADER_DATA} />;
 }
