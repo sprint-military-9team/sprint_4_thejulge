@@ -40,9 +40,9 @@ export default function Table<T>({ header, body, type, onClickRejectButton, onCl
         <tbody className={styles.tbody}>
           {body.map((item, index) => (
             <tr key={generateUniqueId(index)} className={styles.tr}>
-              {header.map(({ id }, index_header) => (
+              {header.map(({ id, name }, index_header) => (
                 <td
-                  key={id as string}
+                  key={name}
                   className={`${styles.td} ${index_header === 0 || index_header === header.length - 1 ? styles.edges : styles.middles}`}
                 >
                   {type === 'owner' && id === 'status' && item[id] === 'pending' ? (
