@@ -1,7 +1,4 @@
-'use client';
-
 import Header from '@/components/common/Header/Header';
-import OwnerAddNotice from '@/components/ownerAddNotice/OwnerAddNotice';
 
 export default function Home() {
   const HEADER_DATA = [
@@ -51,10 +48,5 @@ export default function Home() {
       read: false,
     },
   ];
-  return (
-    <>
-      <Header memberType="owner" notificationListData={HEADER_DATA} />
-      <OwnerAddNotice onClose={() => console.log('close')} />
-    </>
-  );
+  return <Header memberType="owner" notificationListData={HEADER_DATA} />;
 }
