@@ -4,6 +4,13 @@ type UserData = {
   type: string;
 };
 
+export type UserProfileType = UserData & {
+  name: string;
+  phone: string;
+  address: string;
+  bio: string;
+};
+
 export type ShopDataType = {
   id: string;
   name: string;
