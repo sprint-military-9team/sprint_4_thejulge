@@ -36,7 +36,7 @@ export type SpecifyNoticeDataType = {
 export type SpecifyNoticeApplicationsDataType = {
   item: {
     id: string;
-    status: 'pending' | 'accepted' | 'rejected' | 'canceled';
+    status: 'pending' | 'accepted' | 'rejected';
     createdAt: string;
     user: {
       item: {

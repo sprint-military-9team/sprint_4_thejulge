@@ -7,7 +7,25 @@ import { getSpecifyNoticeApplicationData, setSpecifyNoticeApplicationStatus } fr
 import Modal from '@/components/common/Modal/Modal';
 import OwnerDetailModal from '@/components/common/Modal/ownerDetailModal/OwnerDetailModal';
 import styles from './ApplicationList.module.scss';
-import { ModalType, TableDataType } from './types';
+import { ModalType } from './types';
+
+type HeaderType = {
+  id: 'id' | 'name' | 'bio' | 'phone' | 'status';
+  name: string;
+};
+
+type BodyType = {
+  id: string;
+  name: string | undefined;
+  bio: string | undefined;
+  phone: string | undefined;
+  status: 'pending' | 'rejected' | 'accepted';
+};
+
+type TableData = {
+  header: HeaderType[];
+  body: BodyType[];
+};
 
 type ApplicationListProps = {
   shopId: string;
@@ -20,9 +38,14 @@ export default function ApplicationList({ shopId, noticeId }: ApplicationListPro
     type: 'none',
     onClick: () => {},
   });
-  const [TableData, setTableData] = useState<TableDataType>({
-    titles: ['신청자', '소개', '전화번호', '상태'],
-    data: [],
+  const [tableData, setTableData] = useState<TableData>({
+    header: [
+      { id: 'name', name: '신청자' },
+      { id: 'bio', name: '소개' },
+      { id: 'phone', name: '전화번호' },
+      { id: 'status', name: '상태' },
+    ],
+    body: [],
   });
 
   /* const TableData = {
@@ -55,7 +78,7 @@ export default function ApplicationList({ shopId, noticeId }: ApplicationListPro
   useEffect(() => {
     const getApplicationData = async (shopID: string, noticeID: string) => {
       const applicationData = await getSpecifyNoticeApplicationData(shopID, noticeID);
-      const data = applicationData.map((application) => {
+      const body = applicationData.map((application) => {
         const {
           item: {
             id,
@@ -65,28 +88,29 @@ export default function ApplicationList({ shopId, noticeId }: ApplicationListPro
             },
           },
         } = application;
-        return [id, name, bio, phone, status];
+        return { id, name, bio, phone, status };
       });
-      setTableData({ titles: ['신청자', '소개', '전화번호', '상태'], data });
+      setTableData((previousData) => ({ ...previousData, body }));
     };
     getApplicationData(shopId, noticeId);
   }, [noticeId, shopId]);
+
   return (
     <div className={styles.section}>
       <div className={styles.wrapper}>
         <div className={styles.title}>신청자 목록</div>
-        <button type="button" onClick={() => onClickRejectButton('f99961ed-de1c-4ad9-b7ad-cffe97465dd4')}>
-          거절하기
-        </button>
-        <button type="button" onClick={() => onClickAcceptButton('f99961ed-de1c-4ad9-b7ad-cffe97465dd4')}>
-          등록하기
-        </button>
         <div>
-          <Table datas={TableData} />
+          <Table
+            header={tableData.header}
+            body={tableData.body}
+            type="owner"
+            onClickAcceptButton={onClickAcceptButton}
+            onClickRejectButton={onClickRejectButton}
+          />
           <Pagination
             currentPage={currentPage}
             onPageChange={setCurrentPage}
-            allDataCount={TableData.data.length}
+            allDataCount={tableData.body.length}
             perPageDataCount={7}
           />
           {showModal.type !== 'none' && (
