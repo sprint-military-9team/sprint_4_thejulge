@@ -1,10 +1,10 @@
 import { LOGO_BIG } from '@/utils/constants';
 import Image from 'next/image';
-import Form from '@/components/signin/form/Form';
+import Form from '@/components/signup/form/Form';
 import Link from 'next/link';
 import styles from './page.module.scss';
 
-export default function signin() {
+export default function signup() {
   return (
     <div className={styles.page}>
       <div className={styles.wrapper}>
@@ -13,7 +13,7 @@ export default function signin() {
         </Link>
         <Form />
         <div className={styles.text}>
-          회원이 아니신가요? <Link href="/signup">회원가입하기</Link>
+          이미 가입하셨나요? <Link href="/signin">로그인하기</Link>
         </div>
       </div>
     </div>
