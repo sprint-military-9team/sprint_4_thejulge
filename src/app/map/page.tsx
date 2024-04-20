@@ -36,25 +36,24 @@ export default function Map() {
     mapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=0d11bce1f9666f33dfb8ded92b365644&autoload=false&libraries=services`;
     document.head.appendChild(mapScript);
     const container = document.getElementById('map')!;
-    console.log(container);
     const onLoadKakaoMap = () => {
-      console.log('aifowiejfao');
       window.kakao.maps.load(() => {
         const ps = new window.kakao.maps.services.Places();
 
         function addMarker(position, idx) {
           // 마커 이미지 url, 스프라이트 이미지를 씁니다
           // const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png';
-          const imageSrc = 'http://localhost:3000/assets/image.png';
+          // const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png';
+          const imageSrc = 'http://localhost:3000/assets/gps.svg';
           // 마커 이미지의 크기
-          const imageSize = new window.kakao.maps.Size(478, 397);
-          const imgOptions = {
-            // 스프라이트 이미지의 크기
-            spriteSize: new window.kakao.maps.Size(40, 46),
-            spriteOrigin: new window.kakao.maps.Point(0, idx * 46 + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-            offset: new window.kakao.maps.Point(13, 37), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-          };
-          const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions);
+          const imageSize = new window.kakao.maps.Size(34, 39);
+          // const imgOptions = {
+          // 스프라이트 이미지의 크기
+          // spriteSize: new window.kakao.maps.Size(40, 46),
+          // spriteOrigin: new window.kakao.maps.Point(0, idx * 16 + 10),
+          // offset: new window.kakao.maps.Point(13, 37),
+          // };
+          const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
           const marker = new window.kakao.maps.Marker({
             position, // 마커의 위치
             image: markerImage,
@@ -66,8 +65,7 @@ export default function Map() {
         }
 
         function displayPlaces(places, address, shop_id) {
-          console.log('address:', address);
-          for (let i = 0; i < places.length; i++) {
+          for (let i = 0; i < places.length; i += 1) {
             // 마커를 생성하고 지도에 표시합니다
             const placePosition = new window.kakao.maps.LatLng(places[i].y, places[i].x);
             const marker = addMarker(placePosition, i);
@@ -93,10 +91,6 @@ export default function Map() {
             );
           });
         }
-
-        // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
-
-        console.log('kakao map 사용할 준비 완료!');
 
         const options = {
           center: new window.kakao.maps.LatLng(37.52361111, 126.8983417),

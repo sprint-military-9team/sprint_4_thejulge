@@ -1,5 +1,4 @@
-export default function Box({ shop_id, address }) {
-  console.log('shop_id:', shop_id);
+export default function Box({ shop_id, address }: { shop_id: number; address: string }) {
   return (
     <div
       style={{
@@ -8,9 +7,8 @@ export default function Box({ shop_id, address }) {
         height: '700px',
         backgroundColor: '#fff',
         zIndex: 9999,
-        top: '50%',
+        top: '8%',
         right: '4rem',
-        transform: 'translateY(-50%)',
         padding: '3rem',
         borderRadius: '2rem',
       }}
