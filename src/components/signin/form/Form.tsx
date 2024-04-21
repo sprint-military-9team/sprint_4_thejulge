@@ -5,6 +5,7 @@ import { useCallback, useRef } from 'react';
 import Button from '@/components/common/Button';
 import useInput from '@/hooks/useInput';
 import { checkEmail, checkInputList, checkPassword } from '@/utils/checkLoginInput';
+import { postSignin } from '@/apis/user';
 import styles from './form.module.scss';
 
 export default function Form() {
@@ -36,11 +37,12 @@ export default function Form() {
     }
   }, [password, changePasswordError]);
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     checkInputList(formRef);
     if (checkEmail(email) && checkPassword(password)) {
-      console.log('api');
+      const data = await postSignin(email, password);
+      console.log(data);
     }
   };
 

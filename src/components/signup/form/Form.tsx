@@ -5,6 +5,7 @@ import { useCallback, useRef, useState } from 'react';
 import Button from '@/components/common/Button';
 import useInput from '@/hooks/useInput';
 import { checkEmail, checkPassword, checkConfirmPassword, checkInputList } from '@/utils/checkLoginInput';
+import { postSignin, postSignup } from '@/apis/user';
 import styles from './form.module.scss';
 import MemberButton from '../MemberButton/MemberButton';
 
@@ -31,7 +32,7 @@ export default function Form() {
     changeError: changeConfirmPasswordError,
     clearError: clearConfirmPasswordError,
   } = useInput();
-  const [memberType, setMemberType] = useState('employee');
+  const [memberType, setMemberType] = useState<'employee' | 'employer'>('employee');
 
   const onBlurEmail = useCallback(() => {
     if (!checkEmail(email)) {
@@ -59,11 +60,22 @@ export default function Form() {
     setMemberType('employer');
   }, []);
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     checkInputList(formRef);
     if (checkEmail(email) && checkPassword(password) && checkConfirmPassword(password, confirmPassword)) {
-      console.log('api');
+      const { error } = await postSignup(email, password, memberType);
+      if (!error) {
+        const APIData = await postSignin(email, password);
+        console.log(APIData);
+        return;
+      }
+      if (error === '409') {
+        changeEmailError('이미 사용중인 이메일입니다.');
+        return;
+      }
+      changeEmailError('이메일을 확인해주세요.');
+      changePasswordError('비밀번호를 확인해주세요.');
     }
   };
 

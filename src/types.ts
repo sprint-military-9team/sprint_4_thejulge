@@ -77,3 +77,14 @@ export type SpecifyNoticeApplicationsDataType = {
   };
   links: [];
 };
+
+export type SigninDataType = {
+  token: string;
+  type: 'employer' | 'employee' | '';
+  id: string;
+  error: string;
+};
+
+export type SignupDataType = {
+  error: string;
+};
