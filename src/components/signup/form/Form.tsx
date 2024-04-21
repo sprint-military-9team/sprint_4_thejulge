@@ -1,13 +1,15 @@
 'use client';
 
 import Input from '@/components/common/Input/Input';
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import Button from '@/components/common/Button';
 import useInput from '@/hooks/useInput';
+import { checkEmail, checkPassword, checkConfirmPassword, checkInputList } from '@/utils/checkLoginInput';
 import styles from './form.module.scss';
 import MemberButton from '../MemberButton/MemberButton';
 
 export default function Form() {
+  const formRef = useRef<HTMLFormElement>(null);
   const {
     value: email,
     error: emailError,
@@ -32,20 +34,19 @@ export default function Form() {
   const [memberType, setMemberType] = useState('employee');
 
   const onBlurEmail = useCallback(() => {
-    const regularExpression = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!regularExpression.test(email)) {
+    if (!checkEmail(email)) {
       changeEmailError('이메일 형식으로 작성해 주세요.');
     }
   }, [changeEmailError, email]);
 
   const onBlurPassword = useCallback(() => {
-    if (password.length < 8) {
+    if (!checkPassword(password)) {
       changePasswordError('비밀번호는 8자 이상 작성해 주세요.');
     }
   }, [password, changePasswordError]);
 
   const onBlurConfirmPassword = useCallback(() => {
-    if (confirmPassword !== password) {
+    if (!checkConfirmPassword(password, confirmPassword)) {
       changeConfirmPasswordError('비밀번호가 일치하지 않습니다.');
     }
   }, [changeConfirmPasswordError, confirmPassword, password]);
@@ -58,8 +59,16 @@ export default function Form() {
     setMemberType('employer');
   }, []);
 
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    checkInputList(formRef);
+    if (checkEmail(email) && checkPassword(password) && checkConfirmPassword(password, confirmPassword)) {
+      console.log('api');
+    }
+  };
+
   return (
-    <form className={styles.loginForm}>
+    <form className={styles.loginForm} onSubmit={handleSubmit} ref={formRef}>
       <div>
         <Input
           id="email"
@@ -114,7 +123,7 @@ export default function Form() {
         </div>
       </div>
       <div className={styles.submitWrapper}>
-        <Button color="orange" size="large">
+        <Button color="orange" size="large" submit>
           가입하기
         </Button>
       </div>

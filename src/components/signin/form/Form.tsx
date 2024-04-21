@@ -1,12 +1,14 @@
 'use client';
 
 import Input from '@/components/common/Input/Input';
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import Button from '@/components/common/Button';
 import useInput from '@/hooks/useInput';
+import { checkEmail, checkInputList, checkPassword } from '@/utils/checkLoginInput';
 import styles from './form.module.scss';
 
 export default function Form() {
+  const formRef = useRef<HTMLFormElement>(null);
   const {
     value: email,
     error: emailError,
@@ -23,20 +25,27 @@ export default function Form() {
   } = useInput();
 
   const onBlurEmail = useCallback(() => {
-    const regularExpression = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!regularExpression.test(email)) {
+    if (!checkEmail(email)) {
       changeEmailError('이메일 형식으로 작성해 주세요.');
     }
   }, [email, changeEmailError]);
 
   const onBlurPassword = useCallback(() => {
-    if (password.length < 8) {
+    if (!checkPassword(password)) {
       changePasswordError('비밀번호는 8자 이상 작성해 주세요.');
     }
   }, [password, changePasswordError]);
 
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    checkInputList(formRef);
+    if (checkEmail(email) && checkPassword(password)) {
+      console.log('api');
+    }
+  };
+
   return (
-    <form className={styles.loginForm}>
+    <form className={styles.loginForm} onSubmit={handleSubmit} ref={formRef}>
       <div>
         <Input
           id="email"
@@ -66,7 +75,7 @@ export default function Form() {
         />
       </div>
 
-      <Button color="orange" size="large">
+      <Button color="orange" size="large" submit>
         로그인
       </Button>
     </form>
