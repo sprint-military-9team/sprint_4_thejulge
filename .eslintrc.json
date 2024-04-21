@@ -17,6 +17,7 @@
   },
   "plugins": ["react", "@typescript-eslint", "prettier"],
   "rules": {
+    "react-hooks/exhaustive-deps": "off",
     "linebreak-style": "off",
     "react/react-in-jsx-scope": "off",
     "prettier/prettier": "error",

@@ -45,4 +45,3 @@ export default function Dropdown({ optionList = [], onClick, initialOption = nul
     </section>
   );
 }
-

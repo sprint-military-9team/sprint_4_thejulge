@@ -6,6 +6,7 @@ import { useAsync } from '@/hooks/useAsync';
 import { getUserApplicationData } from '@/apis/application';
 import Table from '@/components/common/Table';
 import getTimeDifference from '@/utils/getTimeDifference';
+import { useRouter } from 'next/navigation';
 import styles from './ProfileTableContainer.module.scss';
 import Banner from './Banner';
 
@@ -34,6 +35,7 @@ export default function ProfileTableContainer() {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, error, getUserApplicationDataAsync] = useAsync(getUserApplicationData);
   const [count, setCount] = useState(0);
+  const router = useRouter();
   const [tableData, setTableData] = useState<TableData>({
     header: [
       { id: 'name', name: '가게' },
@@ -69,6 +71,11 @@ export default function ProfileTableContainer() {
   useEffect(() => {
     handleLoadUserApplicationData(USER_ID);
   }, [handleLoadUserApplicationData]);
+
+  if (error) {
+    // 임시로 랜딩페이지로 리다이렉트 추후, 오류 페이지로 바꿀예정
+    router.push('/');
+  }
 
   if (loading) {
     return (

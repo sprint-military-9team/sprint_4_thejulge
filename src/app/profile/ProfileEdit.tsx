@@ -6,6 +6,7 @@ import { FormEvent, useState } from 'react';
 import Button from '@/components/common/Button';
 import Image from 'next/image';
 import { UserProfileType } from '@/types';
+import { setUserProfile } from '@/apis/profile';
 import styles from './ProfileEdit.module.scss';
 
 type ProfileEditProps = {
@@ -29,7 +30,7 @@ export default function ProfileEdit({ isOpend, onClose, defaultValues }: Profile
   const [name, setName] = useState(defaultValues ? defaultValues.name : '');
   const [phone, setPhone] = useState(defaultValues ? defaultValues.phone : '');
   const [bio, setBio] = useState(defaultValues ? defaultValues.bio : '');
-  const [address, setAddress] = useState(defaultValues ? defaultValues.address : null);
+  const [address, setAddress] = useState(defaultValues ? defaultValues.address : '');
   const [errors, setErrors] = useState(INITIAL_ERRORS);
 
   const handleCloseClick = () => {
@@ -52,7 +53,7 @@ export default function ProfileEdit({ isOpend, onClose, defaultValues }: Profile
     setErrors((prevErrors) => ({ ...prevErrors, phoneError: { isError: false, errorMessage: '' } }));
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!name) {
       setErrors((prevErrors) => ({ ...prevErrors, nameError: { isError: true, errorMessage: '이름을 입력해주세요' } }));
@@ -67,8 +68,7 @@ export default function ProfileEdit({ isOpend, onClose, defaultValues }: Profile
     if (!name || !phone) {
       return;
     }
-    console.log(name, phone, bio, address);
-    console.log('API 연동');
+    await setUserProfile('4896c2a6-3c24-4f26-9f5d-84c4b13db4fd', { name, phone, address, bio });
   };
 
   return (
