@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function Box({ shop_id, address }: { shop_id: number; address: string }) {
   return (
     <div
@@ -13,7 +15,112 @@ export default function Box({ shop_id, address }: { shop_id: number; address: st
         borderRadius: '2rem',
       }}
     >
-      {shop_id < 0 ? <h2>가게를 선택해주세요</h2> : <h2>{address}</h2>}
+      <h2 style={{ paddingBottom: '3rem' }}>{shop_id < 0 ? '가게를 선택해주세요' : `${address}의 공고들`}</h2>
+      <div style={{ display: 'flex', gap: '1.5rem', borderBottom: '1px solid #aaa', paddingBottom: '1rem' }}>
+        <div
+          style={{
+            width: '8rem',
+            height: '8rem',
+            position: 'relative',
+            borderRadius: '1rem',
+            overflow: 'hidden',
+            flexShrink: 0,
+          }}
+        >
+          <Image fill src="/assets/image.png" alt="af" />
+        </div>
+        <div>
+          <h3 style={{ marginBottom: '1rem' }}>노예구합니다</h3>
+          <p>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corporis eum suscipit ex repudiandae saepe! Magni
+            ex velit laudantium, consectetur sunt, dolores quam sequi tempora minima ea at.
+          </p>
+        </div>
+      </div>
+      <div style={{ display: 'flex', gap: '1.5rem', borderBottom: '1px solid #aaa', padding: '1rem 0' }}>
+        <div
+          style={{
+            width: '8rem',
+            height: '8rem',
+            position: 'relative',
+            borderRadius: '1rem',
+            overflow: 'hidden',
+            flexShrink: 0,
+          }}
+        >
+          <Image fill src="/assets/image.png" alt="af" />
+        </div>
+        <div>
+          <h3 style={{ marginBottom: '1rem' }}>노예구합니다</h3>
+          <p>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corporis eum suscipit ex repudiandae saepe! Magni
+            ex velit laudantium, consectetur sunt, dolores quam sequi tempora minima ea at.
+          </p>
+        </div>
+      </div>
+      <div style={{ display: 'flex', gap: '1.5rem', borderBottom: '1px solid #aaa', padding: '1rem 0' }}>
+        <div
+          style={{
+            width: '8rem',
+            height: '8rem',
+            position: 'relative',
+            borderRadius: '1rem',
+            overflow: 'hidden',
+            flexShrink: 0,
+          }}
+        >
+          <Image fill src="/assets/image.png" alt="af" />
+        </div>
+        <div>
+          <h3 style={{ marginBottom: '1rem' }}>노예구합니다</h3>
+          <p>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corporis eum suscipit ex repudiandae saepe! Magni
+            ex velit laudantium, consectetur sunt, dolores quam sequi tempora minima ea at.
+          </p>
+        </div>
+      </div>
+      <div style={{ display: 'flex', gap: '1.5rem', borderBottom: '1px solid #aaa', padding: '1rem 0' }}>
+        <div
+          style={{
+            width: '8rem',
+            height: '8rem',
+            position: 'relative',
+            borderRadius: '1rem',
+            overflow: 'hidden',
+            flexShrink: 0,
+          }}
+        >
+          <Image fill src="/assets/image.png" alt="af" />
+        </div>
+        <div>
+          <h3 style={{ marginBottom: '1rem' }}>노예구합니다</h3>
+          <p>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corporis eum suscipit ex repudiandae saepe! Magni
+            ex velit laudantium, consectetur sunt, dolores quam sequi tempora minima ea at.
+          </p>
+        </div>
+      </div>
+      <div style={{ display: 'flex', gap: '1.5rem', borderBottom: '1px solid #aaa', padding: '1rem 0' }}>
+        <div
+          style={{
+            width: '8rem',
+            height: '8rem',
+            position: 'relative',
+            borderRadius: '1rem',
+            overflow: 'hidden',
+            flexShrink: 0,
+          }}
+        >
+          <Image fill src="/assets/image.png" alt="af" />
+        </div>
+        <div>
+          <h3 style={{ marginBottom: '1rem' }}>노예구합니다</h3>
+          <p>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corporis eum suscipit ex repudiandae saepe! Magni
+            ex velit laudantium, consectetur sunt, dolores quam sequi tempora minima ea at.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
