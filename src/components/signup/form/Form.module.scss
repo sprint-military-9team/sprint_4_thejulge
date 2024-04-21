@@ -33,3 +33,9 @@
   width: 100%;
   margin-top: 1.4rem;
 }
+
+@include media(mobile) {
+  .loginForm {
+    gap: 1rem;
+  }
+}

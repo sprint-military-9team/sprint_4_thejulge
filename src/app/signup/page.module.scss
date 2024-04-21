@@ -27,3 +27,13 @@
   font-size: 1.6rem;
   line-height: 1.909rem;
 }
+
+@include media(mobile) {
+  .logoWrapper {
+    height: 3.8rem;
+  }
+  .logo {
+    width: 20.8rem;
+    height: 3.8rem;
+  }
+}

@@ -1,5 +1,3 @@
-import Image from 'next/image';
-import { CHECK } from '@/utils/constants';
 import Modal from '../Modal';
 import styles from './LoginModal.module.scss';
 
@@ -25,7 +23,6 @@ export default function LoginModal({
   return (
     <div>
       <Modal onClose={handleClose}>
-        <Image src={CHECK} alt="check" width={25} height={25} />
         <h2 className={styles.text}>{MODAL_TEXT[type]}</h2>
         <div className={styles.selectionBox}>
           <button className={styles.positiveButton} type="button" onClick={() => handleClose()}>
