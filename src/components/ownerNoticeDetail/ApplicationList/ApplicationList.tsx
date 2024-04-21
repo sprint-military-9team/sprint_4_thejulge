@@ -60,7 +60,6 @@ export default function ApplicationList({ shopId, noticeId }: ApplicationListPro
       body: previousData.body.map((data) => (data.id === id ? { ...data, status: 'accepted' } : data)),
     }));
   };
-  console.log(tableData);
   const onReject = async (id: string) => {
     console.log(`reject: ${id}`);
     await setSpecifyNoticeApplicationStatus(shopId, noticeId, id, 'rejected');

@@ -1,7 +1,7 @@
 'use client';
 
 import Input from '@/components/common/Input/Input';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Button from '@/components/common/Button';
 import useInput from '@/hooks/useInput';
 import { checkEmail, checkPassword, checkConfirmPassword, checkInputList } from '@/utils/checkLoginInput';
@@ -9,6 +9,7 @@ import { postSignin, postSignup } from '@/apis/user';
 import LoginModal from '@/components/common/Modal/LoginModal/LoginModal';
 import Modal from '@/components/common/Modal/Modal';
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 import styles from './form.module.scss';
 import MemberButton from '../MemberButton/MemberButton';
 
@@ -102,6 +103,13 @@ export default function Form() {
       setShowModal({ type: 'error', onClose });
     }
   };
+
+  useEffect(() => {
+    const token = Cookies.get('token');
+    if (token) {
+      router.back();
+    }
+  }, [router]);
 
   return (
     <>
