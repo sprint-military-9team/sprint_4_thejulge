@@ -1,0 +1,10 @@
+@import '@/styles/_index';
+
+.container {
+  background-color: dodgerblue;
+  color: white;
+  border-radius: 2rem;
+  padding: 0.6rem 1rem;
+  font-size: 1.4rem;
+  @include font-bold;
+}
