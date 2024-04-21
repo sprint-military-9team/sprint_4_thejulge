@@ -46,55 +46,48 @@ export default function ProfileTableContainer() {
     body: [],
   });
 
-  const handleLoadUserApplicationData = useCallback(async (user_id: string) => {
-    const data = await getUserApplicationDataAsync(user_id, 7, 7 * (currentPage - 1));
-    if (!data) return;
-    const body = data.items.map((application) => {
-      const {
-        item: {
-          id,
-          status,
-          shop: {
-            item: { name },
+  const handleLoadUserApplicationData = useCallback(
+    async (user_id: string) => {
+      const data = await getUserApplicationDataAsync(user_id, LIMIT, LIMIT * (currentPage - 1));
+      if (!data) return;
+      const body = data.items.map((application) => {
+        const {
+          item: {
+            id,
+            status,
+            shop: {
+              item: { name },
+            },
+            notice: {
+              item: { hourlyPay, startsAt, workhour },
+            },
           },
-          notice: {
-            item: { hourlyPay, startsAt, workhour },
-          },
-        },
-      } = application;
-      return { id, name, day: getTimeDifference(startsAt, Number(workhour)), hourlyPay, status };
-    });
-    setTableData((previousData) => ({ ...previousData, body }));
-    setCount(data.count);
-  }, []);
+        } = application;
+        return { id, name, day: getTimeDifference(startsAt, Number(workhour)), hourlyPay, status };
+      });
+      setTableData((previousData) => ({ ...previousData, body }));
+      setCount(data.count);
+    },
+    [currentPage],
+  );
 
   useEffect(() => {
     handleLoadUserApplicationData(USER_ID);
-  }, [handleLoadUserApplicationData]);
+  }, [handleLoadUserApplicationData, currentPage]);
 
   if (error) {
     // 임시로 랜딩페이지로 리다이렉트 추후, 오류 페이지로 바꿀예정
     router.push('/');
   }
 
-  if (loading) {
-    return (
-      <div>
-        <div className={styles.applyList}>
-          <div className={styles.wrapper}>loading...</div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div>
-      {count > 0 ? (
+      {loading || count > 0 ? (
         <section className={styles.applyList}>
           <div className={styles.wrapper}>
             <h2 className={styles.sectionTitle}>신청 내역</h2>
             <div className={styles.tableContainer}>
-              <Table header={tableData.header} body={tableData.body} type="worker" />
+              {loading ? <div>로딩중</div> : <Table header={tableData.header} body={tableData.body} type="worker" />}
               <Pagination
                 currentPage={currentPage}
                 onPageChange={setCurrentPage}
