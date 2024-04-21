@@ -1,4 +1,5 @@
 @import '@/styles/_index';
+@import '@/styles/_media';
 
 .sectionWrapper {
   display: flex;
@@ -73,7 +74,7 @@
 .sortList {
   display: flex;
   width: 11rem;
-  padding: 1.2rem 0;
+  padding: 0.4rem 0;
   flex-direction: column;
   position: absolute;
   top: 4rem;
@@ -118,23 +119,14 @@
   justify-content: center;
   width: 100%;
 }
-// //
-// $white: #ffffff;
-// $black: #111322;
-// $gray-100: #fafafa;
-// $gray-200: #f2f2f3;
-// $gray-300: #e5e4e7;
-// $gray-400: #cbc9cf;
-// $gray-500: #a4a1aa;
-// $gray-600: #7d7986;
-// $red-100: #ff3b37;
-// $red-200: #ffaf9b;
-// $red-300: #ff8d72;
-// $red-400: #ff4040;
-// $red-500: #ea3c12;
-// $red-600: #ffebe7;
-// $blue-100: #cce6ff;
-// $blue-200: #0080ff;
-// $green-100: #d4f7d4;
-// $green-200: #20a81e;
-// $yellow-kakao: #fee500;
+
+@include media(tablet) {
+  .cardWrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-column-gap: 1.4rem;
+    grid-row-gap: 3.2rem;
+    width: 100%;
+  }
+}

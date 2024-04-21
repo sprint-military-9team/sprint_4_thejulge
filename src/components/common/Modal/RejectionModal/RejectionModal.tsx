@@ -22,14 +22,12 @@ export default function RejectionModal({
           <div className={styles.selectionBox}>
             <div onClick={noClick}>
               <Button color="white" size="medium" style={{ padding: '1rem 2rem' }}>
-                아니오
+                네
               </Button>
             </div>
-            <div onClick={cancelClick}>
-              <Button color="orange" size="medium" style={{ padding: '1rem 2rem' }}>
-                취소하기
-              </Button>
-            </div>
+            <Button onClick={cancelClick} color="orange" size="medium" style={{ padding: '1rem 2rem' }}>
+              취소하기
+            </Button>
           </div>
         </Modal>
       )}

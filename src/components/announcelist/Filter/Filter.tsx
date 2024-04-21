@@ -146,13 +146,18 @@ function Filter({ onClick, removeFilter }: FilterProps) {
         </div>
       </div>
       <div className={styles.buttonWrapper}>
-        <div onClick={handleResetData}>
-          <Button size="large" color="white" style={{ padding: '1.4rem' }}>
+        <div>
+          <Button onClick={handleResetData} size="large" color="white" style={{ padding: '1.4rem' }}>
             초기화
           </Button>
         </div>
-        <div onClick={() => handleSubmitClick(filterData)}>
-          <Button size="large" color="orange" style={{ padding: '1.4rem' }}>
+        <div>
+          <Button
+            onClick={() => handleSubmitClick(filterData)}
+            size="large"
+            color="orange"
+            style={{ padding: '1.4rem' }}
+          >
             적용하기
           </Button>
         </div>

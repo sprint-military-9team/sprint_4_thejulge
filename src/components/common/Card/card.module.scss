@@ -61,7 +61,6 @@
 .contentWrapper {
   @include common;
   width: 100%;
-  gap: 2.4rem;
 }
 .infoWrapper {
   @include common;
@@ -108,9 +107,11 @@
   .salary {
     @include font1;
     font-size: 2.4rem;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
     overflow: hidden;
+    text-overflow: ellipsis;
   }
   .raise {
     display: flex;

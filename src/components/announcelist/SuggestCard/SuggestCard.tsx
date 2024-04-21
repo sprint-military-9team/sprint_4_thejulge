@@ -36,6 +36,15 @@ function SuggestCard({ residence }: SuggestCardProps) {
     arrows: false,
     initialSlide: 0,
     autoplaySpeed: 3000,
+    speed: 500,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+    ],
   };
 
   useEffect(() => {

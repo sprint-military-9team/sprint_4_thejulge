@@ -78,10 +78,12 @@ function Announce({ headerData }: AnnounceProps) {
   };
   const handleSortListClick = (sort: string) => {
     setSelectedSort(sort);
+    setPageNumber(1);
     setIsSortOpen(false);
   };
   const handleFilterClick = (filter: FilterInfo | null) => {
     setSelectedFilter(filter);
+    setPageNumber(1);
     setIsFilterOpen(false);
   };
   const removeFilter = () => {
