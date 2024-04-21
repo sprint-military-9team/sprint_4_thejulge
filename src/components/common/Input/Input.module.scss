@@ -54,7 +54,6 @@
 .errorMessage {
   display: block;
   width: 100%;
-  min-height: 1.2rem;
   margin-top: 0.8rem;
   margin-left: 0.8rem;
   color: $red-400;
@@ -64,4 +63,5 @@
 
 .messageHidden {
   visibility: hidden;
+  min-height: 1.6rem;
 }
