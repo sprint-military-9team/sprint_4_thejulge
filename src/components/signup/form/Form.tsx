@@ -18,8 +18,8 @@ type LoginModalDataType = {
 };
 
 export default function Form() {
-  const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
+  const router = useRouter();
   const {
     value: email,
     error: emailError,
@@ -48,8 +48,12 @@ export default function Form() {
   });
 
   const onClose = useCallback(() => {
+    const flag = Boolean(showModal.type === 'signupAccepted');
     setShowModal({ type: 'none', onClose: () => {} });
-  }, []);
+    if (flag) {
+      router.push('/');
+    }
+  }, [router, showModal]);
 
   const onBlurEmail = useCallback(() => {
     if (!checkEmail(email)) {
@@ -83,10 +87,11 @@ export default function Form() {
     if (checkEmail(email) && checkPassword(password) && checkConfirmPassword(password, confirmPassword)) {
       const { error } = await postSignup(email, password, memberType);
       if (!error) {
-        const APIData = await postSignin(email, password);
-        console.log(APIData);
+        const { error: signinError } = await postSignin(email, password);
+        if (signinError) {
+          return;
+        }
         setShowModal({ type: 'signupAccepted', onClose });
-        router.push('/');
         return;
       }
       if (error === '409') {

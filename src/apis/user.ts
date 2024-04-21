@@ -1,11 +1,8 @@
 import BASE_URL from '@/constants/BASEURL';
-import { SigninDataType, SignupDataType } from '@/types';
+import Cookies from 'js-cookie';
 
-export const postSignin = async (email: string, password: string): Promise<SigninDataType> => {
-  const APIData: SigninDataType = {
-    token: '',
-    id: '',
-    type: '',
+export const postSignin = async (email: string, password: string) => {
+  const APIData = {
     error: '',
   };
 
@@ -30,15 +27,13 @@ export const postSignin = async (email: string, password: string): Promise<Signi
       item: { id, type },
     },
   } = data.item;
-  Object.assign(APIData, { token, id, type });
+  Cookies.set('token', token);
+  Cookies.set('userId', id);
+  Cookies.set('type', type);
   return APIData;
 };
 
-export const postSignup = async (
-  email: string,
-  password: string,
-  type: 'employee' | 'employer',
-): Promise<SignupDataType> => {
+export const postSignup = async (email: string, password: string, type: 'employee' | 'employer') => {
   const APIData = {
     error: '',
   };

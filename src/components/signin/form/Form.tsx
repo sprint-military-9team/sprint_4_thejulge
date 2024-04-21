@@ -60,7 +60,6 @@ export default function Form() {
         setShowModal({ type: 'signinError', onClose });
         return;
       }
-      console.log(data);
       router.push('/');
     }
   };

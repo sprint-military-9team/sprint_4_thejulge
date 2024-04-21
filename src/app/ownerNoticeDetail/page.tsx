@@ -24,7 +24,7 @@ export default async function ownerNoticeDetail() {
 
   return (
     <>
-      <Header memberType="owner" notificationListData={[]} />
+      <Header notificationListData={[]} />
       <NoticeInformation noticeData={NOTICE_DATA} storeData={STORE_DATA} />
       <ApplicationList shopId={shopId} noticeId={noticeId} />
       <Footer />

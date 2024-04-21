@@ -2,45 +2,17 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { SEARCH_ICON, HEADER_LOGO } from '@/utils/constants';
+import Cookies from 'js-cookie';
 import Notification from './notification';
 import styles from './Header.module.scss';
 import { ButtonListType, NotificationDataType } from './types';
 
-const logout = () => {
-  console.log('logout');
-};
-
-const BUTTON_LIST: ButtonListType = {
-  none: {
-    buttonList: [
-      { name: '로그인', href: '/signin' },
-      { name: '회원가입', href: '/signup' },
-    ],
-    notification: false,
-  },
-  owner: {
-    buttonList: [
-      { name: '내 가게', href: '/mystore' },
-      { name: '로그아웃', href: '', onClick: logout },
-    ],
-    notification: true,
-  },
-  worker: {
-    buttonList: [
-      { name: '내 프로필', href: '/myprofile' },
-      { name: '로그아웃', href: '', onClick: logout },
-    ],
-    notification: true,
-  },
-};
-
 type HeaderProps = {
-  memberType: 'none' | 'owner' | 'worker';
   notificationListData?: NotificationDataType[];
 };
-export default function Header({ memberType, notificationListData }: HeaderProps) {
+export default function Header({ notificationListData }: HeaderProps) {
   /* 
   notificationListData 샘플 데이터
   const data = [
@@ -90,10 +62,41 @@ export default function Header({ memberType, notificationListData }: HeaderProps
       read: false,
     },
   ]; */
-  const buttonType = BUTTON_LIST[memberType];
+  const [memberType, setMemberType] = useState('none');
   const [notificationData, setNotificationData] = useState<NotificationDataType[]>(notificationListData ?? []);
   const [notificationNumber, setNotificationNumber] = useState(notificationData.length);
 
+  const logout = () => {
+    Cookies.remove('id');
+    Cookies.remove('token');
+    Cookies.remove('type');
+    setMemberType('none');
+  };
+
+  const BUTTON_LIST: ButtonListType = {
+    none: {
+      buttonList: [
+        { name: '로그인', href: '/signin' },
+        { name: '회원가입', href: '/signup' },
+      ],
+      notification: false,
+    },
+    employer: {
+      buttonList: [
+        { name: '내 가게', href: '/mystore' },
+        { name: '로그아웃', href: '', onClick: logout },
+      ],
+      notification: true,
+    },
+    employee: {
+      buttonList: [
+        { name: '내 프로필', href: '/myprofile' },
+        { name: '로그아웃', href: '', onClick: logout },
+      ],
+      notification: true,
+    },
+  };
+  const buttonType = BUTTON_LIST[memberType];
   const handleClickNotification = useCallback((event: React.MouseEvent<HTMLDivElement>, isRead: boolean) => {
     if (isRead) {
       return;
@@ -110,6 +113,15 @@ export default function Header({ memberType, notificationListData }: HeaderProps
 
   const changeNotificationData = useCallback(() => {
     setNotificationData((previousData) => previousData.filter((notification) => !notification.read && notification));
+  }, []);
+
+  useEffect(() => {
+    const type = Cookies.get('type');
+    if (type === 'employer' || type === 'employee') {
+      setMemberType(type);
+      return;
+    }
+    setMemberType('none');
   }, []);
 
   return (
