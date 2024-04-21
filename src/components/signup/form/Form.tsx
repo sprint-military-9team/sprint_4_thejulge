@@ -3,57 +3,52 @@
 import Input from '@/components/common/Input/Input';
 import { useCallback, useState } from 'react';
 import Button from '@/components/common/Button';
+import useInput from '@/hooks/useInput';
 import styles from './form.module.scss';
 import MemberButton from '../MemberButton/MemberButton';
 
 export default function Form() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const {
+    value: email,
+    error: emailError,
+    changeValue: changeEmail,
+    changeError: changeEmailError,
+    clearError: clearEmailError,
+  } = useInput();
+  const {
+    value: password,
+    error: passwordError,
+    changeValue: changePassword,
+    changeError: changePasswordError,
+    clearError: clearPasswordError,
+  } = useInput();
+  const {
+    value: confirmPassword,
+    error: confirmPasswordError,
+    changeValue: changeConfirmPassword,
+    changeError: changeConfirmPasswordError,
+    clearError: clearConfirmPasswordError,
+  } = useInput();
   const [memberType, setMemberType] = useState('employee');
-  const onChangeEmail = useCallback((value: string) => {
-    setEmail(value);
-  }, []);
-
-  const onChangePassword = useCallback((value: string) => {
-    setPassword(value);
-  }, []);
-
-  const onChangeConfirmPassword = useCallback((value: string) => {
-    setConfirmPassword(value);
-  }, []);
-
-  const onFocusEmail = useCallback(() => {
-    setEmailError('');
-  }, []);
-  const onFocusPassword = useCallback(() => {
-    setPasswordError('');
-  }, []);
-  const onFocusConfirmPassword = useCallback(() => {
-    setConfirmPasswordError('');
-  }, []);
 
   const onBlurEmail = useCallback(() => {
     const regularExpression = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!regularExpression.test(email)) {
-      setEmailError('이메일 형식으로 작성해 주세요.');
+      changeEmailError('이메일 형식으로 작성해 주세요.');
     }
-  }, [email]);
+  }, [changeEmailError, email]);
 
   const onBlurPassword = useCallback(() => {
     if (password.length < 8) {
-      setPasswordError('비밀번호는 8자 이상 작성해 주세요.');
+      changePasswordError('비밀번호는 8자 이상 작성해 주세요.');
     }
-  }, [password]);
+  }, [password, changePasswordError]);
 
   const onBlurConfirmPassword = useCallback(() => {
     if (confirmPassword !== password) {
-      setConfirmPasswordError('비밀번호가 일치하지 않습니다.');
+      changeConfirmPasswordError('비밀번호가 일치하지 않습니다.');
     }
-  }, [confirmPassword, password]);
+  }, [changeConfirmPasswordError, confirmPassword, password]);
 
   const onClickWorkerButton = useCallback(() => {
     setMemberType('employee');
@@ -70,12 +65,12 @@ export default function Form() {
           id="email"
           type="text"
           value={email}
-          onChange={onChangeEmail}
+          onChange={changeEmail}
           label="이메일"
           placeholder="입력"
           isError={Boolean(emailError)}
           errorMessage={emailError}
-          onFocus={onFocusEmail}
+          onFocus={clearEmailError}
           onBlur={onBlurEmail}
         />
       </div>
@@ -84,12 +79,12 @@ export default function Form() {
           id="password"
           type="password"
           value={password}
-          onChange={onChangePassword}
+          onChange={changePassword}
           label="비밀번호"
           placeholder="입력"
           isError={Boolean(passwordError)}
           errorMessage={passwordError}
-          onFocus={onFocusPassword}
+          onFocus={clearPasswordError}
           onBlur={onBlurPassword}
         />
       </div>
@@ -98,12 +93,12 @@ export default function Form() {
           id="confirmPassword"
           type="password"
           value={confirmPassword}
-          onChange={onChangeConfirmPassword}
+          onChange={changeConfirmPassword}
           label="비밀번호 확인"
           placeholder="입력"
           isError={Boolean(confirmPasswordError)}
           errorMessage={confirmPasswordError}
-          onFocus={onFocusConfirmPassword}
+          onFocus={clearConfirmPasswordError}
           onBlur={onBlurConfirmPassword}
         />
       </div>
