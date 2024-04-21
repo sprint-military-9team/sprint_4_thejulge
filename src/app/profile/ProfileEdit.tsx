@@ -13,6 +13,7 @@ type ProfileEditProps = {
   isOpend: boolean;
   onClose: () => void;
   defaultValues?: UserProfileType;
+  triggerProfileUpdate: () => void;
 };
 
 const INITIAL_ERRORS = {
@@ -26,7 +27,7 @@ const INITIAL_ERRORS = {
   },
 };
 
-export default function ProfileEdit({ isOpend, onClose, defaultValues }: ProfileEditProps) {
+export default function ProfileEdit({ isOpend, onClose, defaultValues, triggerProfileUpdate }: ProfileEditProps) {
   const [name, setName] = useState(defaultValues ? defaultValues.name : '');
   const [phone, setPhone] = useState(defaultValues ? defaultValues.phone : '');
   const [bio, setBio] = useState(defaultValues ? defaultValues.bio : '');
@@ -68,7 +69,8 @@ export default function ProfileEdit({ isOpend, onClose, defaultValues }: Profile
     if (!name || !phone) {
       return;
     }
-    await setUserProfile('4896c2a6-3c24-4f26-9f5d-84c4b13db4fd', { name, phone, address, bio });
+    await setUserProfile('04baf4be-52d7-4e0d-8da8-21a646d9a41c', { name, phone, address, bio });
+    triggerProfileUpdate();
   };
 
   return (

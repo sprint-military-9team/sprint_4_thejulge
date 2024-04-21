@@ -13,13 +13,14 @@ import styles from './Profile.module.scss';
 import ProfileEdit from './ProfileEdit';
 import ProfileTableContainer from './ProfileTableContainer';
 
-const USER_ID = '4896c2a6-3c24-4f26-9f5d-84c4b13db4fd'; // user1
+const USER_ID = '04baf4be-52d7-4e0d-8da8-21a646d9a41c'; // user1
 
 export default function Profile() {
   const router = useRouter();
   const [isOpened, setIsOpend] = useState(false);
   const [loading, error, getUserProfileAsync] = useAsync(getUserProfile);
   const [userProfile, setUserProfile] = useState({} as UserProfileType);
+  const [update, setUpdate] = useState(false);
 
   const handleCloseEdit = () => {
     setIsOpend(false);
@@ -37,7 +38,7 @@ export default function Profile() {
 
   useEffect(() => {
     handleLoadUserProfile();
-  }, []);
+  }, [update]);
 
   if (error) {
     // 임시로 랜딩페이지로 리다이렉트 추후, 오류 페이지로 바꿀예정
@@ -46,7 +47,16 @@ export default function Profile() {
 
   return (
     <div className={styles.container}>
-      {!loading && <ProfileEdit defaultValues={userProfile} isOpend={isOpened} onClose={handleCloseEdit} />}
+      {!loading && (
+        <ProfileEdit
+          triggerProfileUpdate={() => {
+            setUpdate((prev) => !prev);
+          }}
+          defaultValues={userProfile}
+          isOpend={isOpened}
+          onClose={handleCloseEdit}
+        />
+      )}
       <main className={styles.main}>
         <section className={styles.profile}>
           <div className={styles.wrapper}>

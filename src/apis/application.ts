@@ -48,7 +48,7 @@ export const getUserApplicationData = async (
   const response = await fetch(`${BASE_URL}/users/${userId}/applications?offset=${offset}&limit=${limit}`, {
     method: 'GET',
     headers: {
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0ODk2YzJhNi0zYzI0LTRmMjYtOWY1ZC04NGM0YjEzZGI0ZmQiLCJpYXQiOjE3MTM1ODAwNDd9.qUvw9FZS0s9sCSGniTimOVsR6bM1ej8Sh7bKPX3bpZA`,
+      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwNGJhZjRiZS01MmQ3LTRlMGQtOGRhOC0yMWE2NDZkOWE0MWMiLCJpYXQiOjE3MTM1Nzk5NjZ9.-Q28XqOjbWr5xSX20q0Y9gRmI8KqTrok7JYjTLw-tjc`,
     },
   });
   if (!response.ok) {
