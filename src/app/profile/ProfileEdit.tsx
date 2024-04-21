@@ -5,11 +5,13 @@ import Input from '@/components/common/Input/Input';
 import { FormEvent, useState } from 'react';
 import Button from '@/components/common/Button';
 import Image from 'next/image';
+import { UserProfileType } from '@/types';
 import styles from './ProfileEdit.module.scss';
 
 type ProfileEditProps = {
   isOpend: boolean;
   onClose: () => void;
+  defaultValues?: UserProfileType;
 };
 
 const INITIAL_ERRORS = {
@@ -21,44 +23,52 @@ const INITIAL_ERRORS = {
     isError: false,
     errorMessage: '',
   },
-  regionError: {
-    isError: false,
-    errorMessage: '',
-  },
 };
 
-type HandleErrorsArgumentType = {
-  id: 'name' | 'phone' | 'region';
-  type: keyof typeof INITIAL_ERRORS;
-  message: string;
-};
-
-export default function ProfileEdit({ isOpend, onClose }: ProfileEditProps) {
+export default function ProfileEdit({ isOpend, onClose, defaultValues }: ProfileEditProps) {
+  const [name, setName] = useState(defaultValues ? defaultValues.name : '');
+  const [phone, setPhone] = useState(defaultValues ? defaultValues.phone : '');
+  const [bio, setBio] = useState(defaultValues ? defaultValues.bio : '');
+  const [address, setAddress] = useState(defaultValues ? defaultValues.address : null);
   const [errors, setErrors] = useState(INITIAL_ERRORS);
 
   const handleCloseClick = () => {
     onClose();
   };
 
-  const hasError = ({ id, type, message }: HandleErrorsArgumentType) => {
-    if ((document.getElementById(id) as HTMLInputElement)?.value === '') {
-      setErrors((prevErrors) => ({ ...prevErrors, [type]: { isError: true, errorMessage: message } }));
-      return true;
-    } else {
-      setErrors((prevErrors) => ({ ...prevErrors, [type]: { isError: false, errorMessage: '' } }));
-      return false;
-    }
+  const handleChangeName = (value: string) => {
+    setName(value);
+  };
+
+  const handleChangePhone = (value: string) => {
+    setPhone(value);
+  };
+
+  const handleFocusOutName = () => {
+    setErrors((prevErrors) => ({ ...prevErrors, nameError: { isError: false, errorMessage: '' } }));
+  };
+
+  const handleFocusOutPhone = () => {
+    setErrors((prevErrors) => ({ ...prevErrors, phoneError: { isError: false, errorMessage: '' } }));
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (
-      hasError({ id: 'name', type: 'nameError', message: '이름을 입력해주세요.' }) ||
-      hasError({ id: 'phone', type: 'phoneError', message: '핸드폰 번호를 입력해주세요.' })
-    ) {
+    if (!name) {
+      setErrors((prevErrors) => ({ ...prevErrors, nameError: { isError: true, errorMessage: '이름을 입력해주세요' } }));
+    }
+    if (!phone) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        phoneError: { isError: true, errorMessage: '휴대폰 번호를 입력해주세요' },
+      }));
+    }
+
+    if (!name || !phone) {
       return;
     }
-    console.log('form submitted');
+    console.log(name, phone, bio, address);
+    console.log('API 연동');
   };
 
   return (
@@ -81,8 +91,11 @@ export default function ProfileEdit({ isOpend, onClose }: ProfileEditProps) {
                     placeholder="입력"
                     label="이름*"
                     id="name"
+                    value={name}
+                    onChange={handleChangeName}
                     isError={errors.nameError.isError}
                     errorMessage={errors.nameError.errorMessage}
+                    onFocus={handleFocusOutName}
                   />
                 </div>
               </div>
@@ -93,28 +106,30 @@ export default function ProfileEdit({ isOpend, onClose }: ProfileEditProps) {
                     placeholder="입력"
                     label="연락처*"
                     id="phone"
+                    value={phone}
+                    onChange={handleChangePhone}
                     isError={errors.phoneError.isError}
                     errorMessage={errors.phoneError.errorMessage}
+                    onFocus={handleFocusOutPhone}
                   />
                 </div>
               </div>
               <div className={styles.inputArea}>
                 <div className={styles.inputAreaWrapper}>
                   <span className={`${styles.label} ${styles.addressLabel}`}>주소</span>
-                  <Dropdown optionList={SEOULGROUPLIST} initialOption={null} />
+                  <Dropdown optionList={SEOULGROUPLIST} initialOption={address} onClick={setAddress} />
                 </div>
               </div>
             </div>
             <div className={styles.textArea}>
               <span className={styles.label}>소개</span>
-              <textarea id="bio" />
+              <textarea id="bio" value={bio} onChange={(e) => setBio(e.target.value)} />
             </div>
-
-            <button type="submit" style={{ border: 'none', width: '30rem', margin: '3rem auto 0', display: 'block' }}>
-              <Button color="orange" size="medium">
+            <div style={{ width: '31.2rem', margin: '4rem auto' }}>
+              <Button submit color="orange" size="medium">
                 등록하기
               </Button>
-            </button>
+            </div>
           </form>
         </div>
       </div>

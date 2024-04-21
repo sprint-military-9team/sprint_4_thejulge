@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import { useAsync } from '@/hooks/useAsync';
 import { getUserProfile } from '@/apis/profile';
 import { UserProfileType } from '@/types';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import Banner from './Banner';
 import styles from './Profile.module.scss';
 import ProfileEdit from './ProfileEdit';
@@ -14,6 +16,7 @@ import ProfileTableContainer from './ProfileTableContainer';
 const USER_ID = '4896c2a6-3c24-4f26-9f5d-84c4b13db4fd'; // user1
 
 export default function Profile() {
+  const router = useRouter();
   const [isOpened, setIsOpend] = useState(false);
   const [loading, error, getUserProfileAsync] = useAsync(getUserProfile);
   const [userProfile, setUserProfile] = useState({} as UserProfileType);
@@ -36,9 +39,14 @@ export default function Profile() {
     handleLoadUserProfile();
   }, []);
 
+  if (error) {
+    // 임시로 랜딩페이지로 리다이렉트 추후, 오류 페이지로 바꿀예정
+    router.push('/');
+  }
+
   return (
     <div className={styles.container}>
-      <ProfileEdit isOpend={isOpened} onClose={handleCloseEdit} />
+      {!loading && <ProfileEdit defaultValues={userProfile} isOpend={isOpened} onClose={handleCloseEdit} />}
       <main className={styles.main}>
         <section className={styles.profile}>
           <div className={styles.wrapper}>
@@ -54,11 +62,11 @@ export default function Profile() {
                       <p className={styles.nameLabel}>이름</p>
                       <p className={styles.name}>{userProfile.name}</p>
                       <p className={styles.phone}>
-                        <img src={PHONE} alt="phone" />
+                        <Image width={20} height={20} src={PHONE} alt="phone" />
                         <span>{userProfile.phone}</span>
                       </p>
                       <p className={styles.region}>
-                        <img src={GPS} alt="gps" />
+                        <Image width={20} height={20} src={GPS} alt="gps" />
                         <span>선호 지역: {userProfile.address}</span>
                       </p>
                       <p className={styles.bio}>{userProfile.bio}</p>
