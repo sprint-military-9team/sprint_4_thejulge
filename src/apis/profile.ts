@@ -12,7 +12,7 @@ export const getUserProfile = async (userId: string): Promise<UserProfileType> =
   return data.item;
 };
 
-export const putUserProfile = async (
+export const setUserProfile = async (
   userId: string,
   body: { name: string; phone: string; address: string; bio: string },
 ) => {
