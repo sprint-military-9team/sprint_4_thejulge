@@ -1,6 +1,8 @@
+@import '@/styles/_index';
+@import '@/styles/_media';
+
 .layout {
   display: flex;
-  align-items: center;
   flex-direction: column;
   width: 100vw;
   min-height: 100vh;
@@ -12,7 +14,18 @@
   flex-direction: column;
   width: 100%;
   background: #fafafa;
-  align-items: flex-start;
   justify-content: center;
   padding: 6rem calc((100vw - 96.3rem) / 2);
+}
+
+@include media(tablet) {
+  .Wrapper {
+    padding: 6rem calc((100vw - 68rem) / 2);
+  }
+}
+
+@include media(mobile) {
+  .Wrapper {
+    padding: 6rem calc((100vw - 35.1rem) / 2);
+  }
 }

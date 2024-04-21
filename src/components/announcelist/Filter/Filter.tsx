@@ -69,10 +69,12 @@ function Filter({ onClick, removeFilter }: FilterProps) {
   const handleInputStartChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputTime = new Date(event.target.value);
     const currentTime = new Date();
+    console.log(currentTime, inputTime, currentTime < inputTime);
     if (inputTime < currentTime) {
       setIsSetTimeValid(false);
+    } else {
+      setIsSetTimeValid(true);
     }
-
     const inputDateTime = event.target.value;
     const dateObject = new Date(inputDateTime);
     const formattedDateTime = dateObject.toISOString();

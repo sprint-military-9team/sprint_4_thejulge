@@ -82,7 +82,7 @@ function ShopDetail() {
       </div>
       <div className={styles.notice}>
         <div className={styles.shopImageWrapper}>
-          <Image width={548} height={308} src={shopImage} alt="shopImage" />
+          <Image fill src={shopImage} alt="shopImage" />
           {completed && <CompletedMessage completed={completed} />}
         </div>
         <div className={styles.noticeContent}>
@@ -90,7 +90,7 @@ function ShopDetail() {
             <div className={styles.noticeInfoTitle}>
               <span className={styles.title}>시급</span>
               <div className={styles.noticeInfoSalary}>
-                <span className={styles.shopTitle}>{noticeData?.item.hourlyPay}</span>
+                <span className={styles.shopTitle}>{noticeData?.item.hourlyPay}원</span>
                 <div className={styles.raise}>
                   <span>기존 시급보다 {raise}%</span>
                   <Image src={CARDARROW} alt="arrow" width={20} height={20} />

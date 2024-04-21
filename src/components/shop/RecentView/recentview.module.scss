@@ -1,4 +1,5 @@
 @import '@/styles/_index';
+@import '@/styles/_media';
 
 .recentViewWrapper {
   display: flex;
@@ -27,4 +28,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@include media(tablet) {
+  .recentViewGrid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+  }
+}
+
+@include media(mobile) {
+  .recentViewGrid {
+    grid-column-gap: 0.8rem;
+    grid-row-gap: 1.6rem;
+  }
 }
