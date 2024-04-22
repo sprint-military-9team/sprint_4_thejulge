@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Box from './Box';
+import { items } from './mockData';
 
 declare global {
   interface Window {
@@ -32,30 +33,31 @@ const restaurants = [
   },
 ];
 
-function extractShopInfo(data) {
+function extractShopInfo(items) {
   const shopInfoArray = [];
 
-  if (data && data.items && data.items.length > 0) {
-    data.items.forEach((item) => {
-      const { shop } = item.item;
-      if (shop && shop.item && shop.item.id && shop.item.name && shop.item.address1 && shop.item.address2) {
-        const shopInfo = {
-          shop_id: shop.item.id,
-          shop_name: shop.item.name,
-          address1: shop.item.address1,
-          address2: shop.item.address2,
-        };
-        shopInfoArray.push(shopInfo);
-      }
-    });
-  }
+  items.forEach((item) => {
+    const { shop } = item.item;
+    if (shop && shop.item && shop.item.id && shop.item.name && shop.item.address1 && shop.item.address2) {
+      const shopInfo = {
+        shop_id: shop.item.id,
+        shop_name: shop.item.name,
+        address1: shop.item.address1,
+        address2: shop.item.address2,
+        imageUrl: shop.item.imageUrl,
+      };
+      shopInfoArray.push(shopInfo);
+    }
+  });
 
   return shopInfoArray;
 }
 
+const mockDatas = extractShopInfo(items);
+
 export default function Map() {
   const [shop, setShop] = useState({
-    address: '',
+    name: '',
     shop_id: -1,
   });
 
@@ -93,30 +95,30 @@ export default function Map() {
           return marker;
         }
 
-        function displayPlaces(places: { x: number; y: number }[], address: string, shop_id: number) {
+        function displayPlaces(places: { x: number; y: number }[], name: string, shop_id: number) {
           for (let i = 0; i < places.length; i += 1) {
             // 마커를 생성하고 지도에 표시합니다
             const placePosition = new window.kakao.maps.LatLng(places[i].y, places[i].x);
             const marker = addMarker(placePosition, i);
-            marker.address = address;
+            marker.name = name;
             marker.shop_id = shop_id;
 
             window.kakao.maps.event.addListener(marker, 'click', () => {
-              setShop({ ...shop, shop_id: marker.shop_id, address: marker.address });
+              setShop({ ...shop, shop_id: marker.shop_id, name: marker.name });
             });
           }
         }
 
-        function placesSearchCB(data: string, address: string, shop_id: number) {
-          displayPlaces(data, address, shop_id);
+        function placesSearchCB(data: string, name: string, shop_id: number) {
+          displayPlaces(data, name, shop_id);
         }
 
         function searchPlaces() {
           // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
 
-          restaurants.forEach((restaurant) => {
-            ps.keywordSearch(restaurant.address, (data) =>
-              placesSearchCB(data, restaurant.address, restaurant.shop_id),
+          mockDatas.forEach((mockData) => {
+            ps.keywordSearch(`${mockData.address1} ${mockData.address2}`, (data) =>
+              placesSearchCB(data, mockData.shop_name, mockData.shop_id),
             );
           });
         }
@@ -138,7 +140,7 @@ export default function Map() {
 
   return (
     <div id="map" style={{ width: '100%', height: '100vh', position: 'relative' }}>
-      <Box shop_id={shop.shop_id} address={shop.address} />
+      <Box shop_id={shop.shop_id} shop_name={shop.name} />
     </div>
   );
 }

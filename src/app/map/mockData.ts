@@ -1026,3 +1026,5 @@ export const items = [
     ],
   },
 ];
+
+export const error = 0;
