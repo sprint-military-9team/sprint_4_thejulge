@@ -96,16 +96,13 @@ export default function Header() {
     },
   };
   const buttonType = BUTTON_LIST[memberType];
-  const handleClickNotification = useCallback((event: React.MouseEvent<HTMLDivElement>, isRead: boolean) => {
+  const handleClickNotification = useCallback((id: string, isRead: boolean) => {
     if (isRead) {
       return;
     }
     /* api function */
-    const notificationId = event.currentTarget.id;
     setNotificationData((previousData) =>
-      previousData.map((notification) =>
-        notification.id === notificationId ? { ...notification, read: true } : notification,
-      ),
+      previousData.map((notification) => (notification.id === id ? { ...notification, read: true } : notification)),
     );
     setNotificationNumber((previousCount) => previousCount - 1);
   }, []);

@@ -12,7 +12,7 @@ import styles from './Notification.module.scss';
 type NotificationProps = {
   notificationData: NotificationDataType[];
   notificationNumber: number;
-  handleClickNotification: (event: React.MouseEvent<HTMLDivElement>, read: boolean) => void;
+  handleClickNotification: (id: string, read: boolean) => void;
   changeNotificationData: () => void;
 };
 
@@ -24,7 +24,6 @@ export default function Notification({
 }: NotificationProps) {
   const [isOpen, setIsOpen] = useState(false);
   const notificationRef = useRef<HTMLDivElement>(null);
-  console.log(notificationData);
 
   const handleClickNotificationButton = () => {
     setIsOpen((previousStatus) => !previousStatus);
@@ -78,7 +77,7 @@ export default function Notification({
                     id={notification.id}
                     key={notification.id}
                     className={notification.read ? styles.notificationReadWrapper : styles.notificationWrapper}
-                    onClick={(event) => handleClickNotification(event, notification.read)}
+                    onClick={() => handleClickNotification(notification.id, notification.read)}
                     role="presentation"
                   >
                     <div
