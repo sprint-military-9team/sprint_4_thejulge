@@ -8,6 +8,7 @@ import useInput from '@/hooks/useInput';
 import Cookies from 'js-cookie';
 import { NoticeInformationDataType } from '@/app/ownerNoticeDetail/types';
 import { checkInputList } from '@/utils/checkLoginInput';
+import { useRouter } from 'next/navigation';
 import styles from './OwnerAddNotice.module.scss';
 import Input from '../common/Input/Input';
 import Button from '../common/Button';
@@ -20,6 +21,7 @@ type OwnerAddNoticeProps = {
 
 export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticeProps) {
   const shopId = Cookies.get('shopId') as string;
+  const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const [description, setDescription] = useState('');
   const {
@@ -155,6 +157,7 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
     const APIFlag = await postNotice(shopId, data);
     if (APIFlag) {
       alert('등록이 완료되었습니다.');
+      router.push(`/ownerNoticeDetail?shopId=${APIFlag}`);
     }
   };
 
@@ -162,6 +165,7 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
     if (noticeData) {
       changeHoulyPay(changeMoneyType(String(noticeData.hourlyPay)));
       const date = new Date(noticeData.startsAt);
+      console.log(noticeData);
       const formattedDate = date.toISOString().slice(0, 16);
       changeWorkhour(String(noticeData.workhour));
       changeStartsAt(formattedDate);

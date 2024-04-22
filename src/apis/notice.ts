@@ -27,7 +27,8 @@ export const postNotice = async (shopId: string, data: NoticeUploadDataType) => 
   if (!response.ok) {
     return false;
   }
-  return true;
+  const noticeData = await response.json();
+  return noticeData.item.id;
 };
 
 export const putSpecifyNotice = async (noticeId: string, data: NoticeUploadDataType) => {
