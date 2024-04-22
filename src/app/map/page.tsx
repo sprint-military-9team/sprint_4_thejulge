@@ -22,7 +22,36 @@ const restaurants = [
     address: '서울특별시 마포구 잔다리로6길 25 재륜빌딩',
     shop_id: 3,
   },
+  {
+    address: '교촌치킨 신용산역점',
+    shop_id: 4,
+  },
+  {
+    address: '김정은 치킨',
+    shop_id: 4,
+  },
 ];
+
+function extractShopInfo(data) {
+  const shopInfoArray = [];
+
+  if (data && data.items && data.items.length > 0) {
+    data.items.forEach((item) => {
+      const { shop } = item.item;
+      if (shop && shop.item && shop.item.id && shop.item.name && shop.item.address1 && shop.item.address2) {
+        const shopInfo = {
+          shop_id: shop.item.id,
+          shop_name: shop.item.name,
+          address1: shop.item.address1,
+          address2: shop.item.address2,
+        };
+        shopInfoArray.push(shopInfo);
+      }
+    });
+  }
+
+  return shopInfoArray;
+}
 
 export default function Map() {
   const [shop, setShop] = useState({
@@ -64,7 +93,7 @@ export default function Map() {
           return marker;
         }
 
-        function displayPlaces(places, address, shop_id) {
+        function displayPlaces(places: { x: number; y: number }[], address: string, shop_id: number) {
           for (let i = 0; i < places.length; i += 1) {
             // 마커를 생성하고 지도에 표시합니다
             const placePosition = new window.kakao.maps.LatLng(places[i].y, places[i].x);
@@ -86,7 +115,7 @@ export default function Map() {
           // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
 
           restaurants.forEach((restaurant) => {
-            ps.keywordSearch(restaurant.address, (data: string) =>
+            ps.keywordSearch(restaurant.address, (data) =>
               placesSearchCB(data, restaurant.address, restaurant.shop_id),
             );
           });
