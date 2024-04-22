@@ -134,18 +134,18 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     checkInputList(formRef);
-    console.log(noticeData);
+
     if (!hourlyPay || !startsAt || !workhour) {
       return;
     }
-    console.log(shopId);
+
     const data = {
       hourlyPay: Number(hourlyPay.replaceAll(',', '')),
       startsAt: changeDateType(startsAt),
       workhour: Number(workhour),
       description,
     };
-    console.log(noticeData);
+
     if (noticeData) {
       const APIFlag = await putSpecifyNotice(noticeData.id, data);
       if (APIFlag) {
@@ -157,7 +157,7 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
     const APIFlag = await postNotice(shopId, data);
     if (APIFlag) {
       alert('등록이 완료되었습니다.');
-      router.push(`/ownerNoticeDetail?shopId=${APIFlag}`);
+      router.push(`/ownerNoticeDetail?noticeId=${APIFlag}`);
     }
   };
 
@@ -165,7 +165,6 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
     if (noticeData) {
       changeHoulyPay(changeMoneyType(String(noticeData.hourlyPay)));
       const date = new Date(noticeData.startsAt);
-      console.log(noticeData);
       const formattedDate = date.toISOString().slice(0, 16);
       changeWorkhour(String(noticeData.workhour));
       changeStartsAt(formattedDate);

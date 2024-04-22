@@ -6,14 +6,14 @@ import { cookies } from 'next/headers';
 import NoticeInformation from '../../components/ownerNoticeDetail/NoticeInformation/NoticeInformation';
 import ApplicationList from '../../components/ownerNoticeDetail/ApplicationList/ApplicationList';
 
-export default async function ownerNoticeDetail() {
+type OwnerNoticeDetailProps = {
+  searchParams?: { [key: string]: string | string[] | undefined };
+};
+
+export default async function ownerNoticeDetail({ searchParams }: OwnerNoticeDetailProps) {
   const cookieStore = cookies();
-  const cookie = cookieStore.get('shopId');
-  if (!cookie) {
-    return <div>error</div>;
-  }
-  const shopId = cookie.value;
-  const noticeId = '61a36d05-5036-42f5-bbe3-9e6f815c2a79';
+  const shopId = cookieStore.get('shopId')?.value as string;
+  const noticeId = searchParams?.noticeId as string;
 
   const getStoreData = async (shopID: string) => {
     const { id, name, category, address1, description, imageUrl, originalHourlyPay } = await getShopData(shopID);
