@@ -50,11 +50,8 @@
   background: rgb(var(--card-rgb) 0);
   border: 1px solid rgb(var(--card-border-rgb) 0);
   border-radius: var(--border-radius);
-<<<<<<< Updated upstream
-=======
   background: rgba(var(--card-rgb), 0);
   border: 1px solid rgba(var(--card-border-rgb), 0);
->>>>>>> Stashed changes
   transition:
     background 200ms,
     border 200ms;
@@ -104,11 +101,8 @@
 
 .center::before,
 .center::after {
-<<<<<<< Updated upstream
-=======
   content: '';
   left: 50%;
->>>>>>> Stashed changes
   position: absolute;
   left: 50%;
   content: '';
@@ -188,14 +182,11 @@
     inset: 0 0 auto;
     align-items: center;
     padding: 2rem 1rem 1.4rem;
-<<<<<<< Updated upstream
     background: linear-gradient(to bottom, rgb(var(--background-start-rgb) 1), rgb(var(--callout-rgb) 0.5));
-=======
     border-radius: 0;
     border: none;
     border-bottom: 1px solid rgba(var(--callout-border-rgb), 0.25);
     background: linear-gradient(to bottom, rgba(var(--background-start-rgb), 1), rgba(var(--callout-rgb), 0.5));
->>>>>>> Stashed changes
     background-clip: padding-box;
     backdrop-filter: blur(24px);
     border: none;
@@ -205,12 +196,9 @@
 
   .description div {
     inset: auto 0 0;
-<<<<<<< Updated upstream
-=======
     padding: 2rem;
     height: 200px;
     background: linear-gradient(to bottom, transparent 0%, rgb(var(--background-end-rgb)) 40%);
->>>>>>> Stashed changes
     z-index: 1;
     align-items: flex-end;
     height: 200px;

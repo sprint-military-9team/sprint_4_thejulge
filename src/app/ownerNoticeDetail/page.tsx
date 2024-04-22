@@ -3,6 +3,7 @@ import Footer from '@/components/common/Footer/Footer';
 import { getShopData } from '@/apis/shop';
 import { getSpecifyNoticeData } from '@/apis/notice';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import NoticeInformation from '../../components/ownerNoticeDetail/NoticeInformation/NoticeInformation';
 import ApplicationList from '../../components/ownerNoticeDetail/ApplicationList/ApplicationList';
 
@@ -13,7 +14,24 @@ type OwnerNoticeDetailProps = {
 export default async function ownerNoticeDetail({ searchParams }: OwnerNoticeDetailProps) {
   const cookieStore = cookies();
   const shopId = cookieStore.get('shopId')?.value as string;
+  const token = cookieStore.get('token')?.value as string;
+  const type = cookieStore.get('type')?.value as string;
   const noticeId = searchParams?.noticeId as string;
+  if (!token) {
+    redirect('/signin');
+  }
+
+  if (type !== 'employer') {
+    redirect('/');
+  }
+
+  if (!shopId) {
+    redirect('/');
+  }
+
+  if (!noticeId) {
+    redirect('/');
+  }
 
   const getStoreData = async (shopID: string) => {
     const { id, name, category, address1, description, imageUrl, originalHourlyPay } = await getShopData(shopID);
