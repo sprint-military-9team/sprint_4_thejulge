@@ -13,7 +13,7 @@ export default async function ownerNoticeDetail() {
     return <div>error</div>;
   }
   const shopId = cookie.value;
-  const noticeId = 'fccaf5b1-b5ba-450c-a58e-0d22f4651f6c';
+  const noticeId = '61a36d05-5036-42f5-bbe3-9e6f815c2a79';
 
   const getStoreData = async (shopID: string) => {
     const { id, name, category, address1, description, imageUrl, originalHourlyPay } = await getShopData(shopID);

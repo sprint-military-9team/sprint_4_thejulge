@@ -3,8 +3,7 @@
 import Image from 'next/image';
 import { CLOSE_ICON } from '@/utils/constants';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { postNotice } from '@/apis/notice';
-import { useRouter } from 'next/navigation';
+import { postNotice, putSpecifyNotice } from '@/apis/notice';
 import useInput from '@/hooks/useInput';
 import Cookies from 'js-cookie';
 import { NoticeInformationDataType } from '@/app/ownerNoticeDetail/types';
@@ -20,7 +19,6 @@ type OwnerAddNoticeProps = {
 };
 
 export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticeProps) {
-  const router = useRouter();
   const shopId = Cookies.get('shopId') as string;
   const formRef = useRef<HTMLFormElement>(null);
   const [description, setDescription] = useState('');
@@ -78,7 +76,8 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
 
   const changeDateType = (date: string) => {
     const inputDate = new Date(date);
-    const formattedDate = `${inputDate.toISOString().slice(0, 19)}Z`;
+    const localDate = new Date(inputDate.getTime() + 9 * 60 * 60000);
+    const formattedDate = `${localDate.toISOString().slice(0, 19)}Z`;
     return formattedDate;
   };
 
@@ -133,19 +132,29 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     checkInputList(formRef);
-    if (!hourlyPayError || !startsAtError || !workhourError) {
+    console.log(noticeData);
+    if (!hourlyPay || !startsAt || !workhour) {
       return;
     }
     console.log(shopId);
-    const APIFlag = await postNotice(shopId, {
+    const data = {
       hourlyPay: Number(hourlyPay.replaceAll(',', '')),
       startsAt: changeDateType(startsAt),
       workhour: Number(workhour),
       description,
-    });
+    };
+    console.log(noticeData);
+    if (noticeData) {
+      const APIFlag = await putSpecifyNotice(noticeData.id, data);
+      if (APIFlag) {
+        alert('편집이 완료되었습니다.');
+        window.location.reload();
+        return;
+      }
+    }
+    const APIFlag = await postNotice(shopId, data);
     if (APIFlag) {
       alert('등록이 완료되었습니다.');
-      router.push('/ownerNoticeDetail');
     }
   };
 
@@ -205,7 +214,7 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
             />
           </div>
           <div className={styles.buttonWrapper} onClick={handleSubmit}>
-            <Button color="orange" size="large">
+            <Button color="orange" size="large" submit>
               등록하기
             </Button>
           </div>

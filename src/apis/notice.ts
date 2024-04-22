@@ -29,3 +29,20 @@ export const postNotice = async (shopId: string, data: NoticeUploadDataType) => 
   }
   return true;
 };
+
+export const putSpecifyNotice = async (noticeId: string, data: NoticeUploadDataType) => {
+  const shopId = Cookies.get('shopId');
+  const token = Cookies.get('token');
+  const response = await fetch(`${BASE_URL}/shops/${shopId}/notices/${noticeId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+  if (!response.ok) {
+    return false;
+  }
+  return true;
+};
