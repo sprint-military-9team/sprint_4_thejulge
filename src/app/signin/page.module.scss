@@ -1,0 +1,39 @@
+@import '@/styles/_index';
+@import '@/styles/_media';
+
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: $white;
+}
+.wrapper {
+  width: 35rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.logoWrapper {
+  height: 4.5rem;
+  margin-bottom: 4rem;
+}
+
+.text {
+  margin-top: 2rem;
+  @include font-normal;
+  font-size: 1.6rem;
+  line-height: 1.909rem;
+}
+
+@include media(mobile) {
+  .logoWrapper {
+    height: 3.8rem;
+  }
+  .logo {
+    width: 20.8rem;
+    height: 3.8rem;
+  }
+}
