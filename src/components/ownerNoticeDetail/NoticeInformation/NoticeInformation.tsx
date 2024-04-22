@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import getTimeDifference from '@/utils/getTimeDifference';
 import { CLOCK, GPS, NOTICE_DETAIL_ARROW_UP } from '@/utils/constants';
-import Button from '@/components/common/Button';
 import styles from './NoticeInformation.module.scss';
 import { NoticeInformationDataType, StoreInformationDataType } from '../../../app/ownerNoticeDetail/types';
+import NotificationInformationButton from '../NotificationInformationButton/NotificationInformationButton';
 
 type NoticeInformationProps = {
   noticeData: NoticeInformationDataType;
@@ -59,9 +59,7 @@ export default function NoticeInformation({ noticeData, storeData }: NoticeInfor
               </div>
               <pre className={`${styles.storeDescription} ${styles.textMediumLarge}`}>{storeData.description}</pre>
             </div>
-            <Button color="white" size="large">
-              공고 편집하기
-            </Button>
+            <NotificationInformationButton />
           </div>
         </div>
         <div className={styles.noticeDescription}>

@@ -31,8 +31,10 @@ export default async function ownerNoticeDetail() {
   return (
     <>
       <Header notificationListData={[]} />
-      <NoticeInformation noticeData={NOTICE_DATA} storeData={STORE_DATA} />
-      <ApplicationList shopId={shopId} noticeId={noticeId} />
+      <div style={{ position: 'relative', width: '100%', height: 'fit-content' }}>
+        <NoticeInformation noticeData={NOTICE_DATA} storeData={STORE_DATA} />
+        <ApplicationList shopId={shopId} noticeId={noticeId} />
+      </div>
       <Footer />
     </>
   );
