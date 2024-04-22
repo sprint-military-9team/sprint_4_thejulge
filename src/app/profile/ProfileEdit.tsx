@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { UserProfileType } from '@/types';
 import { setUserProfile } from '@/apis/profile';
 import { useAsync } from '@/hooks/useAsync';
+import Cookies from 'js-cookie';
 import styles from './ProfileEdit.module.scss';
 
 type ProfileEditProps = {
@@ -29,13 +30,12 @@ const INITIAL_ERRORS = {
 };
 
 export default function ProfileEdit({ isOpend, onClose, defaultValues, triggerProfileUpdate }: ProfileEditProps) {
-  const [name, setName] = useState(defaultValues ? defaultValues.name : '');
-  const [phone, setPhone] = useState(defaultValues ? defaultValues.phone : '');
-  const [bio, setBio] = useState(defaultValues ? defaultValues.bio : '');
-  const [address, setAddress] = useState(defaultValues ? defaultValues.address : '');
+  const [name, setName] = useState(defaultValues?.name ? defaultValues.name : '');
+  const [phone, setPhone] = useState(defaultValues?.phone ? defaultValues.phone : '');
+  const [bio, setBio] = useState(defaultValues?.bio ? defaultValues.bio : '');
+  const [address, setAddress] = useState(defaultValues?.address ? defaultValues.address : '');
   const [errors, setErrors] = useState(INITIAL_ERRORS);
   const [loading, error, setUserProfileAsync] = useAsync(setUserProfile);
-
   const handleCloseClick = () => {
     onClose();
   };
@@ -67,17 +67,25 @@ export default function ProfileEdit({ isOpend, onClose, defaultValues, triggerPr
         phoneError: { isError: true, errorMessage: '휴대폰 번호를 입력해주세요' },
       }));
     }
+    if (!address) {
+      // eslint-disable-next-line no-alert
+      alert('주소를 입력해주세요');
+      return;
+    }
 
     if (!name || !phone) {
       return;
     }
-    await setUserProfileAsync('04baf4be-52d7-4e0d-8da8-21a646d9a41c', { name, phone, address, bio });
+    const USER_ID = Cookies.get('userId') as string;
+    await setUserProfileAsync(USER_ID, { name, phone, address, bio });
 
     triggerProfileUpdate();
   };
 
   if (error) {
-    console.log(error.message);
+    // eslint-disable-next-line no-alert
+    alert('프로필 등록에 실패하였습니다');
+    // return;
   }
 
   return (
@@ -125,7 +133,7 @@ export default function ProfileEdit({ isOpend, onClose, defaultValues, triggerPr
               </div>
               <div className={styles.inputArea}>
                 <div className={styles.inputAreaWrapper}>
-                  <span className={`${styles.label} ${styles.addressLabel}`}>주소</span>
+                  <span className={`${styles.label} ${styles.addressLabel}`}>주소*</span>
                   <Dropdown optionList={SEOULGROUPLIST} initialOption={address} onClick={setAddress} />
                 </div>
               </div>

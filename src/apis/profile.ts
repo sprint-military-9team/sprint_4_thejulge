@@ -18,7 +18,7 @@ export const setUserProfile = async (
   body: { name: string; phone: string; address: string; bio: string },
 ) => {
   const token = Cookies.get('token');
-  const response = await fetch(`${BASE_URL}/usersa/${userId}`, {
+  const response = await fetch(`${BASE_URL}/users/${userId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
