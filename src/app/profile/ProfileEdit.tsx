@@ -7,6 +7,7 @@ import Button from '@/components/common/Button';
 import Image from 'next/image';
 import { UserProfileType } from '@/types';
 import { setUserProfile } from '@/apis/profile';
+import { useAsync } from '@/hooks/useAsync';
 import styles from './ProfileEdit.module.scss';
 
 type ProfileEditProps = {
@@ -33,6 +34,7 @@ export default function ProfileEdit({ isOpend, onClose, defaultValues, triggerPr
   const [bio, setBio] = useState(defaultValues ? defaultValues.bio : '');
   const [address, setAddress] = useState(defaultValues ? defaultValues.address : '');
   const [errors, setErrors] = useState(INITIAL_ERRORS);
+  const [loading, error, setUserProfileAsync] = useAsync(setUserProfile);
 
   const handleCloseClick = () => {
     onClose();
@@ -69,9 +71,14 @@ export default function ProfileEdit({ isOpend, onClose, defaultValues, triggerPr
     if (!name || !phone) {
       return;
     }
-    await setUserProfile('04baf4be-52d7-4e0d-8da8-21a646d9a41c', { name, phone, address, bio });
+    await setUserProfileAsync('04baf4be-52d7-4e0d-8da8-21a646d9a41c', { name, phone, address, bio });
+
     triggerProfileUpdate();
   };
+
+  if (error) {
+    console.log(error.message);
+  }
 
   return (
     <div className={`${styles.container} ${isOpend && styles.opacity}`}>
@@ -128,7 +135,7 @@ export default function ProfileEdit({ isOpend, onClose, defaultValues, triggerPr
               <textarea id="bio" value={bio} onChange={(e) => setBio(e.target.value)} />
             </div>
             <div style={{ width: '31.2rem', margin: '4rem auto' }}>
-              <Button submit color="orange" size="medium">
+              <Button submit color="orange" size="medium" isDisabled={loading}>
                 등록하기
               </Button>
             </div>

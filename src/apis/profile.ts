@@ -16,7 +16,7 @@ export const setUserProfile = async (
   userId: string,
   body: { name: string; phone: string; address: string; bio: string },
 ) => {
-  const response = await fetch(`${BASE_URL}/users/${userId}`, {
+  const response = await fetch(`${BASE_URL}/usersa/${userId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -26,7 +26,7 @@ export const setUserProfile = async (
   });
 
   if (!response.ok) {
-    throw new Error('API 오류');
+    throw new Error(String(response.status));
   }
 };
 

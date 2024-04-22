@@ -33,7 +33,7 @@ type TableData = {
 
 export default function ProfileTableContainer() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [loading, error, getUserApplicationDataAsync] = useAsync(getUserApplicationData);
+  const [loading, error, getUserApplicationDataAsync] = useAsync(getUserApplicationData, true);
   const [count, setCount] = useState(0);
   const router = useRouter();
   const [tableData, setTableData] = useState<TableData>({

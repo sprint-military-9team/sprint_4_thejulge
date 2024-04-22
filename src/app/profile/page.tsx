@@ -18,7 +18,7 @@ const USER_ID = '04baf4be-52d7-4e0d-8da8-21a646d9a41c'; // user1
 export default function Profile() {
   const router = useRouter();
   const [isOpened, setIsOpend] = useState(false);
-  const [loading, error, getUserProfileAsync] = useAsync(getUserProfile);
+  const [loading, error, getUserProfileAsync] = useAsync(getUserProfile, true);
   const [userProfile, setUserProfile] = useState({} as UserProfileType);
   const [update, setUpdate] = useState(false);
 
