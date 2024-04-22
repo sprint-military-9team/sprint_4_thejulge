@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import getTimeDifference from '@/utils/getTimeDifference';
 import { CLOCK, GPS, NOTICE_DETAIL_ARROW_UP } from '@/utils/constants';
-import Button from '@/components/common/Button';
 import styles from './NoticeInformation.module.scss';
 import { NoticeInformationDataType, StoreInformationDataType } from '../../../app/ownerNoticeDetail/types';
+import NotificationInformationButton from '../NotificationInformationButton/NotificationInformationButton';
 
 type NoticeInformationProps = {
   noticeData: NoticeInformationDataType;
@@ -21,14 +21,18 @@ export default function NoticeInformation({ noticeData, storeData }: NoticeInfor
           <div className={styles.storeName}>{storeData.name}</div>
         </div>
         <div className={styles.noticeWrapper}>
-          <Image
-            src={storeData.imageUrl}
-            alt="식당 이미지"
-            width={539}
-            height={308}
-            priority
-            className={styles.storeImage}
-          />
+          <div className={styles.imageWrapper}>
+            <Image
+              src={storeData.imageUrl}
+              alt="식당 이미지"
+              width={539}
+              height={308}
+              priority
+              className={styles.storeImage}
+            />
+            {noticeData.closed && <div className={styles.imageTextWrapper}>마감 완료</div>}
+          </div>
+
           <div className={styles.noticeFlexWrapper}>
             <div className={styles.noticeContentWrapper}>
               <div className={styles.noticeTitleWrapper}>
@@ -59,9 +63,7 @@ export default function NoticeInformation({ noticeData, storeData }: NoticeInfor
               </div>
               <pre className={`${styles.storeDescription} ${styles.textMediumLarge}`}>{storeData.description}</pre>
             </div>
-            <Button color="white" size="large">
-              공고 편집하기
-            </Button>
+            <NotificationInformationButton noticeData={noticeData} />
           </div>
         </div>
         <div className={styles.noticeDescription}>

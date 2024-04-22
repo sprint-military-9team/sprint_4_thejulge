@@ -1,5 +1,6 @@
 import BASE_URL from '@/constants/BASEURL';
-import { SpecifyNoticeDataType } from '@/types';
+import { SpecifyNoticeDataType, NoticeUploadDataType } from '@/types';
+import Cookies from 'js-cookie';
 
 export const getSpecifyNoticeData = async (shopId: string, noticeId: string): Promise<SpecifyNoticeDataType> => {
   const response = await fetch(`${BASE_URL}/shops/${shopId}/notices/${noticeId}`, {
@@ -13,5 +14,36 @@ export const getSpecifyNoticeData = async (shopId: string, noticeId: string): Pr
   return data.item;
 };
 
-/* lint default 오류 방지 코드 -> 새로운 코드 추가 시 삭제 */
-export const error = 0;
+export const postNotice = async (shopId: string, data: NoticeUploadDataType) => {
+  const token = Cookies.get('token');
+  const response = await fetch(`${BASE_URL}/shops/${shopId}/notices`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+  if (!response.ok) {
+    return false;
+  }
+  const noticeData = await response.json();
+  return noticeData.item.id;
+};
+
+export const putSpecifyNotice = async (noticeId: string, data: NoticeUploadDataType) => {
+  const shopId = Cookies.get('shopId');
+  const token = Cookies.get('token');
+  const response = await fetch(`${BASE_URL}/shops/${shopId}/notices/${noticeId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+  if (!response.ok) {
+    return false;
+  }
+  return true;
+};
