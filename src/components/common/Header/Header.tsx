@@ -6,12 +6,13 @@ import { useRouter } from 'next/navigation';
 import { useState, useCallback, useEffect } from 'react';
 import { SEARCH_ICON, HEADER_LOGO } from '@/utils/constants';
 import Cookies from 'js-cookie';
-import { getUserAlert } from '@/apis/alert';
+import { getUserAlert, putUserAlert } from '@/apis/alert';
 import Notification from './notification';
 import styles from './Header.module.scss';
 import { ButtonListType, NotificationDataType } from './types';
 
 export default function Header() {
+  const router = useRouter();
   /* 
   notificationListData 샘플 데이터
   const data = [
@@ -96,11 +97,20 @@ export default function Header() {
     },
   };
   const buttonType = BUTTON_LIST[memberType];
-  const handleClickNotification = useCallback((id: string, isRead: boolean) => {
+  const handleClickNotification = useCallback(async (id: string, isRead: boolean) => {
     if (isRead) {
       return;
     }
     /* api function */
+    const status = await putUserAlert(id);
+    if (status === '400' || status === '404') {
+      throw new Error(`잘못된 접근: ${status}`);
+    }
+    if (status === '403') {
+      alert('로그인 해주세요.');
+      router.push('/signin');
+      return;
+    }
     setNotificationData((previousData) =>
       previousData.map((notification) => (notification.id === id ? { ...notification, read: true } : notification)),
     );
@@ -110,7 +120,6 @@ export default function Header() {
   const changeNotificationData = useCallback(() => {
     setNotificationData((previousData) => previousData.filter((notification) => !notification.read && notification));
   }, []);
-  const router = useRouter();
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
   };

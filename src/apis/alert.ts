@@ -46,4 +46,14 @@ export const getUserAlert = async (): Promise<NotificationDataType[] | number> =
   return filteredData;
 };
 
-export const error = 0;
+export const putUserAlert = async (alertId: string) => {
+  const userId = Cookies.get('userId');
+  const token = Cookies.get('token');
+  const response = await fetch(`${BASE_URL}/users/${userId}/alerts/${alertId}`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return String(response.status);
+};
