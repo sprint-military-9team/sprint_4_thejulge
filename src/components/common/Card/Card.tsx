@@ -1,19 +1,24 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { CLOCK, CLOCKGRAY, GPS, GPSGRAY, CARDARROW, CARDCOMPLETEARROW, CARDMOBILEARROW } from '@/utils/constants';
+import getWorkTime from '@/utils/getWorkTime';
 import styles from './card.module.scss';
 
 interface CardProps {
   image: string;
   title: string;
-  time: string;
+  startTime: string;
+  workHour: number;
   location: string;
   salary: string;
-  raise?: string;
+  raise?: number;
   isRaised?: boolean;
   completed?: string;
+  shopId: string;
+  noticeId: string;
 }
 
 function CompletedMessage({ completed }: Pick<CardProps, 'completed'>) {
@@ -24,13 +29,26 @@ function CompletedMessage({ completed }: Pick<CardProps, 'completed'>) {
   );
 }
 
-function Card({ image, title, time, location, salary, raise, isRaised, completed }: CardProps) {
+function Card({
+  image,
+  title,
+  startTime,
+  workHour,
+  location,
+  salary,
+  raise,
+  isRaised,
+  completed,
+  shopId,
+  noticeId,
+}: CardProps) {
   const [isMobile, setIsMobile] = useState(false);
   const style = completed ? { color: '#CBC9CF' } : {};
   const raiseClass = completed ? (isMobile ? styles.completedMobile : styles.completedDesk) : undefined;
   const arrowSrc = completed ? (isMobile ? CARDCOMPLETEARROW : CARDARROW) : isMobile ? CARDMOBILEARROW : CARDARROW;
   const clockSrc = completed ? CLOCKGRAY : CLOCK;
   const locationSrc = completed ? GPSGRAY : GPS;
+  const router = useRouter();
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 767);
@@ -41,10 +59,32 @@ function Card({ image, title, time, location, salary, raise, isRaised, completed
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+  const handleRouteNotice = () => {
+    const cardData = {
+      image,
+      title,
+      startTime,
+      workHour,
+      location,
+      salary,
+      raise,
+      isRaised,
+      completed,
+      shopId,
+      noticeId,
+    };
+    const currentData = JSON.parse(localStorage.getItem('cardDataList') || '[]');
+    if (currentData.length >= 6) {
+      currentData.shift();
+    }
+    currentData.unshift(cardData);
+    localStorage.setItem('cardDataList', JSON.stringify(currentData));
+    router.push(`/shop?shopId=${shopId}&noticeId=${noticeId}`);
+  };
   return (
-    <div className={styles.cardWrapper}>
+    <div className={styles.cardWrapper} onClick={handleRouteNotice}>
       <div className={styles.imageWrapper}>
-        <Image src={image} layout="fill" objectFit="cover" alt="store image" />
+        <Image src={image} fill alt="store image" />
         {completed && <CompletedMessage completed={completed} />}
       </div>
       <div className={styles.contentWrapper}>
@@ -55,7 +95,7 @@ function Card({ image, title, time, location, salary, raise, isRaised, completed
           <div className={styles.info}>
             <Image width={24} height={24} className={styles.icon} src={clockSrc} alt="clockicon" />
             <span style={style} className={styles.time}>
-              {time}
+              {getWorkTime(startTime, workHour)}
             </span>
           </div>
           <div className={styles.info}>
@@ -67,7 +107,7 @@ function Card({ image, title, time, location, salary, raise, isRaised, completed
         </div>
         <div className={styles.salaryWrapper}>
           <span style={style} className={styles.salary}>
-            {salary}
+            {salary}원
           </span>
           {isRaised && (
             <div className={`${styles.raise} ${raiseClass}`}>

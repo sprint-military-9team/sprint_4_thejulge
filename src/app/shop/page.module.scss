@@ -1,0 +1,31 @@
+@import '@/styles/_index';
+@import '@/styles/_media';
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  min-height: 100vh;
+  height: 100vh;
+}
+
+.Wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: #fafafa;
+  justify-content: center;
+  padding: 6rem calc((100vw - 96.3rem) / 2);
+}
+
+@include media(tablet) {
+  .Wrapper {
+    padding: 6rem calc((100vw - 68rem) / 2);
+  }
+}
+
+@include media(mobile) {
+  .Wrapper {
+    padding: 6rem calc((100vw - 35.1rem) / 2);
+  }
+}
