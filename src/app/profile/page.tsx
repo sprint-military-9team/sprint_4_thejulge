@@ -8,12 +8,11 @@ import { getUserProfile } from '@/apis/profile';
 import { UserProfileType } from '@/types';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 import Banner from './Banner';
 import styles from './Profile.module.scss';
 import ProfileEdit from './ProfileEdit';
 import ProfileTableContainer from './ProfileTableContainer';
-
-const USER_ID = '04baf4be-52d7-4e0d-8da8-21a646d9a41c'; // user1
 
 export default function Profile() {
   const router = useRouter();
@@ -21,6 +20,7 @@ export default function Profile() {
   const [loading, error, getUserProfileAsync] = useAsync(getUserProfile, true);
   const [userProfile, setUserProfile] = useState({} as UserProfileType);
   const [update, setUpdate] = useState(false);
+  const USER_ID = Cookies.get('userId');
 
   const handleCloseEdit = () => {
     setIsOpend(false);
@@ -31,6 +31,10 @@ export default function Profile() {
   };
 
   const handleLoadUserProfile = async () => {
+    if (!USER_ID) {
+      router.push('/signin');
+      return;
+    }
     const data = await getUserProfileAsync(USER_ID);
     if (!data) return;
     setUserProfile(data);

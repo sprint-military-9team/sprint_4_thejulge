@@ -7,10 +7,10 @@ import { getUserApplicationData } from '@/apis/application';
 import Table from '@/components/common/Table';
 import getTimeDifference from '@/utils/getTimeDifference';
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 import styles from './ProfileTableContainer.module.scss';
 import Banner from './Banner';
 
-const USER_ID = '04baf4be-52d7-4e0d-8da8-21a646d9a41c'; // user1
 const LIMIT = 4;
 
 type HeaderType = {
@@ -45,6 +45,7 @@ export default function ProfileTableContainer() {
     ],
     body: [],
   });
+  const USER_ID = Cookies.get('userId');
 
   const handleLoadUserApplicationData = useCallback(
     async (user_id: string) => {
@@ -72,6 +73,10 @@ export default function ProfileTableContainer() {
   );
 
   useEffect(() => {
+    if (!USER_ID) {
+      router.push('/signin');
+      return;
+    }
     handleLoadUserApplicationData(USER_ID);
   }, [handleLoadUserApplicationData, currentPage]);
 
