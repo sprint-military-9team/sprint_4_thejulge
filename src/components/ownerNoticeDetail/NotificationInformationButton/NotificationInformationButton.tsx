@@ -25,7 +25,7 @@ export default function NotificationInformationButton({ noticeData }: Notificati
     <div style={{ width: '100%', height: '100%' }}>
       <div className={styles.buttonWrapper}>
         <Button color={noticeData.closed ? 'disabled' : 'white'} size="large" onClick={onClick}>
-          공고 편집하기
+          {noticeData.closed ? '편집 불가' : '공고 편집하기'}
         </Button>
       </div>
 

@@ -21,14 +21,18 @@ export default function NoticeInformation({ noticeData, storeData }: NoticeInfor
           <div className={styles.storeName}>{storeData.name}</div>
         </div>
         <div className={styles.noticeWrapper}>
-          <Image
-            src={storeData.imageUrl}
-            alt="식당 이미지"
-            width={539}
-            height={308}
-            priority
-            className={styles.storeImage}
-          />
+          <div className={styles.imageWrapper}>
+            <Image
+              src={storeData.imageUrl}
+              alt="식당 이미지"
+              width={539}
+              height={308}
+              priority
+              className={styles.storeImage}
+            />
+            {noticeData.closed && <div className={styles.imageTextWrapper}>마감 완료</div>}
+          </div>
+
           <div className={styles.noticeFlexWrapper}>
             <div className={styles.noticeContentWrapper}>
               <div className={styles.noticeTitleWrapper}>
