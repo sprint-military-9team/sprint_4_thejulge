@@ -1,5 +1,5 @@
 import BASE_URL from '@/constants/BASEURL';
-import { SpecifyNoticeApplicationsDataType } from '@/types';
+import { SpecifyNoticeApplicationsDataType, UserApplicationDataType } from '@/types';
 import Cookies from 'js-cookie';
 
 export const getSpecifyNoticeApplicationData = async (
@@ -48,10 +48,11 @@ export const getUserApplicationData = async (
   limit?: number,
   offset?: number,
 ): Promise<{ count: number; items: UserApplicationDataType[] }> => {
+  const token = Cookies.get('token');
   const response = await fetch(`${BASE_URL}/users/${userId}/applications?offset=${offset}&limit=${limit}`, {
     method: 'GET',
     headers: {
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwNGJhZjRiZS01MmQ3LTRlMGQtOGRhOC0yMWE2NDZkOWE0MWMiLCJpYXQiOjE3MTM1Nzk5NjZ9.-Q28XqOjbWr5xSX20q0Y9gRmI8KqTrok7JYjTLw-tjc`,
+      Authorization: `Bearer ${token}`,
     },
   });
   if (!response.ok) {

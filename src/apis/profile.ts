@@ -1,5 +1,6 @@
 import BASE_URL from '@/constants/BASEURL';
 import { UserProfileType } from '@/types';
+import Cookies from 'js-cookie';
 
 export const getUserProfile = async (userId: string): Promise<UserProfileType> => {
   const response = await fetch(`${BASE_URL}/users/${userId}`, {
@@ -16,11 +17,12 @@ export const setUserProfile = async (
   userId: string,
   body: { name: string; phone: string; address: string; bio: string },
 ) => {
+  const token = Cookies.get('token');
   const response = await fetch(`${BASE_URL}/usersa/${userId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwNGJhZjRiZS01MmQ3LTRlMGQtOGRhOC0yMWE2NDZkOWE0MWMiLCJpYXQiOjE3MTM1Nzk5NjZ9.-Q28XqOjbWr5xSX20q0Y9gRmI8KqTrok7JYjTLw-tjc`,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(body),
   });
