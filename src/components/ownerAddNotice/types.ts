@@ -7,5 +7,6 @@ export type InputDataType = {
   isError: boolean;
   onChange: (value: string) => void;
   onFocus: () => void;
+  onBlur: () => void;
   unit?: string;
 };

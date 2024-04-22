@@ -5,64 +5,88 @@ import { CLOSE_ICON } from '@/utils/constants';
 import { useCallback, useState } from 'react';
 import { postNotice } from '@/apis/notice';
 import { useRouter } from 'next/navigation';
+import useInput from '@/hooks/useInput';
 import styles from './OwnerAddNotice.module.scss';
 import Input from '../common/Input/Input';
 import Button from '../common/Button';
 import { InputDataType } from './types';
 
 type OwnerAddNoticeProps = {
-  onClose: () => void;
+  onClose?: () => void;
+  /* noticeData?: []; */
 };
 
-export default function OwnerAddNotice({ onClose }: OwnerAddNoticeProps) {
+export default function OwnerAddNotice({ onClose /* noticeData */ }: OwnerAddNoticeProps) {
   const router = useRouter();
   const shopId = 'd3398bdc-4f7b-4457-b6b6-588928dc7e2f';
-  const [hourlyPay, setHourlyPay] = useState('');
-  const [startsAt, setStartsAt] = useState('');
-  const [workhour, setWorkhour] = useState('');
   const [description, setDescription] = useState('');
+  const {
+    value: hourlyPay,
+    error: hourlyPayError,
+    changeValue: changeHoulyPay,
+    changeError: changeHourlyPayError,
+    clearError: clearHourlyPayError,
+  } = useInput();
 
-  const [hourlyPayError, setHourlyPayError] = useState(false);
-  const [startsAtError, setStartsAtError] = useState(false);
-  const [workhourError, setWorkhourError] = useState(false);
+  const {
+    value: startsAt,
+    error: startsAtError,
+    changeValue: changeStartsAt,
+    changeError: changeStartsAtError,
+    clearError: clearStartsAtError,
+  } = useInput();
 
-  const changeMoneyType = (number: string) => {
-    const realNumber = Number(number.replaceAll(',', ''));
-    const formattedNumber = realNumber.toLocaleString();
-    return formattedNumber;
+  const {
+    value: workhour,
+    error: workhourError,
+    changeValue: changeWorkhour,
+    changeError: changeWorkhourError,
+    clearError: clearWorkhourError,
+  } = useInput();
+
+  const onBlurHourlyPay = () => {
+    if (!hourlyPay) {
+      changeHourlyPayError('값을 입력해주세요.');
+    }
   };
+  const onBlurStartsAt = () => {
+    if (!startsAt) {
+      changeStartsAtError('값을 입력해주세요.');
+    }
+  };
+  const onBlurWorkhour = () => {
+    if (!workhour) {
+      changeWorkhourError('값을 입력해주세요.');
+    }
+  };
+
+  const onChangeHourlyPay = useCallback(
+    (value: string) => {
+      const changeMoneyType = (number: string) => {
+        const realNumber = Number(number.replaceAll(',', ''));
+        const formattedNumber = realNumber.toLocaleString();
+        return formattedNumber;
+      };
+
+      changeHoulyPay(changeMoneyType(value));
+    },
+    [changeHoulyPay],
+  );
+
   const changeDateType = (date: string) => {
     const inputDate = new Date(date);
     const formattedDate = `${inputDate.toISOString().slice(0, 19)}Z`;
     return formattedDate;
   };
 
-  const changeHoulyPay = useCallback((value: string) => {
-    setHourlyPay(changeMoneyType(value));
-  }, []);
-  const changeStartsAt = useCallback((value: string) => {
-    setStartsAt(value);
-  }, []);
-  const changeWorkhour = useCallback((value: string) => {
-    setWorkhour(value);
-  }, []);
-
-  const changeHourlyPayError = useCallback(() => {
-    setHourlyPayError(false);
-  }, []);
-  const changeStartsAtError = useCallback(() => {
-    setStartsAtError(false);
-  }, []);
-  const changeWorkhourError = useCallback(() => {
-    setWorkhourError(false);
-  }, []);
-
   const handleChangeDescription = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(event.target.value);
   };
 
   const handleClickCloseButton = () => {
-    onClose();
+    if (onClose) {
+      onClose();
+    }
   };
 
   const INPUT_DATA: InputDataType[] = [
@@ -72,9 +96,10 @@ export default function OwnerAddNotice({ onClose }: OwnerAddNoticeProps) {
       value: hourlyPay,
       label: '시급*',
       errorMessage: '제대로 된 값을 입력해주세요',
-      isError: hourlyPayError,
-      onChange: changeHoulyPay,
-      onFocus: changeHourlyPayError,
+      isError: Boolean(hourlyPayError),
+      onChange: onChangeHourlyPay,
+      onFocus: clearHourlyPayError,
+      onBlur: onBlurHourlyPay,
       unit: '원',
     },
     {
@@ -83,9 +108,10 @@ export default function OwnerAddNotice({ onClose }: OwnerAddNoticeProps) {
       value: startsAt,
       label: '시작 일시*',
       errorMessage: '제대로 된 값을 입력해주세요',
-      isError: startsAtError,
+      isError: Boolean(startsAtError),
       onChange: changeStartsAt,
-      onFocus: changeStartsAtError,
+      onFocus: clearStartsAtError,
+      onBlur: onBlurStartsAt,
     },
     {
       id: 'workhour',
@@ -93,25 +119,17 @@ export default function OwnerAddNotice({ onClose }: OwnerAddNoticeProps) {
       value: workhour,
       label: '업무 시간*',
       errorMessage: '제대로 된 값을 입력해주세요',
-      isError: workhourError,
+      isError: Boolean(workhourError),
       onChange: changeWorkhour,
-      onFocus: changeWorkhourError,
+      onFocus: clearWorkhourError,
+      onBlur: onBlurWorkhour,
       unit: '시간',
     },
   ];
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (!hourlyPay) {
-      setHourlyPayError(true);
-    }
-    if (!startsAt) {
-      setStartsAtError(true);
-    }
-    if (!workhour) {
-      setWorkhourError(true);
-    }
-    if (!hourlyPay || !startsAt || !workhour) {
+    if (hourlyPayError || startsAtError || workhourError) {
       return;
     }
     const APIFlag = await postNotice(shopId, {
@@ -153,6 +171,7 @@ export default function OwnerAddNotice({ onClose }: OwnerAddNoticeProps) {
                     unit={data.unit}
                     onChange={data.onChange}
                     onFocus={data.onFocus}
+                    onBlur={data.onBlur}
                     isError={data.isError}
                     errorMessage={data.errorMessage}
                   />
