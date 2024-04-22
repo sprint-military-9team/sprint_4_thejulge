@@ -12,7 +12,7 @@ import styles from './announce.module.scss';
 import { Data, MainData, SortButtonProps, SortListProps, FilterButtonProps, FilterInfo } from './type';
 
 interface AnnounceProps {
-  headerData: string;
+  headerData: string | null;
 }
 interface SortOptions {
   [key: string]: 'time' | 'pay' | 'hour' | 'shop';
