@@ -6,14 +6,12 @@ import { useRouter } from 'next/navigation';
 import { useState, useCallback, useEffect } from 'react';
 import { SEARCH_ICON, HEADER_LOGO } from '@/utils/constants';
 import Cookies from 'js-cookie';
+import { getUserAlert } from '@/apis/alert';
 import Notification from './notification';
 import styles from './Header.module.scss';
 import { ButtonListType, NotificationDataType } from './types';
 
-type HeaderProps = {
-  notificationListData?: NotificationDataType[];
-};
-export default function Header({ notificationListData }: HeaderProps) {
+export default function Header() {
   /* 
   notificationListData 샘플 데이터
   const data = [
@@ -64,7 +62,7 @@ export default function Header({ notificationListData }: HeaderProps) {
     },
   ]; */
   const [memberType, setMemberType] = useState('none');
-  const [notificationData, setNotificationData] = useState<NotificationDataType[]>(notificationListData ?? []);
+  const [notificationData, setNotificationData] = useState<NotificationDataType[]>([]);
   const [notificationNumber, setNotificationNumber] = useState(notificationData.length);
   const [input, setInput] = useState('');
   const logout = () => {
@@ -131,6 +129,21 @@ export default function Header({ notificationListData }: HeaderProps) {
       return;
     }
     setMemberType('none');
+  }, []);
+
+  useEffect(() => {
+    const getData = async () => {
+      const token = Cookies.get('token');
+      if (token) {
+        const alertData = await getUserAlert();
+        if (typeof alertData === 'number') {
+          throw new Error(`Alert API Error ${alertData}`);
+        }
+        setNotificationData(alertData);
+        setNotificationNumber(alertData.length);
+      }
+    };
+    getData();
   }, []);
 
   return (

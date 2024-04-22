@@ -24,6 +24,7 @@ export default function Notification({
 }: NotificationProps) {
   const [isOpen, setIsOpen] = useState(false);
   const notificationRef = useRef<HTMLDivElement>(null);
+  console.log(notificationData);
 
   const handleClickNotificationButton = () => {
     setIsOpen((previousStatus) => !previousStatus);
