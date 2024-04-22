@@ -71,7 +71,7 @@ function ShopDetail() {
       }
     };
     fetchData();
-  }, []);
+  }, [shopId, noticeId]);
 
   return (
     <div className={styles.shopDetail}>

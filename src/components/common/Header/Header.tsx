@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState, useCallback, useEffect } from 'react';
 import { SEARCH_ICON, HEADER_LOGO } from '@/utils/constants';
 import Cookies from 'js-cookie';
@@ -65,7 +66,7 @@ export default function Header({ notificationListData }: HeaderProps) {
   const [memberType, setMemberType] = useState('none');
   const [notificationData, setNotificationData] = useState<NotificationDataType[]>(notificationListData ?? []);
   const [notificationNumber, setNotificationNumber] = useState(notificationData.length);
-
+  const [input, setInput] = useState('');
   const logout = () => {
     const removeData = ['id', 'token', 'type', 'shopId'];
     removeData.map((data) => Cookies.remove(data));
@@ -113,7 +114,15 @@ export default function Header({ notificationListData }: HeaderProps) {
   const changeNotificationData = useCallback(() => {
     setNotificationData((previousData) => previousData.filter((notification) => !notification.read && notification));
   }, []);
-
+  const router = useRouter();
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(event.target.value);
+  };
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter' && input) {
+      router.push(`/announcelist?keyword=${input}`);
+    }
+  };
   useEffect(() => {
     const type = Cookies.get('type');
     if (type === 'employer' || type === 'employee') {
@@ -129,9 +138,15 @@ export default function Header({ notificationListData }: HeaderProps) {
         <Link href="/">
           <Image src={HEADER_LOGO} alt="logo" width={112} height={40} className={styles.logo} priority />
         </Link>
-        <form className={styles.searchBarWrapper}>
+        <form className={styles.searchBarWrapper} onSubmit={(e) => e.preventDefault()}>
           <Image src={SEARCH_ICON} alt="search" width={20} height={20} className={styles.searchButton} priority />
-          <input className={styles.searchBar} placeholder="가게 이름으로 찾아보세요" />
+          <input
+            className={styles.searchBar}
+            value={input}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+            placeholder="가게 이름으로 찾아보세요"
+          />
         </form>
         <div className={memberType === 'none' ? styles.buttonWrapperSmall : styles.buttonWrapper}>
           {buttonType.buttonList.map((button) =>
