@@ -2,46 +2,17 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { SEARCH_ICON, HEADER_LOGO } from '@/utils/constants';
+import Cookies from 'js-cookie';
 import Notification from './notification';
 import styles from './Header.module.scss';
 import { ButtonListType, NotificationDataType } from './types';
 
-const logout = () => {
-  console.log('logout');
-};
-
-const BUTTON_LIST: ButtonListType = {
-  none: {
-    buttonList: [
-      { name: '로그인', href: '/signin' },
-      { name: '회원가입', href: '/signup' },
-    ],
-    notification: false,
-  },
-  owner: {
-    buttonList: [
-      { name: '내 가게', href: '/mystore' },
-      { name: '로그아웃', href: '', onClick: logout },
-    ],
-    notification: true,
-  },
-  worker: {
-    buttonList: [
-      { name: '내 프로필', href: '/myprofile' },
-      { name: '로그아웃', href: '', onClick: logout },
-    ],
-    notification: true,
-  },
-};
-
 type HeaderProps = {
-  memberType: 'none' | 'owner' | 'worker';
-  notificationListData: NotificationDataType[];
-  setHeaderData: (data: string) => void;
+  notificationListData?: NotificationDataType[];
 };
-export default function Header({ memberType, notificationListData, setHeaderData }: HeaderProps) {
+export default function Header({ notificationListData }: HeaderProps) {
   /* 
   notificationListData 샘플 데이터
   const data = [
@@ -91,10 +62,40 @@ export default function Header({ memberType, notificationListData, setHeaderData
       read: false,
     },
   ]; */
-  const buttonType = BUTTON_LIST[memberType];
-  const [notificationData, setNotificationData] = useState<NotificationDataType[]>(notificationListData);
+  const [memberType, setMemberType] = useState('none');
+  const [notificationData, setNotificationData] = useState<NotificationDataType[]>(notificationListData ?? []);
   const [notificationNumber, setNotificationNumber] = useState(notificationData.length);
 
+  const logout = () => {
+    const removeData = ['id', 'token', 'type', 'shopId'];
+    removeData.map((data) => Cookies.remove(data));
+    setMemberType('none');
+  };
+
+  const BUTTON_LIST: ButtonListType = {
+    none: {
+      buttonList: [
+        { name: '로그인', href: '/signin' },
+        { name: '회원가입', href: '/signup' },
+      ],
+      notification: false,
+    },
+    employer: {
+      buttonList: [
+        { name: '내 가게', href: '/mystore' },
+        { name: '로그아웃', href: '', onClick: logout },
+      ],
+      notification: true,
+    },
+    employee: {
+      buttonList: [
+        { name: '내 프로필', href: '/myprofile' },
+        { name: '로그아웃', href: '', onClick: logout },
+      ],
+      notification: true,
+    },
+  };
+  const buttonType = BUTTON_LIST[memberType];
   const handleClickNotification = useCallback((event: React.MouseEvent<HTMLDivElement>, isRead: boolean) => {
     if (isRead) {
       return;
@@ -113,6 +114,15 @@ export default function Header({ memberType, notificationListData, setHeaderData
     setNotificationData((previousData) => previousData.filter((notification) => !notification.read && notification));
   }, []);
 
+  useEffect(() => {
+    const type = Cookies.get('type');
+    if (type === 'employer' || type === 'employee') {
+      setMemberType(type);
+      return;
+    }
+    setMemberType('none');
+  }, []);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.contentWrapper}>
@@ -121,11 +131,7 @@ export default function Header({ memberType, notificationListData, setHeaderData
         </Link>
         <form className={styles.searchBarWrapper}>
           <Image src={SEARCH_ICON} alt="search" width={20} height={20} className={styles.searchButton} priority />
-          <input
-            className={styles.searchBar}
-            placeholder="가게 이름으로 찾아보세요"
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setHeaderData(event.target.value)}
-          />
+          <input className={styles.searchBar} placeholder="가게 이름으로 찾아보세요" />
         </form>
         <div className={memberType === 'none' ? styles.buttonWrapperSmall : styles.buttonWrapper}>
           {buttonType.buttonList.map((button) =>
