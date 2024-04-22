@@ -6,6 +6,7 @@ import { useCallback, useState } from 'react';
 import { postNotice } from '@/apis/notice';
 import { useRouter } from 'next/navigation';
 import useInput from '@/hooks/useInput';
+import Cookies from 'js-cookie';
 import styles from './OwnerAddNotice.module.scss';
 import Input from '../common/Input/Input';
 import Button from '../common/Button';
@@ -18,7 +19,7 @@ type OwnerAddNoticeProps = {
 
 export default function OwnerAddNotice({ onClose /* noticeData */ }: OwnerAddNoticeProps) {
   const router = useRouter();
-  const shopId = 'd3398bdc-4f7b-4457-b6b6-588928dc7e2f';
+  const shopId = Cookies.get('shopId') as string;
   const [description, setDescription] = useState('');
   const {
     value: hourlyPay,
@@ -132,6 +133,7 @@ export default function OwnerAddNotice({ onClose /* noticeData */ }: OwnerAddNot
     if (hourlyPayError || startsAtError || workhourError) {
       return;
     }
+    console.log(shopId);
     const APIFlag = await postNotice(shopId, {
       hourlyPay: Number(hourlyPay.replaceAll(',', '')),
       startsAt: changeDateType(startsAt),

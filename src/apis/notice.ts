@@ -1,5 +1,6 @@
 import BASE_URL from '@/constants/BASEURL';
 import { SpecifyNoticeDataType, NoticeUploadDataType } from '@/types';
+import Cookies from 'js-cookie';
 
 export const getSpecifyNoticeData = async (shopId: string, noticeId: string): Promise<SpecifyNoticeDataType> => {
   const response = await fetch(`${BASE_URL}/shops/${shopId}/notices/${noticeId}`, {
@@ -14,10 +15,12 @@ export const getSpecifyNoticeData = async (shopId: string, noticeId: string): Pr
 };
 
 export const postNotice = async (shopId: string, data: NoticeUploadDataType) => {
+  const token = Cookies.get('token');
   const response = await fetch(`${BASE_URL}/shops/${shopId}/notices`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(data),
   });
