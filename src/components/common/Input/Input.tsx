@@ -63,7 +63,6 @@ export default function Input({
             onChange={handleChange}
             onBlur={handleFocusOut}
             onFocus={handleFocusIn}
-            autoComplete="off"
           />
           {unit && <p className={styles.unit}>{unit}</p>}
         </div>
