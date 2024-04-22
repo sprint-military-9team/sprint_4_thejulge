@@ -67,7 +67,7 @@ export default function Header({ notificationListData }: HeaderProps) {
   const [notificationNumber, setNotificationNumber] = useState(notificationData.length);
 
   const logout = () => {
-    const removeData = ['id', 'token', 'type', 'shopId'];
+    const removeData = ['id', 'token', 'type', 'shopId', 'userId'];
     removeData.map((data) => Cookies.remove(data));
     setMemberType('none');
   };
