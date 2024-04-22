@@ -27,3 +27,8 @@ interface ShopInfo {
   imageUrl: string;
   originalHourlyPay: number;
 }
+
+export interface ButtonProps {
+  status: 'pending' | 'accepted' | 'rejected' | 'canceled' | 'none';
+  onClick: () => void | null;
+}

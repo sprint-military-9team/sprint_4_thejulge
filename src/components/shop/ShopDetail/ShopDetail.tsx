@@ -3,14 +3,19 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
+import Cookies from 'js-cookie';
+import WorkerDetailModal from '@/components/common/Modal/workerDetailModal/WorkerDetailModal';
 import raisePercent from '@/utils/getRaisePercent';
 import getWorkTime from '@/utils/getWorkTime';
 import getShopDetailData from '@/apis/shopdetail';
 import { CLOCK, GPS, CARDARROW } from '@/utils/constants';
+import { postApplicationNotice, putApplicationNotice, getUserApplication } from '@/apis/applicationNotice';
 import Button from '@/components/common/Button/';
 import RejectionModal from '@/components/common/Modal/RejectionModal/RejectionModal';
+
 import styles from './shopdetail.module.scss';
-import { MainData } from './type';
+import { MainData, ButtonProps } from './type';
+import ButtonStatus from './ButtonStatus';
 
 interface CompletedMessageProps {
   completed: string;
@@ -26,9 +31,13 @@ function CompletedMessage({ completed }: CompletedMessageProps) {
 
 function ShopDetail() {
   const [noticeData, setNoticeData] = useState<MainData | null>(null);
-  const [isApplied, setIsApplied] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [userApplicationStatus, setUserApplicationStatus] = useState({ id: '', status: 'none' });
+  const [buttonProps, setButtonProps] = useState<ButtonProps>({
+    status: 'none',
+    onClick: () => {},
+  });
+  const [isRejectionModalOpen, setIsRejectionModalOpen] = useState(false);
+  const [isWorkerDetailModalOpen, setIsWorkerDetailModalOpen] = useState(false);
   const params = useSearchParams();
   const shopId = params.get('shopId');
   const noticeId = params.get('noticeId');
@@ -42,25 +51,65 @@ function ShopDetail() {
         ? '지난 공고'
         : ''
     : '';
-
+  console.log(userApplicationStatus);
   const shopImage = noticeData ? noticeData?.item.shop.item.imageUrl : '';
-  const handleClickButton = () => {
-    setIsApplied((prev) => !prev);
+
+  const token = Cookies.get('token');
+  const userId = Cookies.get('userId');
+
+  const handleClickApplicationButton = () => {
+    if (token) {
+      const postApplication = async () => {
+        try {
+          const data = await postApplicationNotice(shopId, noticeId, token);
+          setUserApplicationStatus({ id: data.item.id, status: data.item.status });
+        } catch (error) {
+          console.error('API 전송 실패:', error);
+        }
+      };
+      postApplication();
+    } else {
+      setIsWorkerDetailModalOpen(true);
+    }
   };
-  const handleOpenModal = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    setIsModalOpen(true);
+  const handleClickCancelButton = () => {
+    setIsRejectionModalOpen(true);
   };
 
-  const handleButtonCancelClick = () => {
-    setIsModalOpen(false);
-    setIsApplied(false); // api 신청상태 변경 cookie 에서 가져오기
+  const handleWorkerModal = (event: React.MouseEvent) => {
+    event.preventDefault();
+    setIsWorkerDetailModalOpen(false);
   };
-  const handleButtonNoClick = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    setIsModalOpen(false);
-    setIsApplied(true);
+
+  const handleModalCancelClick = () => {
+    if (token) {
+      const putApplication = async () => {
+        try {
+          const data = await putApplicationNotice(shopId, noticeId, token, userApplicationStatus.id, 'canceled');
+          setUserApplicationStatus({ id: data.item.id, status: data.item.status });
+        } catch (error) {
+          console.error('API 전송 실패:', error);
+        }
+      };
+      putApplication();
+    }
+    setIsRejectionModalOpen(false);
   };
+  const handleModalNoClick = () => {
+    setIsRejectionModalOpen(false);
+  };
+  useEffect(() => {
+    if (userApplicationStatus.status === 'none' || userApplicationStatus.status === 'canceled') {
+      setButtonProps({ status: 'canceled', onClick: handleClickApplicationButton });
+    } else if (userApplicationStatus.status === 'pending') {
+      setButtonProps({ status: 'pending', onClick: handleClickCancelButton });
+    } else if (userApplicationStatus.status === 'accepted') {
+      setButtonProps({ status: 'accepted', onClick: () => {} });
+    } else if (userApplicationStatus.status === 'rejected') {
+      setButtonProps({ status: 'rejected', onClick: () => {} });
+    }
+  }, [userApplicationStatus]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -71,6 +120,24 @@ function ShopDetail() {
       }
     };
     fetchData();
+    if (token) {
+      const fetchUserApplication = async (offset = 0, limit = 20) => {
+        try {
+          const data = await getUserApplication(userId, token, offset, limit);
+          const applicationData = data.items.filter((item) => item.item.notice.item.id === noticeId);
+          if (applicationData.length > 0) {
+            setUserApplicationStatus({ id: applicationData[0].item.id, status: applicationData[0].item.status });
+          } else if (data.hasNext) {
+            fetchUserApplication(offset + limit, limit);
+          }
+        } catch (error) {
+          console.error('API 호출 실패:', error);
+        }
+      };
+      fetchUserApplication();
+    } else {
+      setUserApplicationStatus({ id: '', status: 'none' });
+    }
   }, [shopId, noticeId]);
 
   return (
@@ -110,24 +177,15 @@ function ShopDetail() {
                 신청 불가
               </Button>
             ) : (
-              <div onClick={handleClickButton}>
-                {isApplied ? (
-                  <div onClick={handleOpenModal}>
-                    <Button color="white" size="large">
-                      취소 하기
-                    </Button>
-                    {isModalOpen && (
-                      <RejectionModal
-                        isModal={isModalOpen}
-                        cancelClick={handleButtonCancelClick}
-                        noClick={handleButtonNoClick}
-                      />
-                    )}
-                  </div>
-                ) : (
-                  <Button color="orange" size="large">
-                    신청 하기
-                  </Button>
+              <div>
+                <ButtonStatus {...buttonProps} />
+                {isWorkerDetailModalOpen && <WorkerDetailModal isModal onClick={handleWorkerModal} />}
+                {isRejectionModalOpen && (
+                  <RejectionModal
+                    isModal={isRejectionModalOpen}
+                    cancelClick={handleModalCancelClick}
+                    noClick={handleModalNoClick}
+                  />
                 )}
               </div>
             )}

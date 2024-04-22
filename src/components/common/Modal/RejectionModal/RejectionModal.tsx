@@ -25,11 +25,9 @@ export default function RejectionModal({
             <Image src={CHECK} alt="check" width={25} height={25} />
             <h2 className={styles.text}>신청을 거절하시겠어요?</h2>
             <div className={styles.selectionBox}>
-              <div onClick={noClick}>
-                <Button color="white" size="medium" style={{ padding: '1rem 2rem' }}>
-                  네
-                </Button>
-              </div>
+              <Button color="white" onClick={noClick} size="medium" style={{ padding: '1rem 2rem' }}>
+                아니오
+              </Button>
               <Button onClick={cancelClick} color="orange" size="medium" style={{ padding: '1rem 2rem' }}>
                 취소하기
               </Button>
