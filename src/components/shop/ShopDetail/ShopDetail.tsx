@@ -51,7 +51,6 @@ function ShopDetail() {
         ? '지난 공고'
         : ''
     : '';
-  console.log(userApplicationStatus);
   const shopImage = noticeData ? noticeData?.item.shop.item.imageUrl : '';
 
   const token = Cookies.get('token');
