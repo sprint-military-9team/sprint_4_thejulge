@@ -3,13 +3,21 @@
 import OwnerAddNotice from '@/components/ownerAddNotice/OwnerAddNotice';
 import Button from '@/components/common/Button';
 import { useCallback, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { NoticeInformationDataType } from '@/app/ownerNoticeDetail/types';
 import styles from './NotificationInformationButton.module.scss';
 
-export default function NotificationInformationButton() {
+type NotificationInformationButtonProps = {
+  noticeData: NoticeInformationDataType;
+};
+
+export default function NotificationInformationButton({ noticeData }: NotificationInformationButtonProps) {
+  const router = useRouter();
   const [isAdd, setIsAdd] = useState(false);
   const onClose = useCallback(() => {
     setIsAdd(false);
-  }, []);
+    router.push('/ownerNoticeDetail');
+  }, [router]);
   const onClick = useCallback(() => {
     setIsAdd(true);
   }, []);
@@ -23,7 +31,7 @@ export default function NotificationInformationButton() {
 
       {isAdd && (
         <div className={styles.wrapper}>
-          <OwnerAddNotice onClose={onClose} />
+          <OwnerAddNotice onClose={onClose} noticeData={noticeData} />
         </div>
       )}
     </div>

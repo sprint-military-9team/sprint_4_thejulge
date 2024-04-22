@@ -2,11 +2,12 @@
 
 import Image from 'next/image';
 import { CLOSE_ICON } from '@/utils/constants';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { postNotice } from '@/apis/notice';
 import { useRouter } from 'next/navigation';
 import useInput from '@/hooks/useInput';
 import Cookies from 'js-cookie';
+import { NoticeInformationDataType } from '@/app/ownerNoticeDetail/types';
 import styles from './OwnerAddNotice.module.scss';
 import Input from '../common/Input/Input';
 import Button from '../common/Button';
@@ -14,10 +15,10 @@ import { InputDataType } from './types';
 
 type OwnerAddNoticeProps = {
   onClose?: () => void;
-  /* noticeData?: []; */
+  noticeData?: NoticeInformationDataType;
 };
 
-export default function OwnerAddNotice({ onClose /* noticeData */ }: OwnerAddNoticeProps) {
+export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticeProps) {
   const router = useRouter();
   const shopId = Cookies.get('shopId') as string;
   const [description, setDescription] = useState('');
@@ -60,15 +61,14 @@ export default function OwnerAddNotice({ onClose /* noticeData */ }: OwnerAddNot
       changeWorkhourError('값을 입력해주세요.');
     }
   };
+  const changeMoneyType = (number: string) => {
+    const realNumber = Number(number.replaceAll(',', ''));
+    const formattedNumber = realNumber.toLocaleString();
+    return formattedNumber;
+  };
 
   const onChangeHourlyPay = useCallback(
     (value: string) => {
-      const changeMoneyType = (number: string) => {
-        const realNumber = Number(number.replaceAll(',', ''));
-        const formattedNumber = realNumber.toLocaleString();
-        return formattedNumber;
-      };
-
       changeHoulyPay(changeMoneyType(value));
     },
     [changeHoulyPay],
@@ -146,11 +146,22 @@ export default function OwnerAddNotice({ onClose /* noticeData */ }: OwnerAddNot
     }
   };
 
+  useEffect(() => {
+    if (noticeData) {
+      changeHoulyPay(changeMoneyType(String(noticeData.hourlyPay)));
+      const date = new Date(noticeData.startsAt);
+      const formattedDate = date.toISOString().slice(0, 16);
+      changeWorkhour(String(noticeData.workhour));
+      changeStartsAt(formattedDate);
+      setDescription(noticeData.description);
+    }
+  }, [changeHoulyPay, changeWorkhour, changeStartsAt, noticeData]);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.contentWrapper}>
         <div className={styles.titleWrapper}>
-          <span>공고 등록</span>
+          <span>{noticeData ? '공고 편집' : '공고 등록'}</span>
           <Image
             src={CLOSE_ICON}
             alt="close"

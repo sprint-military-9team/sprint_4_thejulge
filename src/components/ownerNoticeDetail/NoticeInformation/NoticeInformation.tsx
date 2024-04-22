@@ -59,7 +59,7 @@ export default function NoticeInformation({ noticeData, storeData }: NoticeInfor
               </div>
               <pre className={`${styles.storeDescription} ${styles.textMediumLarge}`}>{storeData.description}</pre>
             </div>
-            <NotificationInformationButton />
+            <NotificationInformationButton noticeData={noticeData} />
           </div>
         </div>
         <div className={styles.noticeDescription}>
