@@ -2,12 +2,13 @@
 
 import Image from 'next/image';
 import { CLOSE_ICON } from '@/utils/constants';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { postNotice } from '@/apis/notice';
 import { useRouter } from 'next/navigation';
 import useInput from '@/hooks/useInput';
 import Cookies from 'js-cookie';
 import { NoticeInformationDataType } from '@/app/ownerNoticeDetail/types';
+import { checkInputList } from '@/utils/checkLoginInput';
 import styles from './OwnerAddNotice.module.scss';
 import Input from '../common/Input/Input';
 import Button from '../common/Button';
@@ -21,6 +22,7 @@ type OwnerAddNoticeProps = {
 export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticeProps) {
   const router = useRouter();
   const shopId = Cookies.get('shopId') as string;
+  const formRef = useRef<HTMLFormElement>(null);
   const [description, setDescription] = useState('');
   const {
     value: hourlyPay,
@@ -130,7 +132,8 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (hourlyPayError || startsAtError || workhourError) {
+    checkInputList(formRef);
+    if (!hourlyPayError || !startsAtError || !workhourError) {
       return;
     }
     console.log(shopId);
@@ -171,7 +174,7 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
             onClick={handleClickCloseButton}
           />
         </div>
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={handleSubmit} ref={formRef}>
           <div className={styles.inputWrapper}>
             <div className={styles.inputFlexWrapper}>
               {INPUT_DATA.map((data) => (
