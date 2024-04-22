@@ -1,5 +1,6 @@
 import BASE_URL from '@/constants/BASEURL';
 import { SpecifyNoticeApplicationsDataType } from '@/types';
+import Cookies from 'js-cookie';
 
 export const getSpecifyNoticeApplicationData = async (
   shopId: string,
@@ -26,10 +27,12 @@ export const setSpecifyNoticeApplicationStatus = async (
   applicationId: string,
   status: 'accepted' | 'rejected',
 ) => {
+  const token = Cookies.get('token');
   const response = await fetch(`${BASE_URL}/shops/${shopId}/notices/${noticeId}/applications/${applicationId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       status,

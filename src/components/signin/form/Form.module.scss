@@ -1,0 +1,21 @@
+@import '@/styles/_index';
+@import '@/styles/_media';
+
+.loginForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+@include media(tablet) {
+  .loginForm {
+    gap: 1rem;
+  }
+}
+
+@include media(mobile) {
+  .loginForm {
+    gap: 0.8rem;
+  }
+}
