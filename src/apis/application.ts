@@ -1,6 +1,7 @@
 import BASE_URL from '@/constants/BASEURL';
 import { SpecifyNoticeApplicationsDataType, UserApplicationDataType } from '@/types';
 import Cookies from 'js-cookie';
+import { cookies } from 'next/headers';
 
 export const getSpecifyNoticeApplicationData = async (
   shopId: string,
@@ -48,7 +49,7 @@ export const getUserApplicationData = async (
   limit?: number,
   offset?: number,
 ): Promise<{ count: number; items: UserApplicationDataType[] }> => {
-  const token = Cookies.get('token');
+  const token = cookies().get('token')?.value;
   const response = await fetch(`${BASE_URL}/users/${userId}/applications?offset=${offset}&limit=${limit}`, {
     method: 'GET',
     headers: {

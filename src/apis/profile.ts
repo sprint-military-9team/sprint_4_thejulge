@@ -3,7 +3,7 @@ import { UserProfileType } from '@/types';
 import Cookies from 'js-cookie';
 
 export const getUserProfile = async (userId: string): Promise<UserProfileType> => {
-  const response = await fetch(`${BASE_URL}/usersaaa/${userId}`, {
+  const response = await fetch(`${BASE_URL}/users/${userId}`, {
     method: 'GET',
   });
   if (!response.ok) {

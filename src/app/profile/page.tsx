@@ -7,7 +7,8 @@ import styles from './Profile.module.scss';
 import ProfileTableContainer from './ProfileTableContainer';
 import ControlModal from './Control';
 
-export default async function Profile() {
+export default async function Profile({ searchParams }: { searchParams: { page: string } }) {
+  const { page = 1 } = searchParams;
   const cookie = cookies().get('userId');
   const userProfile = await getUserProfile(cookie?.value as string);
 
@@ -47,7 +48,7 @@ export default async function Profile() {
             </div>
           </div>
         </section>
-        <ProfileTableContainer />
+        <ProfileTableContainer currentPage={Number(page)} />
       </main>
     </div>
   );
