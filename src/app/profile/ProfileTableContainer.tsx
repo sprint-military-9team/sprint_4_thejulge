@@ -45,7 +45,7 @@ export default function ProfileTableContainer() {
     ],
     body: [],
   });
-  const USER_ID = Cookies.get('userId');
+  const USER_ID = Cookies.get('userId') as string;
 
   const handleLoadUserApplicationData = useCallback(
     async (user_id: string) => {
@@ -73,10 +73,6 @@ export default function ProfileTableContainer() {
   );
 
   useEffect(() => {
-    if (!USER_ID) {
-      router.push('/signin');
-      return;
-    }
     handleLoadUserApplicationData(USER_ID);
   }, [handleLoadUserApplicationData, currentPage]);
 
