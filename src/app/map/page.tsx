@@ -45,7 +45,10 @@ function extractShopInfo(items) {
         address1: shop.item.address1,
         address2: shop.item.address2,
         imageUrl: shop.item.imageUrl,
+        originalHourlyPay: shop.item.originalHourlyPay,
+        description: shop.item.description,
       };
+
       shopInfoArray.push(shopInfo);
     }
   });
@@ -57,8 +60,11 @@ const mockDatas = extractShopInfo(items);
 
 export default function Map() {
   const [shop, setShop] = useState({
-    name: '',
     shop_id: -1,
+    shop_name: '',
+    address1: '',
+    address2: '',
+    imageUrl: '',
   });
 
   useEffect(() => {
@@ -95,31 +101,28 @@ export default function Map() {
           return marker;
         }
 
-        function displayPlaces(places: { x: number; y: number }[], name: string, shop_id: number) {
+        function displayPlaces(places: { x: number; y: number }[], shop) {
           for (let i = 0; i < places.length; i += 1) {
             // 마커를 생성하고 지도에 표시합니다
             const placePosition = new window.kakao.maps.LatLng(places[i].y, places[i].x);
             const marker = addMarker(placePosition, i);
-            marker.name = name;
-            marker.shop_id = shop_id;
+            marker.shop = shop;
 
             window.kakao.maps.event.addListener(marker, 'click', () => {
-              setShop({ ...shop, shop_id: marker.shop_id, name: marker.name });
+              setShop(marker.shop);
             });
           }
         }
 
-        function placesSearchCB(data: string, name: string, shop_id: number) {
-          displayPlaces(data, name, shop_id);
+        function placesSearchCB(data: string, shop) {
+          displayPlaces(data, shop);
         }
 
         function searchPlaces() {
           // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
 
           mockDatas.forEach((mockData) => {
-            ps.keywordSearch(`${mockData.address1} ${mockData.address2}`, (data) =>
-              placesSearchCB(data, mockData.shop_name, mockData.shop_id),
-            );
+            ps.keywordSearch(`${mockData.address1} ${mockData.address2}`, (data) => placesSearchCB(data, mockData));
           });
         }
 
@@ -130,7 +133,7 @@ export default function Map() {
         };
 
         const map = new window.kakao.maps.Map(container, options);
-        map.setZoomable(false);
+        // map.setZoomable(false);
 
         searchPlaces();
       });
@@ -140,7 +143,7 @@ export default function Map() {
 
   return (
     <div id="map" style={{ width: '100%', height: '100vh', position: 'relative' }}>
-      <Box shop_id={shop.shop_id} shop_name={shop.name} />
+      <Box shop={shop} />
     </div>
   );
 }
