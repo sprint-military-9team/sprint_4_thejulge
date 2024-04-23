@@ -21,15 +21,15 @@ export default function LoginModal({
     }
   };
   return (
-    <div>
-      <Modal onClose={handleClose}>
+    <Modal onClose={handleClose}>
+      <div className={styles.wrapper}>
         <h2 className={styles.text}>{MODAL_TEXT[type]}</h2>
         <div className={styles.selectionBox}>
-          <button className={styles.positiveButton} type="button" onClick={() => handleClose()}>
+          <button className={styles.button} type="button" onClick={() => handleClose()}>
             확인
           </button>
         </div>
-      </Modal>
-    </div>
+      </div>
+    </Modal>
   );
 }
