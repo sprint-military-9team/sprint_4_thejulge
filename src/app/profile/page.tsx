@@ -20,7 +20,8 @@ export default function Profile() {
   const [loading, error, getUserProfileAsync] = useAsync(getUserProfile, true);
   const [userProfile, setUserProfile] = useState({} as UserProfileType);
   const [update, setUpdate] = useState(false);
-  const USER_ID = Cookies.get('userId');
+  // middleware 덕분에 undefined 아닌게 확실
+  const USER_ID = Cookies.get('userId') as string;
 
   const handleCloseEdit = () => {
     setIsOpend(false);
@@ -31,10 +32,6 @@ export default function Profile() {
   };
 
   const handleLoadUserProfile = async () => {
-    if (!USER_ID) {
-      router.push('/signin');
-      return;
-    }
     const data = await getUserProfileAsync(USER_ID);
     if (!data) return;
     setUserProfile(data);
