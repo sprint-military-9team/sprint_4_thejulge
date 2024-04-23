@@ -1,16 +1,19 @@
+import Button from '@/components/common/Button';
 import { GPS, PHONE } from '@/utils/constants';
 import { getUserProfile } from '@/apis/profile';
 import Image from 'next/image';
-import { cookies } from 'next/headers';
 import Banner from './Banner';
 import styles from './Profile.module.scss';
 import ProfileTableContainer from './ProfileTableContainer';
-import ControlModal from './Control';
 
 export default async function Profile() {
-  const cookie = cookies().get('userId');
-  const userProfile = await getUserProfile(cookie?.value as string);
+  const USER_ID = Cookies.get('userId') as string;
+  console.log('쉬발:', USER_ID);
 
+  // middleware 덕분에 undefined 아닌게 확실
+  const userProfile = await getUserProfile();
+  // console.log('userId:', USER_ID);
+  // const userProfile = { name: 'adf' };
   return (
     <div className={styles.container}>
       <main className={styles.main}>
@@ -34,7 +37,11 @@ export default async function Profile() {
                     <p className={styles.bio}>{userProfile.bio}</p>
                   </div>
                   <div>
-                    <ControlModal defaultValues={userProfile} />
+                    <div>
+                      <Button color="white" size="medium" style={{ padding: '1rem 1.4rem' }}>
+                        편집하기
+                      </Button>
+                    </div>
                   </div>
                 </div>
               ) : (

@@ -15,7 +15,6 @@ type ProfileEditProps = {
   isOpend: boolean;
   onClose: () => void;
   defaultValues?: UserProfileType;
-  triggerProfileUpdate: () => void;
 };
 
 const INITIAL_ERRORS = {
@@ -29,7 +28,7 @@ const INITIAL_ERRORS = {
   },
 };
 
-export default function ProfileEdit({ isOpend, onClose, defaultValues, triggerProfileUpdate }: ProfileEditProps) {
+export default function ProfileEdit({ isOpend, onClose, defaultValues }: ProfileEditProps) {
   const [name, setName] = useState(defaultValues?.name ? defaultValues.name : '');
   const [phone, setPhone] = useState(defaultValues?.phone ? defaultValues.phone : '');
   const [bio, setBio] = useState(defaultValues?.bio ? defaultValues.bio : '');
@@ -78,8 +77,6 @@ export default function ProfileEdit({ isOpend, onClose, defaultValues, triggerPr
     }
     const USER_ID = Cookies.get('userId') as string;
     await setUserProfileAsync(USER_ID, { name, phone, address, bio });
-
-    triggerProfileUpdate();
   };
 
   if (error) {

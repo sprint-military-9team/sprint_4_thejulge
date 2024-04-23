@@ -1,3 +1,5 @@
+'use client';
+
 import Button from '@/components/common/Button';
 import Link from 'next/link';
 import styles from './Banner.module.scss';
