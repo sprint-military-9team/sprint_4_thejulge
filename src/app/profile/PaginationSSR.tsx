@@ -1,6 +1,6 @@
 import { ARROW_NEXT, ARROW_PREV } from '@/utils/constants';
 import Link from 'next/link';
-import styles from '@/components/common/Pagination/Pagination.module.scss';
+import styles from './PaginationSSR.module.scss';
 
 type Props = {
   currentPage: number;
