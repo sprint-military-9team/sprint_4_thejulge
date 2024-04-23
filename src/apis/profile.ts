@@ -3,11 +3,11 @@ import { UserProfileType } from '@/types';
 import Cookies from 'js-cookie';
 
 export const getUserProfile = async (userId: string): Promise<UserProfileType> => {
-  const response = await fetch(`${BASE_URL}/users/${userId}`, {
+  const response = await fetch(`${BASE_URL}/usersaaa/${userId}`, {
     method: 'GET',
   });
   if (!response.ok) {
-    throw new Error('API 오류');
+    throw new Error(`${response.status}`);
   }
   const data = await response.json();
   return data.item;
