@@ -102,7 +102,7 @@ export default function ProfileTableContainer() {
         <section className={styles.applyList}>
           <div className={styles.wrapper}>
             <h2 className={styles.sectionTitle}>신청 내역</h2>
-            <Banner description="아직 신청 내역이 없어요." buttonContent="공고 보러가기" linkPath="/" />
+            <Banner description="아직 신청 내역이 없어요." buttonContent="공고 보러가기" linkPath="/" isPageChange />
           </div>
         </section>
       )}

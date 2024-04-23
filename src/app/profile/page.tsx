@@ -41,7 +41,7 @@ export default async function Profile() {
                 <Banner
                   description="내 프로필을 등록하고 원하는 가게에 지원해 보세요."
                   buttonContent="내 프로필 등록하기"
-                  onClick={() => {}}
+                  isPageChange={false}
                 />
               )}
             </div>

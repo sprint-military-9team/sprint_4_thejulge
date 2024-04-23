@@ -3,24 +3,21 @@
 import Button from '@/components/common/Button';
 import Link from 'next/link';
 import styles from './Banner.module.scss';
+import ControlModal from './Control';
 
 type BannerProps = {
   description: string;
   buttonContent: string;
   linkPath?: string;
-  onClick?: () => void;
+  isPageChange: boolean;
 };
 
-export default function Banner({ description, buttonContent, linkPath, onClick }: BannerProps) {
+export default function Banner({ description, buttonContent, linkPath, isPageChange }: BannerProps) {
   return (
     <div className={styles.banner}>
       <p className={styles.bannerDescription}>{description}</p>
-      {onClick ? (
-        <div onClick={onClick}>
-          <Button color="orange" size="medium" style={{ maxWidth: '37rem', margin: '0 auto' }}>
-            {buttonContent}
-          </Button>
-        </div>
+      {!isPageChange ? (
+        <ControlModal type="banner" buttonContent={buttonContent} />
       ) : (
         <Link style={{ textDecoration: 'none' }} href={linkPath || '#'}>
           <Button color="orange" size="medium" style={{ maxWidth: '37rem', margin: '0 auto' }}>
