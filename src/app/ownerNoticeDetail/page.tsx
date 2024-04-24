@@ -18,7 +18,7 @@ export default async function ownerNoticeDetail({ searchParams }: OwnerNoticeDet
   const type = cookieStore.get('type')?.value as string;
   const noticeId = searchParams?.noticeId as string;
   if (!token) {
-    redirect('/signin');
+    redirect('/signin?redirectURL=login');
   }
 
   if (type !== 'employer') {
@@ -30,7 +30,7 @@ export default async function ownerNoticeDetail({ searchParams }: OwnerNoticeDet
   }
 
   if (!noticeId) {
-    redirect('/');
+    redirect('/myshop?redirectURL=invalidNotice');
   }
 
   const getStoreData = async (shopID: string) => {
