@@ -10,7 +10,7 @@ import styles from './page.module.scss';
 export default function signin() {
   const token = cookies().get('token');
   if (token) {
-    redirect('/?redirectURL=alreadyLogin');
+    redirect('/?redirectStatus=alreadyLogin');
   }
   return (
     <>

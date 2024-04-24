@@ -9,7 +9,7 @@ import styles from './page.module.scss';
 export default function signup() {
   const token = cookies().get('token');
   if (token) {
-    redirect('/?redirectURL=alreadyLogin');
+    redirect('/?redirectStatus=alreadyLogin');
   }
   return (
     <div className={styles.page}>
