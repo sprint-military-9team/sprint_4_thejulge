@@ -15,10 +15,22 @@ type BoxProps = {
   };
 };
 
+type NoticeType = {
+  item: {
+    id: string;
+    description: string;
+    hourlyPay: string;
+    startsAt: string;
+    workhour: number;
+    closed: boolean;
+  };
+};
+
 export default function Box({ shop }: BoxProps) {
-  const [state, setState] = useState([]);
+  const [state, setState] = useState<NoticeType[]>([]);
   useEffect(() => {
     if (shop.shop_id < 0) return;
+    // eslint-disable-next-line func-names
     (async function () {
       const response = await fetch(
         `https://bootcamp-api.codeit.kr/api/0-1/the-julge/shops/${shop.shop_id}/notices?limit=100`,
@@ -91,13 +103,3 @@ export default function Box({ shop }: BoxProps) {
     </div>
   );
 }
-
-/**
-  "hourlyPay": "number",
-        "startsAt": "string",
-        "workhour": "number",
-        "description": "string",
-        "closed": "boolean", 
-  
- 
- */
