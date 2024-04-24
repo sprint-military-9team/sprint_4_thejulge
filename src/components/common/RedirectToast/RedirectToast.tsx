@@ -19,6 +19,9 @@ export default function RedirectToast() {
     if (status === 'alreadyLogin') {
       toast.error('이미 로그인 상태입니다.');
     }
+    if (status === 'invalidAuthority') {
+      toast.error('접근 권한이 없습니다.');
+    }
   }, []);
 
   return (

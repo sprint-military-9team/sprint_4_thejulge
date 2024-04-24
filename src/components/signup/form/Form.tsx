@@ -174,7 +174,7 @@ export default function Form() {
         </div>
       </form>
       {showModal.type !== 'none' && (
-        <Modal onClose={onClose}>
+        <Modal>
           <LoginModal type={showModal.type} onClose={onClose} />
         </Modal>
       )}
