@@ -14,7 +14,7 @@ function Button({ children, color, size, style, submit, onClick }: ButtonProps) 
   const classProp = styles[color];
   const sizeClass = styles[size];
   return (
-    <div>
+    <div className={styles.layout}>
       <button
         type={submit ? 'submit' : 'button'}
         onClick={onClick}
