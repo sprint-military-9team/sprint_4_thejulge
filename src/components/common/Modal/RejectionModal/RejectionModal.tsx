@@ -21,7 +21,7 @@ export default function RejectionModal({
     <div>
       {isModal && (
         <Modal>
-          <div>
+          <div className={styles.wrapper}>
             <Image src={CHECK} alt="check" width={25} height={25} />
             <h2 className={styles.text}>신청을 거절하시겠어요?</h2>
             <div className={styles.selectionBox}>
