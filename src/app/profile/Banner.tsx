@@ -1,7 +1,6 @@
-'use client';
-
 import Button from '@/components/common/Button';
 import Link from 'next/link';
+import React from 'react';
 import styles from './Banner.module.scss';
 import ControlModal from './Control';
 

@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { UserProfileType } from '@/types';
 import ProfileEdit from './ProfileEdit';
 
-export default function ControlModal({
+function ControlModal({
   defaultValues,
   type = 'normal',
   buttonContent,
@@ -40,3 +40,5 @@ export default function ControlModal({
     </>
   );
 }
+
+export default ControlModal;

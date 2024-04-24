@@ -28,7 +28,7 @@ export const setUserProfile = async (
   });
 
   if (!response.ok) {
-    throw new Error(String(response.status));
+    throw new Error((await response.json()).message);
   }
 };
 

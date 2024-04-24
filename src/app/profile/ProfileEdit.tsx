@@ -9,6 +9,7 @@ import { UserProfileType } from '@/types';
 import { setUserProfile } from '@/apis/profile';
 import { useAsync } from '@/hooks/useAsync';
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 import styles from './ProfileEdit.module.scss';
 
 type ProfileEditProps = {
@@ -34,7 +35,9 @@ export default function ProfileEdit({ isOpend, onClose, defaultValues }: Profile
   const [bio, setBio] = useState(defaultValues?.bio ? defaultValues.bio : '');
   const [address, setAddress] = useState(defaultValues?.address ? defaultValues.address : '');
   const [errors, setErrors] = useState(INITIAL_ERRORS);
-  const [loading, error, setUserProfileAsync] = useAsync(setUserProfile);
+  const [loading, error, setUserProfileAsync, setError] = useAsync(setUserProfile);
+  const router = useRouter();
+
   const handleCloseClick = () => {
     onClose();
   };
@@ -77,12 +80,14 @@ export default function ProfileEdit({ isOpend, onClose, defaultValues }: Profile
     }
     const USER_ID = Cookies.get('userId') as string;
     await setUserProfileAsync(USER_ID, { name, phone, address, bio });
+    router.refresh();
+    onClose();
   };
 
   if (error) {
     // eslint-disable-next-line no-alert
-    alert('프로필 등록에 실패하였습니다');
-    // return;
+    alert(`${error.message}`);
+    setError(null);
   }
 
   return (

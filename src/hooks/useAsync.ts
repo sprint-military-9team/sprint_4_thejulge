@@ -18,14 +18,14 @@ export function useAsync<T extends (...args: any[]) => Promise<Awaited<ReturnTyp
       setError(null);
       return await callback(...args);
     } catch (err) {
-      setError(err as Error);
+      setError({ message: err as string });
       return undefined;
     } finally {
       setPending(false);
     }
   };
 
-  return [pending, error, wrappedFunction] as const;
+  return [pending, error, wrappedFunction, setError] as const;
 }
 
 export const error = 0;

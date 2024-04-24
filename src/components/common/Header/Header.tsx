@@ -91,7 +91,7 @@ export default function Header({ notificationListData }: HeaderProps) {
     },
     employee: {
       buttonList: [
-        { name: '내 프로필', href: '/myprofile' },
+        { name: '내 프로필', href: '/profile' },
         { name: '로그아웃', href: '', onClick: logout },
       ],
       notification: true,
