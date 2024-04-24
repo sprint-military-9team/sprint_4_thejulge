@@ -2,10 +2,10 @@ import { GPS, PHONE } from '@/utils/constants';
 import { getUserProfile } from '@/apis/profile';
 import Image from 'next/image';
 import { cookies } from 'next/headers';
-import Banner from './Banner';
+import Banner from '../../components/profile/Banner';
 import styles from './Profile.module.scss';
-import ProfileTableContainer from './ProfileTableContainer';
-import ControlModal from './Control';
+import ProfileTableContainer from '../../components/profile/ProfileTableContainer';
+import ControlModal from '../../components/profile/Control';
 
 export default async function Profile({ searchParams }: { searchParams: { page: string } }) {
   const { page = 1 } = searchParams;
