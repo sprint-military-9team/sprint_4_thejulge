@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState, useCallback, useEffect } from 'react';
 import { SEARCH_ICON, HEADER_LOGO } from '@/utils/constants';
 import Cookies from 'js-cookie';
@@ -10,21 +10,17 @@ import Notification from './notification';
 import styles from './Header.module.scss';
 import { ButtonListType, NotificationDataType } from './types';
 
-type HeaderProps = {
-  notificationListData?: NotificationDataType[];
-};
-export default function Header({ notificationListData }: HeaderProps) {
+export default function Header() {
   const router = useRouter();
-  const pathName = usePathname();
   const [memberType, setMemberType] = useState('none');
-  const [notificationData, setNotificationData] = useState<NotificationDataType[]>(notificationListData ?? []);
+  const [notificationData, setNotificationData] = useState<NotificationDataType[]>([]);
   const [notificationNumber, setNotificationNumber] = useState(notificationData.length);
   const [input, setInput] = useState('');
   const logout = () => {
     const removeData = ['id', 'token', 'type', 'shopId', 'userId'];
     removeData.forEach((data) => Cookies.remove(data));
     setMemberType('none');
-    router.push(pathName);
+    router.refresh();
   };
 
   const BUTTON_LIST: ButtonListType = {
@@ -68,6 +64,7 @@ export default function Header({ notificationListData }: HeaderProps) {
   const changeNotificationData = useCallback(() => {
     setNotificationData((previousData) => previousData.filter((notification) => !notification.read && notification));
   }, []);
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
   };

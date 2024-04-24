@@ -1,13 +1,13 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
+import Cookies from 'js-cookie';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function RedirectToast() {
-  const params = useSearchParams();
-  const status = params.get('redirectStatus');
+  const status = Cookies.get('redirectStatus');
+  Cookies.remove('redirectStauts');
 
   useEffect(() => {
     if (status === 'needLogin') {

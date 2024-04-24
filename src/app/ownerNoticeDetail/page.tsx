@@ -18,19 +18,23 @@ export default async function ownerNoticeDetail({ searchParams }: OwnerNoticeDet
   const type = cookieStore.get('type')?.value as string;
   const noticeId = searchParams?.noticeId as string;
   if (!token) {
-    redirect('/signin?redirectStatus=needLogin');
+    cookieStore.set('redirectStatus', 'needLogin');
+    redirect('/signin');
   }
 
   if (type !== 'employer') {
-    redirect('/?redirectStatus=invalidAuthority');
+    cookieStore.set('redirectStatus', 'invalidAuthority');
+    redirect('/');
   }
 
   if (!shopId) {
-    redirect('/?redirectStatus=invalidAuthority');
+    cookieStore.set('redirectStatus', 'invalidAuthority');
+    redirect('/');
   }
 
   if (!noticeId) {
-    redirect('/myshop?redirectStatus=invalidNotice');
+    cookieStore.set('redirectStatus', 'invalidNotice');
+    redirect('/');
   }
 
   const getStoreData = async (shopID: string) => {
@@ -48,7 +52,7 @@ export default async function ownerNoticeDetail({ searchParams }: OwnerNoticeDet
 
   return (
     <>
-      <Header notificationListData={[]} />
+      <Header />
       <div style={{ position: 'relative', width: '100%', height: 'fit-content' }}>
         <NoticeInformation noticeData={NOTICE_DATA} storeData={STORE_DATA} />
         <ApplicationList shopId={shopId} noticeId={noticeId} />

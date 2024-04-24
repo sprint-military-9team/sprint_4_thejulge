@@ -7,9 +7,11 @@ import { redirect } from 'next/navigation';
 import styles from './page.module.scss';
 
 export default function signup() {
-  const token = cookies().get('token');
+  const cookieStore = cookies();
+  const token = cookieStore.get('token');
   if (token) {
-    redirect('/?redirectStatus=alreadyLogin');
+    cookieStore.set('redirectStatus', 'alreadyLogin');
+    redirect('/');
   }
   return (
     <div className={styles.page}>
