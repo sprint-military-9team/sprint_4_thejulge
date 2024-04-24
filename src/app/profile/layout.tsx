@@ -13,7 +13,8 @@ type LayoutProps = {
 export default function Layout({ children }: LayoutProps) {
   return (
     <>
-      <Header memberType="none" notificationListData={notificationList} />
+      <Header notificationListData={notificationList} />
+
       {children}
       <Footer />
     </>

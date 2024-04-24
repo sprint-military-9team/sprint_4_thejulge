@@ -24,7 +24,7 @@ export default function Pagination({ currentPage = 1, allDataCount, perPageDataC
   return (
     <div className={styles.container}>
       {totalPages > PAGE_LIMIT && (
-        <Link href={`?page=${currentPage - 1}`} className={styles.button}>
+        <Link href={`?page=${currentPage - 1}`} className={styles.button} prefetch>
           <img src={ARROW_PREV} alt="arrow_prev" />
         </Link>
       )}
@@ -33,7 +33,7 @@ export default function Pagination({ currentPage = 1, allDataCount, perPageDataC
           (item) =>
             item <= totalPages && (
               <li key={item} className={`${styles.listItem} ${currentPage === item ? styles.selected : ''}`}>
-                <Link href={`?page=${item}`} className={styles.pageButton}>
+                <Link href={`?page=${item}`} className={styles.pageButton} prefetch>
                   {item}
                 </Link>
               </li>
@@ -42,7 +42,7 @@ export default function Pagination({ currentPage = 1, allDataCount, perPageDataC
       </ul>
 
       {totalPages > PAGE_LIMIT && (
-        <Link href={`?page=${currentPage + 1}`} className={styles.button}>
+        <Link href={`?page=${currentPage + 1}`} className={styles.button} prefetch>
           <img src={ARROW_NEXT} alt="arrow_prev" />
         </Link>
       )}

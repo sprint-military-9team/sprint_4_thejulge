@@ -58,7 +58,7 @@ interface AnnounceListLayoutProps {
 function AnnounceListLayout({ children }: AnnounceListLayoutProps) {
   return (
     <div className={styles.layout}>
-      <Header memberType="worker" notificationListData={HEADER_DATA} />
+      <Header notificationListData={HEADER_DATA} />
       {children}
       <Footer />
     </div>
