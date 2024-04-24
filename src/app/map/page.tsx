@@ -35,10 +35,18 @@ const restaurants = [
 
 function extractShopInfo(items) {
   const shopInfoArray = [];
-
+  const shopNameList = [];
   items.forEach((item) => {
     const { shop } = item.item;
-    if (shop && shop.item && shop.item.id && shop.item.name && shop.item.address1 && shop.item.address2) {
+    if (
+      shop &&
+      shop.item &&
+      shop.item.id &&
+      shop.item.name &&
+      shop.item.address1 &&
+      shop.item.address2 &&
+      !shopNameList.includes(shop.item.name)
+    ) {
       const shopInfo = {
         shop_id: shop.item.id,
         shop_name: shop.item.name,
@@ -49,10 +57,11 @@ function extractShopInfo(items) {
         description: shop.item.description,
       };
 
+      shopNameList.push(shop.item.name);
       shopInfoArray.push(shopInfo);
     }
   });
-
+  console.log(shopInfoArray);
   return shopInfoArray;
 }
 
@@ -120,9 +129,13 @@ export default function Map() {
 
         function searchPlaces() {
           // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+          const geocoder = new window.kakao.maps.services.Geocoder();
 
           mockDatas.forEach((mockData) => {
-            ps.keywordSearch(`${mockData.address1} ${mockData.address2}`, (data) => placesSearchCB(data, mockData));
+            // ps.keywordSearch(`${mockData.address1} ${mockData.address2}`, (data) => placesSearchCB(data, mockData));
+            geocoder.addressSearch(`${mockData.address1} ${mockData.address2}`, (data) =>
+              placesSearchCB(data, mockData),
+            );
           });
         }
 
