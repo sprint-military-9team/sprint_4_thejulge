@@ -2,17 +2,9 @@ import { LOGO_BIG } from '@/utils/constants';
 import Image from 'next/image';
 import Form from '@/components/signup/form/Form';
 import Link from 'next/link';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 import styles from './page.module.scss';
 
 export default function signup() {
-  const cookieStore = cookies();
-  const token = cookieStore.get('token');
-  if (token) {
-    cookieStore.set('redirectStatus', 'alreadyLogin');
-    redirect('/');
-  }
   return (
     <div className={styles.page}>
       <div className={styles.wrapper}>

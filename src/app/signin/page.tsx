@@ -3,17 +3,9 @@ import Image from 'next/image';
 import Form from '@/components/signin/form/Form';
 import Link from 'next/link';
 import RedirectToast from '@/components/common/RedirectToast/RedirectToast';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 import styles from './page.module.scss';
 
 export default function signin() {
-  const cookieStore = cookies();
-  const token = cookieStore.get('token');
-  if (token) {
-    cookieStore.set('redirectStatus', 'alreadyLogin');
-    redirect('/');
-  }
   return (
     <>
       <RedirectToast />

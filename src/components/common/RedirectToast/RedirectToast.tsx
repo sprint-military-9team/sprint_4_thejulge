@@ -6,10 +6,8 @@ import Cookies from 'js-cookie';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function RedirectToast() {
-  const status = Cookies.get('redirectStatus');
-  Cookies.remove('redirectStauts');
-
   useEffect(() => {
+    const status = Cookies.get('redirectStatus');
     if (status === 'needLogin') {
       toast.error('로그인이 필요합니다!');
     }
@@ -18,10 +16,12 @@ export default function RedirectToast() {
     }
     if (status === 'alreadyLogin') {
       toast.error('이미 로그인 상태입니다.');
+      Cookies.remove('redirectStatus');
     }
     if (status === 'invalidAuthority') {
       toast.error('접근 권한이 없습니다.');
     }
+    Cookies.remove('redirectStatus');
   }, []);
 
   return (
@@ -33,6 +33,7 @@ export default function RedirectToast() {
       pauseOnHover
       draggable
       theme="light"
+      limit={2}
     />
   );
 }
