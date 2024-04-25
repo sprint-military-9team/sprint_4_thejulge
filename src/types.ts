@@ -4,6 +4,13 @@ type UserData = {
   type: string;
 };
 
+export type UserProfileType = UserData & {
+  name: string;
+  phone: string;
+  address: string;
+  bio: string;
+};
+
 export type ShopDataType = {
   id: string;
   name: string;
@@ -73,6 +80,38 @@ export type SpecifyNoticeApplicationsDataType = {
         closed: boolean;
       };
       href: string;
+    };
+  };
+  links: [];
+};
+
+export type UserApplicationDataType = {
+  item: {
+    id: string;
+    status: 'pending' | 'accepted' | 'rejected' | 'canceled';
+    createdAt: string;
+    shop: {
+      item: {
+        id: string;
+        name: string;
+        category: string;
+        address1: string;
+        address2: string;
+        description: string;
+        imageUrl: string;
+        originalHourlyPay: number;
+      };
+      href: string;
+    };
+    notice: {
+      item: {
+        id: string;
+        hourlyPay: number;
+        description: string;
+        startsAt: string;
+        workhour: number;
+        closed: boolean;
+      };
     };
   };
   links: [];

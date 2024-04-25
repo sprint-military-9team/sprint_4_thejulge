@@ -9,10 +9,12 @@ import Cookies from 'js-cookie';
 import { NoticeInformationDataType } from '@/app/ownerNoticeDetail/types';
 import { checkInputList } from '@/utils/checkLoginInput';
 import { useRouter } from 'next/navigation';
+import { toast, ToastContainer } from 'react-toastify';
 import styles from './OwnerAddNotice.module.scss';
 import Input from '../common/Input/Input';
 import Button from '../common/Button';
 import { InputDataType } from './types';
+import 'react-toastify/dist/ReactToastify.css';
 
 type OwnerAddNoticeProps = {
   onClose?: () => void;
@@ -149,14 +151,14 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
     if (noticeData) {
       const APIFlag = await putSpecifyNotice(noticeData.id, data);
       if (APIFlag) {
-        alert('편집이 완료되었습니다.');
+        toast.success('편집이 완료되었습니다.');
         window.location.reload();
         return;
       }
     }
     const APIFlag = await postNotice(shopId, data);
     if (APIFlag) {
-      alert('등록이 완료되었습니다.');
+      toast.success('등록이 완료되었습니다.');
       router.push(`/ownerNoticeDetail?noticeId=${APIFlag}`);
     }
   };
@@ -173,56 +175,67 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
   }, [changeHoulyPay, changeWorkhour, changeStartsAt, noticeData]);
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.contentWrapper}>
-        <div className={styles.titleWrapper}>
-          <span>{noticeData ? '공고 편집' : '공고 등록'}</span>
-          <Image
-            src={CLOSE_ICON}
-            alt="close"
-            width={32}
-            height={32}
-            className={styles.button}
-            onClick={handleClickCloseButton}
-          />
-        </div>
-        <form className={styles.form} onSubmit={handleSubmit} ref={formRef}>
-          <div className={styles.inputWrapper}>
-            <div className={styles.inputFlexWrapper}>
-              {INPUT_DATA.map((data) => (
-                <div className={styles.inputComponentWrapper} key={data.id}>
-                  <Input
-                    id={data.id}
-                    type={data.type}
-                    value={String(data.value)}
-                    label={data.label}
-                    unit={data.unit}
-                    onChange={data.onChange}
-                    onFocus={data.onFocus}
-                    onBlur={data.onBlur}
-                    isError={data.isError}
-                    errorMessage={data.errorMessage}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className={styles.descriptionWrapper}>
-            <div className={styles.descriptionLabel}>공고 설명</div>
-            <textarea
-              id="description"
-              className={styles.textArea}
-              onChange={handleChangeDescription}
-              value={description}
+    <>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="light"
+      />
+      <div className={styles.wrapper}>
+        <div className={styles.contentWrapper}>
+          <div className={styles.titleWrapper}>
+            <span>{noticeData ? '공고 편집' : '공고 등록'}</span>
+            <Image
+              src={CLOSE_ICON}
+              alt="close"
+              width={32}
+              height={32}
+              className={styles.button}
+              onClick={handleClickCloseButton}
             />
           </div>
-          <div className={styles.buttonWrapper} onClick={handleSubmit}>
-            <Button color="orange" size="large" submit>
-              등록하기
-            </Button>
-          </div>
-        </form>
+          <form className={styles.form} onSubmit={handleSubmit} ref={formRef}>
+            <div className={styles.inputWrapper}>
+              <div className={styles.inputFlexWrapper}>
+                {INPUT_DATA.map((data) => (
+                  <div className={styles.inputComponentWrapper} key={data.id}>
+                    <Input
+                      id={data.id}
+                      type={data.type}
+                      value={String(data.value)}
+                      label={data.label}
+                      unit={data.unit}
+                      onChange={data.onChange}
+                      onFocus={data.onFocus}
+                      onBlur={data.onBlur}
+                      isError={data.isError}
+                      errorMessage={data.errorMessage}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className={styles.descriptionWrapper}>
+              <div className={styles.descriptionLabel}>공고 설명</div>
+              <textarea
+                id="description"
+                className={styles.textArea}
+                onChange={handleChangeDescription}
+                value={description}
+              />
+            </div>
+            <div className={styles.buttonWrapper} onClick={handleSubmit}>
+              <Button color="orange" size="large" submit>
+                등록하기
+              </Button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -62,8 +62,24 @@ export default async function ApplicationList({ shopId, noticeId, currentPage }:
       <div className={styles.wrapper}>
         <div className={styles.title}>신청자 목록</div>
         <div>
-          <Table header={tableData.header} body={tableData.body} type="owner" />
-          <Pagination currentPage={Number(currentPage)} allDataCount={totalCount} perPageDataCount={7} />
+          <Table
+            header={tableData.header}
+            body={tableData.body}
+            type="owner"
+            onClickAcceptButton={onClickAcceptButton}
+            onClickRejectButton={onClickRejectButton}
+          />
+          <Pagination
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+            allDataCount={totalCount}
+            perPageDataCount={7}
+          />
+          {showModal.type !== 'none' && (
+            <Modal onClose={onClose}>
+              <OwnerDetailModal type={showModal.type} onClose={onClose} onClick={showModal.onClick} />
+            </Modal>
+          )}
         </div>
       </div>
     </div>
