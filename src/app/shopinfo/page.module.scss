@@ -28,6 +28,10 @@
   gap: 1rem;
 }
 
+.mainImage {
+  @include rounded-lg;
+}
+
 .label {
   color: $red-400;
   @include font-bold;

@@ -34,7 +34,7 @@ export default function ShopInformation() {
       <h2 className={styles.title}>내 가게</h2>
       <section className={styles.shopLayout}>
         <article className={styles.shopBox}>
-          <Image src={shopData.imageUrl} alt="shop" width={150} height={150} />
+          <Image className={styles.mainImage} src={shopData.imageUrl} alt="shop" width={150} height={150} />
           <div className={styles.shopInfoBox}>
             <p className={styles.label}>식당</p>
             <h1 className={styles.name}>{shopData.name}</h1>
