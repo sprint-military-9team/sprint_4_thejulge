@@ -28,7 +28,7 @@ export default function Dropdown({ optionList = [], onClick, initialOption = nul
   return (
     <section className={css.layout}>
       <button className={css.button} type="button" onClick={handleButtonClick}>
-        {selectedOption || 'Select Option'}
+        {selectedOption || initialOption || '선택'}
         <Image src={isOpen ? ARROW_UP : ARROW_DOWN} alt={isOpen ? 'arrow_up' : 'arrow_down'} width={10} height={10} />
       </button>
       {isOpen && (
@@ -43,4 +43,3 @@ export default function Dropdown({ optionList = [], onClick, initialOption = nul
     </section>
   );
 }
-
