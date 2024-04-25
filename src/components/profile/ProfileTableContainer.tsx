@@ -4,7 +4,7 @@ import getTimeDifference from '@/utils/getTimeDifference';
 import { cookies } from 'next/headers';
 import styles from './ProfileTableContainer.module.scss';
 import Banner from './Banner';
-import Pagination from './PaginationSSR';
+import Pagination from '../common/PaginationSSR/PaginationSSR';
 
 const LIMIT = 4;
 
