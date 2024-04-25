@@ -1,5 +1,5 @@
 import Table from '@/components/common/Table';
-import Pagination from '@/components/common/PaginationSSR/PaginationSSR';
+import Pagination from '@/components/common/Pagination/Pagination';
 import { getSpecifyNoticeApplicationData } from '@/apis/application';
 import styles from './ApplicationList.module.scss';
 
