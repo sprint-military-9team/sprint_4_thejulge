@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import Box from './Box';
-import { items as mockItems } from './mockData';
 
 declare global {
   interface Window {
@@ -77,8 +76,6 @@ function extractShopInfo(items: Item[]) {
   return shopInfoArray;
 }
 
-const mockDatas = extractShopInfo(mockItems);
-
 export default function Map() {
   const [shop, setShop] = useState({
     shop_id: -1,
@@ -131,12 +128,18 @@ export default function Map() {
 
         function searchPlaces() {
           const geocoder = new window.kakao.maps.services.Geocoder();
-
-          mockDatas.forEach((mockData) => {
-            geocoder.addressSearch(`${mockData.address1} ${mockData.address2}`, (data: { x: number; y: number }[]) =>
-              placesSearchCB(data, mockData),
-            );
-          });
+          // mockDatas
+          // eslint-disable-next-line func-names
+          (async function () {
+            const response = await fetch('https://bootcamp-api.codeit.kr/api/0-1/the-julge/notices?limit=100');
+            const resData = await response.json();
+            const datas = extractShopInfo(resData.items);
+            datas?.forEach((mockData) => {
+              geocoder.addressSearch(`${mockData.address1} ${mockData.address2}`, (data: { x: number; y: number }[]) =>
+                placesSearchCB(data, mockData),
+              );
+            });
+          })();
         }
 
         const options = {
