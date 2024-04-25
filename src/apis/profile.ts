@@ -28,7 +28,13 @@ export const setUserProfile = async (
   });
 
   if (!response.ok) {
-    throw new Error((await response.json()).message);
+    if (response.status === 400) {
+      throw new Error((await response.json()).message);
+    }
+    if (response.status === 401 || response.status === 403) {
+      throw new Error(`${response.status}`);
+    }
+    throw new Error(`unexpected error`);
   }
 };
 
