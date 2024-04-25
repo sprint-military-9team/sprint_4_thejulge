@@ -54,7 +54,7 @@ export default function TableButton({ id }: TableButtonProps) {
         </button>
       </div>
       {showModal.type !== 'none' && (
-        <Modal onClose={onClose}>
+        <Modal>
           <OwnerDetailModal type={showModal.type} onClose={onClose} onClick={showModal.onClick} />
         </Modal>
       )}

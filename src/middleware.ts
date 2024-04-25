@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export default function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value;
   const type = request.cookies.get('type')?.value;
-  const shopId = request.cookies.get('shopId')?.value;
+  /* const shopId = request.cookies.get('shopId')?.value; */
   const path = request.nextUrl.pathname;
   if ((path === '/signin' || path === '/signup') && token) {
     const response = NextResponse.redirect(new URL('/', request.url));
@@ -19,15 +19,15 @@ export default function middleware(request: NextRequest) {
       return loginResponse;
     }
 
-    if (type !== 'employee') {
+    if (type !== 'employer') {
       mainResponse.cookies.set('redirectStatus', 'invalidAuthority');
       return mainResponse;
     }
 
-    if (!shopId) {
+    /* if (!shopId) {
       mainResponse.cookies.set('redirectStatus', 'invalidAuthority');
       return mainResponse;
-    }
+    } */
   }
   return NextResponse.next();
 }
