@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { ARROW_DOWN, ARROW_UP } from '@/utils/constants';
 import Image from 'next/image';
@@ -43,4 +45,3 @@ export default function Dropdown({ optionList = [], onClick, initialOption = nul
     </section>
   );
 }
-
