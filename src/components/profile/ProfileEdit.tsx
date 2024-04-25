@@ -95,10 +95,8 @@ export default function ProfileEdit({ isOpend, onClose, defaultValues }: Profile
         toast.error('유저 토큰에 문제가 생겼습니다. 로그아웃 후 다시 로그인 해주세요.');
       } else if (error.message === '403') {
         toast.error('프로필 수정 권한이 없어요. 로그아웃 후 다시 로그인 해주세요.');
-      } else if (error.message === '400') {
-        toast.error(`${error.message}`);
       } else {
-        toast.error('예상치 못한 문제가 발생했습니다. 로그아웃 후 다시 로그인 해주세요.');
+        toast.error(`${error.message}`);
       }
     } finally {
       setLoading(false);
