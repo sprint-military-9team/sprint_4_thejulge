@@ -1,7 +1,7 @@
 'use client';
 
 import Input from '@/components/common/Input/Input';
-import { useCallback, useRef, useState, useEffect } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import Button from '@/components/common/Button';
 import useInput from '@/hooks/useInput';
 import { checkEmail, checkInputList, checkPassword } from '@/utils/checkLoginInput';
@@ -9,7 +9,6 @@ import { postSignin } from '@/apis/user';
 import Modal from '@/components/common/Modal/Modal';
 import LoginModal from '@/components/common/Modal/LoginModal/LoginModal';
 import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
 import styles from './form.module.scss';
 
 type LoginModalDataType = {
@@ -65,13 +64,6 @@ export default function Form() {
     }
   };
 
-  useEffect(() => {
-    const token = Cookies.get('token');
-    if (token) {
-      router.back();
-    }
-  }, [router]);
-
   return (
     <>
       <form className={styles.loginForm} onSubmit={handleSubmit} ref={formRef}>
@@ -109,7 +101,7 @@ export default function Form() {
         </Button>
       </form>
       {showModal.type !== 'none' && (
-        <Modal onClose={onClose}>
+        <Modal>
           <LoginModal type={showModal.type} onClose={onClose} />
         </Modal>
       )}

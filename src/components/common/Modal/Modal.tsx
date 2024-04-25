@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
-import useOutsideClick from '@/hooks/useOutsideClick';
 import { allowScroll, preventScroll } from '@/utils/modal';
 import styles from './Modal.module.scss';
 
 type ModalProps = {
   children: React.ReactNode;
-  onClose: () => void;
 };
 
 function ModalPortal({ children }: { children: React.ReactNode }) {
@@ -20,9 +18,8 @@ function ModalPortal({ children }: { children: React.ReactNode }) {
   return ReactDOM.createPortal(children, document.getElementById('modal') as HTMLElement) as JSX.Element;
 }
 
-export default function Modal({ children, onClose }: ModalProps) {
+export default function Modal({ children }: ModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
-  useOutsideClick(modalRef, onClose);
   useEffect(() => {
     const prevScrollY = preventScroll();
     return () => {
