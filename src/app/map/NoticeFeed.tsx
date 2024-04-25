@@ -2,6 +2,7 @@ import getTimeDifference from '@/utils/getTimeDifference';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import styles from './NoticeFeed.module.scss';
 
 type BoxProps = {
   shop: {
@@ -27,7 +28,7 @@ type NoticeType = {
   };
 };
 
-export default function Box({ shop }: BoxProps) {
+export default function NoticeFeed({ shop }: BoxProps) {
   const [state, setState] = useState<NoticeType[]>([]);
   useEffect(() => {
     if (Number(shop.id) < 0) return;
@@ -42,20 +43,8 @@ export default function Box({ shop }: BoxProps) {
   }, [shop.id]);
 
   return (
-    <div
-      style={{
-        position: 'absolute',
-        width: '400px',
-        height: '700px',
-        backgroundColor: '#fff',
-        zIndex: 9999,
-        top: '8%',
-        right: '4rem',
-        padding: '3rem',
-        borderRadius: '2rem',
-      }}
-    >
-      <h2 style={{ paddingBottom: '3rem' }}>내가 선택한 가게</h2>
+    <div className={styles.container}>
+      <h2 className={styles.title}>내가 선택한 가게</h2>
 
       {Number(shop.id) < 0 ? (
         <div>지도에서 가게를 선택해주세요</div>
@@ -83,7 +72,7 @@ export default function Box({ shop }: BoxProps) {
           </div>
         </div>
       )}
-      <h2 style={{ paddingBottom: '1rem' }}>공고 리스트 </h2>
+      <h2 className={styles.title}>공고 리스트 </h2>
       <div style={{ overflow: 'scroll', height: '50rem' }}>
         <ul style={{ paddingTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1.6rem' }}>
           {state.map((item) => (

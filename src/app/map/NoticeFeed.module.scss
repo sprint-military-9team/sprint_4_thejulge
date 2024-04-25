@@ -1,0 +1,19 @@
+@import '@/styles/_index';
+@import '@/styles/_media';
+
+.container {
+  position: absolute;
+  width: 400px;
+  height: 700px;
+  background-color: #fff;
+  z-index: 9999;
+  top: 8%;
+  right: 4rem;
+  padding: 3rem;
+  border-radius: 2rem;
+}
+
+.title {
+  padding-bottom: 2rem;
+  font-size: 1.4rem;
+}

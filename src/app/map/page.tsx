@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Item, ShopInfo } from '@/types/shopDetailPageType';
-import Box from './Box';
+import NoticeFeed from './NoticeFeed';
 
 declare global {
   interface Window {
@@ -49,7 +49,16 @@ function extractShopInfo(items: Items[]) {
 }
 
 export default function Map() {
-  const [shop, setShop] = useState({} as ShopInfo);
+  const [shop, setShop] = useState({
+    id: '-1',
+    name: '',
+    category: '',
+    address1: '',
+    address2: '',
+    imageUrl: '',
+    originalHourlyPay: -1,
+    description: '',
+  } as ShopInfo);
 
   useEffect(() => {
     const mapScript = document.createElement('script');
@@ -122,7 +131,7 @@ export default function Map() {
 
   return (
     <div id="map" style={{ width: '100%', height: '100vh', position: 'relative' }}>
-      <Box shop={shop} />
+      <NoticeFeed shop={shop} />
     </div>
   );
 }
