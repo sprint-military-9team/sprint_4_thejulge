@@ -8,9 +8,10 @@ interface ButtonProps {
   style?: React.CSSProperties;
   submit?: boolean;
   onClick?: () => void;
+  isDisabled?: boolean;
 }
 
-function Button({ children, color, size, style, submit, onClick }: ButtonProps) {
+function Button({ children, color, size, style, submit, onClick, isDisabled }: ButtonProps) {
   const classProp = styles[color];
   const sizeClass = styles[size];
   return (
@@ -20,6 +21,7 @@ function Button({ children, color, size, style, submit, onClick }: ButtonProps) 
         onClick={onClick}
         style={style}
         className={`${styles.buttonWrapper} ${sizeClass} ${classProp}`}
+        disabled={isDisabled}
       >
         {children}
       </button>

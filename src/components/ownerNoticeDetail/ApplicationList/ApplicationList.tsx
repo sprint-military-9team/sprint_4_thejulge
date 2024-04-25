@@ -121,7 +121,7 @@ export default function ApplicationList({ shopId, noticeId }: ApplicationListPro
             perPageDataCount={7}
           />
           {showModal.type !== 'none' && (
-            <Modal onClose={onClose}>
+            <Modal>
               <OwnerDetailModal type={showModal.type} onClose={onClose} onClick={showModal.onClick} />
             </Modal>
           )}

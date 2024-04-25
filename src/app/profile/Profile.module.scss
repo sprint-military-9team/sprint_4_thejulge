@@ -1,0 +1,113 @@
+@import '@/styles/_index';
+@import '@/styles/_media';
+
+.container {
+  position: relative;
+}
+
+.header {
+  height: 4rem;
+  background-color: rgb(168, 204, 240);
+}
+
+.profile {
+  padding-top: 6rem;
+}
+
+.sectionTitle {
+  font-size: 2.8rem;
+  margin-bottom: 3rem;
+}
+
+.sectionTitle.notMargin {
+  margin: 0;
+}
+
+.wrapper {
+  max-width: 98rem;
+  padding: 0 2rem;
+  margin: 0 auto;
+}
+
+.applyList {
+  background-color: $gray-100;
+  margin-top: 5rem;
+  padding-top: 6rem;
+  min-height: 46rem;
+}
+
+.profileContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profileCard {
+  background-color: $red-700;
+  width: 65.5rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 4rem;
+  border-radius: 1rem;
+}
+
+.footer {
+  height: 4rem;
+  background-color: rgb(168, 204, 240);
+}
+
+.nameLabel {
+  font-size: 1.6rem;
+  color: $red-500;
+  @include font-bold;
+  margin-bottom: 1.4rem;
+}
+
+.name {
+  font-size: 2.8rem;
+  @include font-bold;
+  margin-bottom: 1.3rem;
+}
+
+.phone {
+  font-size: 1.6rem;
+  color: $gray-600;
+  margin-bottom: 1.3rem;
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+}
+
+.region {
+  font-size: 1.6rem;
+  color: $gray-600;
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+}
+
+.bio {
+  font-size: 1.6rem;
+  @include font-normal;
+}
+
+.tableArea {
+  padding-top: 3rem;
+}
+
+.tableContainer {
+  border: 1px solid $gray-400;
+  @include rounded-lg;
+  overflow: hidden;
+}
+
+@include media(tablet) {
+  .profileContainer {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .profileCard {
+    width: 100%;
+  }
+}

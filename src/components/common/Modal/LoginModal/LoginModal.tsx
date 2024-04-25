@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+import useOutsideClick from '@/hooks/useOutsideClick';
 import Modal from '../Modal';
 import styles from './LoginModal.module.scss';
 
@@ -15,21 +17,23 @@ export default function LoginModal({
   type: 'signinError' | 'duplicatedEmailError' | 'signupAccepted' | 'error';
   onClose: () => void;
 }) {
+  const modalRef = useRef<HTMLDivElement>(null);
   const handleClose = () => {
     if (onClose) {
       onClose();
     }
   };
+  useOutsideClick(modalRef, onClose);
   return (
-    <div>
-      <Modal onClose={handleClose}>
+    <Modal>
+      <div className={styles.wrapper} ref={modalRef}>
         <h2 className={styles.text}>{MODAL_TEXT[type]}</h2>
         <div className={styles.selectionBox}>
-          <button className={styles.positiveButton} type="button" onClick={() => handleClose()}>
+          <button className={styles.button} type="button" onClick={() => handleClose()}>
             확인
           </button>
         </div>
-      </Modal>
-    </div>
+      </div>
+    </Modal>
   );
 }

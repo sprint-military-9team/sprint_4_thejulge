@@ -1,6 +1,7 @@
 import BASE_URL from '@/constants/BASEURL';
-import { SpecifyNoticeApplicationsDataType } from '@/types';
+import { SpecifyNoticeApplicationsDataType, UserApplicationDataType } from '@/types';
 import Cookies from 'js-cookie';
+import { cookies } from 'next/headers';
 
 export const getSpecifyNoticeApplicationData = async (
   shopId: string,
@@ -41,4 +42,23 @@ export const setSpecifyNoticeApplicationStatus = async (
   if (!response.ok) {
     throw new Error('API 오류');
   }
+};
+
+export const getUserApplicationData = async (
+  userId: string,
+  limit?: number,
+  offset?: number,
+): Promise<{ count: number; items: UserApplicationDataType[] }> => {
+  const token = cookies().get('token')?.value;
+  const response = await fetch(`${BASE_URL}/users/${userId}/applications?offset=${offset}&limit=${limit}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) {
+    throw new Error('API 오류');
+  }
+  const data = await response.json();
+  return { count: data.count, items: data.items };
 };
