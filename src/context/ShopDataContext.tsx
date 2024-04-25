@@ -24,7 +24,6 @@ export function ShopDataContextProvider({ children }: { children: React.ReactNod
     },
   });
   const updateShopData = (data: ShopDataType) => {
-    console.log(123);
     setShopData(data);
   };
 
