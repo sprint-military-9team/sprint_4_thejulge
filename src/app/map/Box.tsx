@@ -5,13 +5,14 @@ import { useEffect, useState } from 'react';
 
 type BoxProps = {
   shop: {
-    shop_id: number;
-    shop_name: string;
+    id: string;
+    name: string;
     address1: string;
     address2: string;
     imageUrl: string;
     description: string;
-    originalHourlyPay: string;
+    originalHourlyPay: number;
+    category: string;
   };
 };
 
@@ -29,16 +30,16 @@ type NoticeType = {
 export default function Box({ shop }: BoxProps) {
   const [state, setState] = useState<NoticeType[]>([]);
   useEffect(() => {
-    if (shop.shop_id < 0) return;
+    if (Number(shop.id) < 0) return;
     // eslint-disable-next-line func-names
     (async function () {
       const response = await fetch(
-        `https://bootcamp-api.codeit.kr/api/0-1/the-julge/shops/${shop.shop_id}/notices?limit=100`,
+        `https://bootcamp-api.codeit.kr/api/0-1/the-julge/shops/${shop.id}/notices?limit=100`,
       );
       const data = await response.json();
       setState(data.items);
     })();
-  }, [shop.shop_id]);
+  }, [shop.id]);
 
   return (
     <div
@@ -56,7 +57,7 @@ export default function Box({ shop }: BoxProps) {
     >
       <h2 style={{ paddingBottom: '3rem' }}>내가 선택한 가게</h2>
 
-      {shop.shop_id < 0 ? (
+      {Number(shop.id) < 0 ? (
         <div>지도에서 가게를 선택해주세요</div>
       ) : (
         <div style={{ display: 'flex', gap: '1.5rem', paddingBottom: '2rem' }}>
@@ -73,7 +74,7 @@ export default function Box({ shop }: BoxProps) {
             <Image fill src={shop.imageUrl} alt="af" />
           </div>
           <div>
-            <h3 style={{ marginBottom: '1rem', fontSize: '1.4rem' }}>{shop.shop_name}</h3>
+            <h3 style={{ marginBottom: '1rem', fontSize: '1.4rem' }}>{shop.name}</h3>
             <p style={{ marginBottom: '1rem' }}>{shop.description}</p>
             <p style={{ marginBottom: '1rem' }}>기존시급: {shop.originalHourlyPay}</p>
             <p>

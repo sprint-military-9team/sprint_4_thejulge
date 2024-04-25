@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Item, ShopInfo } from '@/types/shopDetailPageType';
 import Box from './Box';
 
 declare global {
@@ -10,42 +11,11 @@ declare global {
   }
 }
 
-type Item = {
-  item: {
-    id: string;
-    hourlyPay: number;
-    startsAt: string;
-    workhour: number;
-    description: string;
-    closed: boolean;
-    shop: {
-      item: {
-        id: string;
-        name: string;
-        category: string;
-        address1: string;
-        address2: string;
-        description: string;
-        imageUrl: string;
-        originalHourlyPay: number;
-      };
-      href: string;
-    };
-  };
-  links: { rel: string; description: string; method: string; href: string }[];
-};
+interface Items {
+  item: Item;
+}
 
-type ShopInfo = {
-  shop_id: string;
-  shop_name: string;
-  address1: string;
-  address2: string;
-  imageUrl: string;
-  originalHourlyPay: number;
-  description: string;
-};
-
-function extractShopInfo(items: Item[]) {
+function extractShopInfo(items: Items[]) {
   const shopInfoArray: ShopInfo[] = [];
   const shopNameList: string[] = [];
   items.forEach((item) => {
@@ -57,11 +27,13 @@ function extractShopInfo(items: Item[]) {
       shop.item.name &&
       shop.item.address1 &&
       shop.item.address2 &&
+      shop.item.category &&
       !shopNameList.includes(shop.item.name)
     ) {
       const shopInfo = {
-        shop_id: shop.item.id,
-        shop_name: shop.item.name,
+        id: shop.item.id,
+        name: shop.item.name,
+        category: shop.item.category,
         address1: shop.item.address1,
         address2: shop.item.address2,
         imageUrl: shop.item.imageUrl,
@@ -77,15 +49,7 @@ function extractShopInfo(items: Item[]) {
 }
 
 export default function Map() {
-  const [shop, setShop] = useState({
-    shop_id: -1,
-    shop_name: '',
-    address1: '',
-    address2: '',
-    imageUrl: '',
-    description: '',
-    originalHourlyPay: '',
-  });
+  const [shop, setShop] = useState({} as ShopInfo);
 
   useEffect(() => {
     const mapScript = document.createElement('script');
@@ -134,9 +98,9 @@ export default function Map() {
             const response = await fetch('https://bootcamp-api.codeit.kr/api/0-1/the-julge/notices?limit=100');
             const resData = await response.json();
             const datas = extractShopInfo(resData.items);
-            datas?.forEach((mockData) => {
-              geocoder.addressSearch(`${mockData.address1} ${mockData.address2}`, (data: { x: number; y: number }[]) =>
-                placesSearchCB(data, mockData),
+            datas?.forEach((shopData) => {
+              geocoder.addressSearch(`${shopData.address1} ${shopData.address2}`, (data: { x: number; y: number }[]) =>
+                placesSearchCB(data, shopData),
               );
             });
           })();
