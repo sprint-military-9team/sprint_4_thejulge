@@ -20,7 +20,7 @@ export default function UploadImage({ onUploadImage }: { onUploadImage: (imageUr
     try {
       setIsUploading(true);
       if (event.target.files) {
-        const file = event.target.files[1];
+        const file = event.target.files[0];
         const reader = new FileReader();
         reader.onload = () => {
           setImage(reader.result as string);
@@ -51,7 +51,7 @@ export default function UploadImage({ onUploadImage }: { onUploadImage: (imageUr
           throw new Error('이미지를 업로드하는데 실패했습니다.');
         }
 
-        const imageURLResponse = await fetch(presignedURL.split('?')[1]);
+        const imageURLResponse = await fetch(presignedURL.split('?')[0]);
         if (!imageURLResponse.ok) {
           throw new Error('이미지 URL 조회에 실패했습니다.');
         }
@@ -69,7 +69,7 @@ export default function UploadImage({ onUploadImage }: { onUploadImage: (imageUr
   return (
     <section>
       <div className={styles.layout}>
-        {image && <Image className={styles.shopImage} src={image} width={201} height={200} alt="shop" />}
+        {image && <Image className={styles.shopImage} src={image} width={200} height={200} alt="shop" />}
         <button
           className={cn(styles.uploadButton, !image && styles.noneImage)}
           type="button"
@@ -83,7 +83,7 @@ export default function UploadImage({ onUploadImage }: { onUploadImage: (imageUr
             ref={fileInputRef}
             onChange={handleImageChange}
           />
-          <Image className={styles.uploadImage} src={UPLOAD} alt="upload" width={101} height={100} />
+          <Image className={styles.uploadImage} src={UPLOAD} alt="upload" width={100} height={100} />
           <p className={styles.uploadText}>이미지 선택하기</p>
         </button>
         {isUploading && <LoadingSpinner />}
