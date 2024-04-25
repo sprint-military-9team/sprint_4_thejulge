@@ -9,7 +9,9 @@ import { UserProfileType } from '@/types';
 import { setUserProfile } from '@/apis/profile';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+import { ToastContainer, toast } from 'react-toastify';
 import styles from './ProfileEdit.module.scss';
+import 'react-toastify/dist/ReactToastify.css';
 
 type ProfileEditProps = {
   isOpend: boolean;
@@ -71,7 +73,8 @@ export default function ProfileEdit({ isOpend, onClose, defaultValues }: Profile
     }
     if (!address) {
       // eslint-disable-next-line no-alert
-      alert('주소를 입력해주세요');
+      toast.error('주소를 입력해주세요');
+
       return;
     }
 
@@ -87,7 +90,7 @@ export default function ProfileEdit({ isOpend, onClose, defaultValues }: Profile
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       // eslint-disable-next-line no-alert
-      alert(`${error.message}`);
+      toast.error(`${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -95,6 +98,15 @@ export default function ProfileEdit({ isOpend, onClose, defaultValues }: Profile
 
   return (
     <div className={`${styles.container} ${isOpend && styles.opacity}`}>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar
+        closeOnClick
+        pauseOnHover
+        draggable
+        limit={1}
+      />
       <div className={styles.wrapper}>
         <div className={styles.contents}>
           <div className={styles.header}>
@@ -148,13 +160,7 @@ export default function ProfileEdit({ isOpend, onClose, defaultValues }: Profile
               <textarea id="bio" value={bio} onChange={(e) => setBio(e.target.value)} />
             </div>
             <div style={{ width: '31.2rem', margin: '4rem auto' }}>
-              <Button
-                submit
-                color="orange"
-                size="medium"
-                isDisabled={loading}
-                style={loading ? { backgroundColor: 'dodgerblue' } : {}}
-              >
+              <Button submit color="orange" size="medium" isDisabled={loading}>
                 등록하기
               </Button>
             </div>
