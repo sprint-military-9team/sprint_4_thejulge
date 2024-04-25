@@ -30,3 +30,4 @@ export const CLOSE_ICON = `${BASE_PATH}/close_icon.svg`;
 export const HEADER_LOGO = `${BASE_PATH}/header_logo.svg`;
 export const SEARCH_ICON = `${BASE_PATH}/search_icon.svg`;
 export const NOTICE_DETAIL_ARROW_UP = `${BASE_PATH}/notice_detail_arrow_up.svg`;
+export const UPLOAD = `${BASE_PATH}/upload.png`;
