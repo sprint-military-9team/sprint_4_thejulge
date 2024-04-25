@@ -7,7 +7,6 @@ import Button from '@/components/common/Button';
 import Image from 'next/image';
 import { UserProfileType } from '@/types';
 import { setUserProfile } from '@/apis/profile';
-import { useAsync } from '@/hooks/useAsync';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import styles from './ProfileEdit.module.scss';
@@ -35,7 +34,8 @@ export default function ProfileEdit({ isOpend, onClose, defaultValues }: Profile
   const [bio, setBio] = useState(defaultValues?.bio ? defaultValues.bio : '');
   const [address, setAddress] = useState(defaultValues?.address ? defaultValues.address : '');
   const [errors, setErrors] = useState(INITIAL_ERRORS);
-  const [loading, error, setUserProfileAsync, setError] = useAsync(setUserProfile);
+  // const [loading, error, setUserProfileAsync, setError] = useAsync(setUserProfile);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleCloseClick = () => {
@@ -79,16 +79,19 @@ export default function ProfileEdit({ isOpend, onClose, defaultValues }: Profile
       return;
     }
     const USER_ID = Cookies.get('userId') as string;
-    await setUserProfileAsync(USER_ID, { name, phone, address, bio });
-    router.refresh();
-    onClose();
+    setLoading(true);
+    try {
+      await setUserProfile(USER_ID, { name, phone, address, bio });
+      router.refresh();
+      onClose();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      // eslint-disable-next-line no-alert
+      alert(`${error.message}`);
+    } finally {
+      setLoading(false);
+    }
   };
-
-  if (error) {
-    // eslint-disable-next-line no-alert
-    alert(`${error.message}`);
-    setError(null);
-  }
 
   return (
     <div className={`${styles.container} ${isOpend && styles.opacity}`}>
@@ -145,7 +148,13 @@ export default function ProfileEdit({ isOpend, onClose, defaultValues }: Profile
               <textarea id="bio" value={bio} onChange={(e) => setBio(e.target.value)} />
             </div>
             <div style={{ width: '31.2rem', margin: '4rem auto' }}>
-              <Button submit color="orange" size="medium" isDisabled={loading}>
+              <Button
+                submit
+                color="orange"
+                size="medium"
+                isDisabled={loading}
+                style={loading ? { backgroundColor: 'dodgerblue' } : {}}
+              >
                 등록하기
               </Button>
             </div>
