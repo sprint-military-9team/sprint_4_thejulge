@@ -1,21 +1,37 @@
 import { NextRequest, NextResponse } from 'next/server';
-// import Cookies from 'js-cookie';
-import { cookies } from 'next/headers';
 
-const protectedRoutes = ['/profile'];
-
-export default async function middleware(req: NextRequest) {
-  const path = req.nextUrl.pathname;
-  const isProtectedRoute = protectedRoutes.includes(path);
-
-  const cookie = cookies().get('userId');
-  if (isProtectedRoute && !cookie) {
-    return NextResponse.redirect(new URL('/signin', req.nextUrl));
+export default function middleware(request: NextRequest) {
+  const token = request.cookies.get('token')?.value;
+  const type = request.cookies.get('type')?.value;
+  const shopId = request.cookies.get('shopId')?.value;
+  const path = request.nextUrl.pathname;
+  if ((path === '/signin' || path === '/signup') && token) {
+    const response = NextResponse.redirect(new URL('/', request.url));
+    response.cookies.set('redirectStatus', 'alreadyLogin');
+    return response;
   }
 
+  if (path.startsWith('/ownerNoticeDetail')) {
+    const mainResponse = NextResponse.redirect(new URL('/', request.url));
+    const loginResponse = NextResponse.redirect(new URL('/signin', request.url));
+    if (!token) {
+      loginResponse.cookies.set('redirectStatus', 'needLogin');
+      return loginResponse;
+    }
+
+    if (type !== 'employee') {
+      mainResponse.cookies.set('redirectStatus', 'invalidAuthority');
+      return mainResponse;
+    }
+
+    if (!shopId) {
+      mainResponse.cookies.set('redirectStatus', 'invalidAuthority');
+      return mainResponse;
+    }
+  }
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
+  matcher: ['/signin', '/signup', '/ownerNoticeDetail/:path*'],
 };

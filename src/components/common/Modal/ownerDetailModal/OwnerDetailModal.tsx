@@ -1,5 +1,7 @@
 import Image from 'next/image';
 import { CHECK } from '@/utils/constants';
+import { useRef } from 'react';
+import useOutsideClick from '@/hooks/useOutsideClick';
 import Modal from '../Modal';
 import styles from './OwnerDetailModal.module.scss';
 
@@ -23,9 +25,11 @@ export default function OwnerDetailModal({
   onClose: () => void;
   onClick: () => void;
 }) {
+  const modalRef = useRef<HTMLDivElement>(null);
+  useOutsideClick(modalRef, onClose);
   return (
-    <div>
-      <Modal onClose={onClose}>
+    <Modal>
+      <div ref={modalRef} className={styles.wrapper}>
         <Image src={CHECK} alt="check" width={25} height={25} />
         <h2 className={styles.text}>{MODAL_TYPE[type].text}</h2>
         <div className={styles.selectionBox}>
@@ -36,7 +40,7 @@ export default function OwnerDetailModal({
             {MODAL_TYPE[type].button}
           </button>
         </div>
-      </Modal>
-    </div>
+      </div>
+    </Modal>
   );
 }
