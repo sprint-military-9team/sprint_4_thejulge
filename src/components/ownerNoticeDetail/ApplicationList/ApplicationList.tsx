@@ -63,7 +63,12 @@ export default async function ApplicationList({ shopId, noticeId, currentPage }:
         <div className={styles.title}>신청자 목록</div>
         <div>
           <Table header={tableData.header} body={tableData.body} type="owner" />
-          <Pagination currentPage={Number(currentPage)} allDataCount={totalCount} perPageDataCount={7} />
+          <Pagination
+            currentPage={Number(currentPage)}
+            allDataCount={totalCount}
+            perPageDataCount={7}
+            pageQuery={`?noticeId=${noticeId}`}
+          />
         </div>
       </div>
     </div>

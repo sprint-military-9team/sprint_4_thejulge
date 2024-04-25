@@ -32,7 +32,8 @@ export const postNotice = async (shopId: string, data: NoticeUploadDataType) => 
 };
 
 export const putSpecifyNotice = async (noticeId: string, data: NoticeUploadDataType) => {
-  const shopId = Cookies.get('shopId');
+  /* const shopId = Cookies.get('shopId'); */
+  const shopId = 'd3398bdc-4f7b-4457-b6b6-588928dc7e2f';
   const token = Cookies.get('token');
   const response = await fetch(`${BASE_URL}/shops/${shopId}/notices/${noticeId}`, {
     method: 'PUT',

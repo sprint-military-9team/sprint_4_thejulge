@@ -6,6 +6,7 @@ type Props = {
   currentPage: number;
   allDataCount: number;
   perPageDataCount: number;
+  pageQuery?: string;
 };
 
 const PAGE_LIMIT = 4;
@@ -17,14 +18,18 @@ const createPageNumberList = (currentPage: number, totalPages: number): number[]
   return new Array(endPage - startPage + 1).fill(0).map((_, index) => index + startPage);
 };
 
-export default function Pagination({ currentPage = 1, allDataCount, perPageDataCount }: Props) {
+export default function Pagination({ currentPage = 1, allDataCount, perPageDataCount, pageQuery }: Props) {
   const totalPages = Math.ceil(allDataCount / perPageDataCount);
   const pageNumberList = createPageNumberList(currentPage, totalPages);
 
   return (
     <div className={styles.container}>
       {totalPages > PAGE_LIMIT && (
-        <Link href={`?page=${currentPage - 1}`} className={styles.button} prefetch>
+        <Link
+          href={pageQuery ? `${pageQuery}&page=${currentPage - 1}` : `?page=${currentPage - 1}`}
+          className={styles.button}
+          prefetch
+        >
           <img src={ARROW_PREV} alt="arrow_prev" />
         </Link>
       )}
@@ -33,7 +38,11 @@ export default function Pagination({ currentPage = 1, allDataCount, perPageDataC
           (item) =>
             item <= totalPages && (
               <li key={item} className={`${styles.listItem} ${currentPage === item ? styles.selected : ''}`}>
-                <Link href={`?page=${item}`} className={styles.pageButton} prefetch>
+                <Link
+                  href={pageQuery ? `${pageQuery}&page=${item}` : `?page=${item}`}
+                  className={styles.pageButton}
+                  prefetch
+                >
                   {item}
                 </Link>
               </li>
@@ -42,7 +51,11 @@ export default function Pagination({ currentPage = 1, allDataCount, perPageDataC
       </ul>
 
       {totalPages > PAGE_LIMIT && (
-        <Link href={`?page=${currentPage + 1}`} className={styles.button} prefetch>
+        <Link
+          href={pageQuery ? `${pageQuery}&page=${currentPage + 1}` : `?page=${currentPage + 1}`}
+          className={styles.button}
+          prefetch
+        >
           <img src={ARROW_NEXT} alt="arrow_prev" />
         </Link>
       )}
