@@ -1,49 +1,77 @@
+import { ReactNode } from 'react';
 import styles from './Table.module.scss';
+import Status from '../Status';
 
-/*
-const datas = {
-  titles: ['신청자', '소개', '전화번호', '상태'],
-  data: [
-    ['id를 넣어주세요', '김태진', '안녕하세요', '010-3727-4228', 'pending'],
-    ['id를 넣어주세요', '김우기', '안녕하세요', '010-4987-4228', 'pending'],
-  ],
-};
-*/
-
-type Datas = {
-  titles: string[];
-  data: string[][];
+type Header<T> = {
+  id: keyof T & string;
+  name: string;
 };
 
-type TableProps = {
-  datas: Datas;
+type TableProps<T> = {
+  header: Header<T>[];
+  body: T[];
+  type: 'owner' | 'worker';
+  onClickRejectButton?: (id: string) => void;
+  onClickAcceptButton?: (id: string) => void;
 };
-
-export default function Table({ datas }: TableProps) {
+export default function Table<T extends { id: string; status: 'pending' | 'rejected' | 'accepted' | 'canceled' }>({
+  header,
+  body,
+  type,
+  onClickRejectButton,
+  onClickAcceptButton,
+}: TableProps<T>) {
   return (
     <div className={styles.container}>
       <table className={styles.table}>
         <thead className={styles.thead}>
           <tr className={styles.tr}>
-            {datas.titles.map((title, index) => (
+            {header.map(({ id, name }, index) => (
               <th
-                key={title}
-                className={`${styles.th} ${index === 0 || index === datas.titles.length - 1 ? styles.edges : styles.middles}`}
+                key={id}
+                className={`${styles.th} ${index === 0 || index === header.length - 1 ? styles.edges : index === header.length - 2 ? styles.penult : styles.middles}`}
               >
-                {title}
+                {name}
               </th>
             ))}
           </tr>
         </thead>
         <tbody className={styles.tbody}>
-          {datas.data.map((item) => (
-            <tr key={item[0]} className={styles.tr}>
-              {datas.titles.map((title, index) => (
+          {body.map((item) => (
+            <tr key={item.id} className={styles.tr}>
+              {header.map(({ id }, index_header) => (
                 <td
-                  key={title}
-                  className={`${styles.td} ${index === 0 || index === datas.titles.length - 1 ? styles.edges : styles.middles}`}
+                  key={id}
+                  className={`${styles.td} ${index_header === 0 || index_header === header.length - 1 ? styles.edges : index_header === header.length - 2 ? styles.penult : styles.middles}`}
                 >
-                  {item[index + 1]}
+                  {type === 'owner' && id === 'status' && item[id] === 'pending' ? (
+                    <div className={styles.btnContainer}>
+                      <button
+                        className={`${styles.btn} ${styles.reject}`}
+                        type="button"
+                        onClick={() => {
+                          if (!onClickRejectButton) return;
+                          onClickRejectButton(item.id);
+                        }}
+                      >
+                        거절하기
+                      </button>
+                      <button
+                        className={`${styles.btn} ${styles.accept}`}
+                        type="button"
+                        onClick={() => {
+                          if (!onClickAcceptButton) return;
+                          onClickAcceptButton(item.id);
+                        }}
+                      >
+                        승인하기
+                      </button>
+                    </div>
+                  ) : id === 'status' ? (
+                    <Status type={item.status} />
+                  ) : (
+                    (item[id] as ReactNode)
+                  )}
                 </td>
               ))}
             </tr>

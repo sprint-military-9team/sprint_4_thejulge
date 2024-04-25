@@ -2,7 +2,6 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-
 // prettier-ignore
 * {
   box-sizing: border-box;
@@ -10,7 +9,9 @@
 html {
   font-size: 10px;
 }
-body,
+body {
+  margin: 0;
+}
 div,
 span,
 applet,
