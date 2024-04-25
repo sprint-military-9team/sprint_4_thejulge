@@ -1,16 +1,6 @@
 import BASE_URL from '@/constants/BASEURL';
 import Cookies from 'js-cookie';
 
-const getShopId = async (userId: string) => {
-  const response = await fetch(`${BASE_URL}/users/${userId}`);
-  if (!response.ok) {
-    return '';
-  }
-  const data = await response.json();
-  const { id } = data.item.shop.item;
-  return id;
-};
-
 export const postSignin = async (email: string, password: string) => {
   const APIData = {
     error: '',

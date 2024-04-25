@@ -19,19 +19,19 @@ export default function middleware(request: NextRequest) {
       return loginResponse;
     }
 
-    if (type !== 'employer') {
+    if (type !== 'employee') {
       mainResponse.cookies.set('redirectStatus', 'invalidAuthority');
-      return loginResponse;
+      return mainResponse;
     }
 
     if (!shopId) {
       mainResponse.cookies.set('redirectStatus', 'invalidAuthority');
-      return loginResponse;
+      return mainResponse;
     }
   }
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/signin', '/signup', '/ownerNoticeDetail/:noticeId*'],
+  matcher: ['/signin', '/signup', '/ownerNoticeDetail/:path*'],
 };

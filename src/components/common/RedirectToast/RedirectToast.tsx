@@ -32,8 +32,7 @@ export default function RedirectToast() {
       closeOnClick
       pauseOnHover
       draggable
-      theme="light"
-      limit={2}
+      limit={1}
     />
   );
 }
