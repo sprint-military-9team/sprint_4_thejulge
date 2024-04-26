@@ -30,7 +30,7 @@ type NoticeType = {
 };
 
 export default function NoticeFeed({ shop }: BoxProps) {
-  const [state, setState] = useState<NoticeType[]>([]);
+  const [notice, setNotice] = useState<NoticeType[]>([]);
   useEffect(() => {
     if (Number(shop.id) < 0) return;
     // eslint-disable-next-line func-names
@@ -39,7 +39,7 @@ export default function NoticeFeed({ shop }: BoxProps) {
         `https://bootcamp-api.codeit.kr/api/0-1/the-julge/shops/${shop.id}/notices?limit=100`,
       );
       const data = await response.json();
-      setState(data.items);
+      setNotice(data.items);
     })();
   }, [shop.id]);
 
@@ -70,7 +70,7 @@ export default function NoticeFeed({ shop }: BoxProps) {
       </h2>
       <div className={styles.shopListContainer}>
         <ul className={styles.shopList}>
-          {state.map((item) => (
+          {notice.map((item) => (
             <li key={item.item.id} className={styles.shopListItem}>
               <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
                 <div>
@@ -82,7 +82,7 @@ export default function NoticeFeed({ shop }: BoxProps) {
                     {item.item.closed ? '마감' : '모집중'}
                   </p>
                 </div>
-                <Link href="/">
+                <Link href={`shop?shopId=${shop.id}&noticeId=${item.item.id}`}>
                   <button type="button" className={styles.btn}>
                     공고 보러가기
                   </button>
