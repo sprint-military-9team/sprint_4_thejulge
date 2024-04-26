@@ -9,8 +9,10 @@ import getTimeDifference from '@/utils/getTimeDifference';
 import { getUserAlert, putUserAlert } from '@/apis/alert';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+import { ToastContainer, toast } from 'react-toastify';
 import { NotificationDataType } from './types';
 import styles from './Notification.module.scss';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Notification() {
   const router = useRouter();
@@ -62,7 +64,8 @@ export default function Notification() {
     }
     const status = await putUserAlert(id);
     if (status === '400' || status === '404') {
-      throw new Error(`알림 읽음 처리 오류 ${status}`);
+      setIsOpen(false);
+      toast.error('알림 읽음 처리에서 오류가 발생했습니다.');
     }
     if (status === '403') {
       Cookies.remove('token');
@@ -80,6 +83,7 @@ export default function Notification() {
 
   return (
     <div className={styles.notification}>
+      <ToastContainer position="top-center" autoClose={3000} closeOnClick pauseOnHover={false} limit={1} />
       <Image
         src={notificationNumber ? NOTIFICATION_ACTIVE : NOTIFICATION_INACTIVE}
         alt="notification"
