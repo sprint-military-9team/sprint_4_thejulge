@@ -117,7 +117,9 @@ function Announce({ headerData }: AnnounceProps) {
             <SortButton selected={selectedSort} onClick={handleSortButtonClick} isSortOpen={isSortOpen} />
             <FilterButton count={countSelectedLocation} onClick={handleFilterButtonClick} />
             {isSortOpen && <SortList onClick={handleSortListClick} />}
-            {isFilterOpen && <Filter onClick={handleFilterClick} removeFilter={removeFilter} />}
+            {isFilterOpen && (
+              <Filter onClick={handleFilterClick} removeFilter={removeFilter} initialFilter={selectedFilter} />
+            )}
           </div>
         </div>
         <div className={styles.cardWrapper}>

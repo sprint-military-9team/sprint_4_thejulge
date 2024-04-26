@@ -17,6 +17,7 @@
   width: 100%;
   cursor: pointer;
   @include m.rounded-lg;
+  white-space: nowrap;
 }
 
 .large {
@@ -51,6 +52,7 @@
 .disabled {
   background: c.$gray-500;
   color: c.$white;
+  pointer-events: none;
 }
 
 .blue {
