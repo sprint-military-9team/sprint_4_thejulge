@@ -1,3 +1,5 @@
+@import '@/styles/_index';
+
 .container {
   display: flex;
   align-items: center;
@@ -25,14 +27,14 @@
 
 .listItem.selected {
   .pageButton {
-    color: #fff;
-    background-color: #ff8d72;
+    color: $white;
+    background-color: $red-300;
     border-radius: 0.4rem;
   }
 }
 
 .pageButton {
-  background-color: #fff;
+  background-color: $white;
   border: none;
   width: 100%;
   height: 100%;

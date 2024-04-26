@@ -1,5 +1,15 @@
 @import '@/styles/_index';
 
+.wrapper {
+  width: 29.8rem;
+  height: 18.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
 .text {
   @include font-normal;
 }

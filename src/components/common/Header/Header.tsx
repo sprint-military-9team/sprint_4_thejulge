@@ -13,12 +13,14 @@ import { ButtonListType } from './types';
 export default function Header() {
   const router = useRouter();
   const [memberType, setMemberType] = useState('none');
+  const [notificationData, setNotificationData] = useState<NotificationDataType[]>([]);
+  const [notificationNumber, setNotificationNumber] = useState(notificationData.length);
   const [input, setInput] = useState('');
   const logout = () => {
     const removeData = ['id', 'token', 'type', 'shopId', 'userId'];
     removeData.forEach((data) => Cookies.remove(data));
     setMemberType('none');
-    window.location.reload();
+    router.refresh();
   };
 
   const BUTTON_LIST: ButtonListType = {
@@ -31,20 +33,38 @@ export default function Header() {
     },
     employer: {
       buttonList: [
-        { name: '내 가게', href: '/mystore' },
+        { name: '내 가게', href: '/shopinfo' },
         { name: '로그아웃', href: '', onClick: logout },
       ],
       notification: true,
     },
     employee: {
       buttonList: [
-        { name: '내 프로필', href: '/myprofile' },
+        { name: '내 프로필', href: '/profile' },
         { name: '로그아웃', href: '', onClick: logout },
       ],
       notification: true,
     },
   };
   const buttonType = BUTTON_LIST[memberType];
+  const handleClickNotification = useCallback((event: React.MouseEvent<HTMLDivElement>, isRead: boolean) => {
+    if (isRead) {
+      return;
+    }
+    /* api function */
+    const notificationId = event.currentTarget.id;
+    setNotificationData((previousData) =>
+      previousData.map((notification) =>
+        notification.id === notificationId ? { ...notification, read: true } : notification,
+      ),
+    );
+    setNotificationNumber((previousCount) => previousCount - 1);
+  }, []);
+
+  const changeNotificationData = useCallback(() => {
+    setNotificationData((previousData) => previousData.filter((notification) => !notification.read && notification));
+  }, []);
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
   };

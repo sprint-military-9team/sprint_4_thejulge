@@ -1,0 +1,81 @@
+@import '@/styles/_index';
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  background: $gray-100;
+}
+
+.Box {
+  width: 100%;
+  padding: 0 10rem;
+}
+
+.titleBox {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.closeIcon {
+  cursor: pointer;
+}
+
+.form {
+  width: 100%;
+  display: grid;
+  gap: 2rem;
+  grid-template:
+    'name category'
+    'address1 address2'
+    'originalHourlyPay .'
+    'uploadImage uploadImage'
+    'description description'
+    'registerButton registerButton';
+}
+
+.text {
+  font-size: 1.6rem;
+  line-height: 2.6rem;
+}
+
+.name {
+  grid-area: name;
+}
+
+.category {
+  grid-area: category;
+}
+
+.address1 {
+  grid-area: address1;
+}
+
+.address2 {
+  grid-area: address2;
+}
+
+.originalHourlyPay {
+  grid-area: originalHourlyPay;
+}
+
+.uploadImage {
+  grid-area: uploadImage;
+}
+
+.description {
+  grid-area: description;
+}
+
+.registerButton {
+  padding: 0 15rem;
+  grid-area: registerButton;
+}

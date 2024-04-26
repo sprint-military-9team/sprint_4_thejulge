@@ -14,20 +14,7 @@ type OwnerNoticeDetailProps = {
 export default async function ownerNoticeDetail({ searchParams }: OwnerNoticeDetailProps) {
   const cookieStore = cookies();
   const shopId = cookieStore.get('shopId')?.value as string;
-  const token = cookieStore.get('token')?.value as string;
-  const type = cookieStore.get('type')?.value as string;
   const noticeId = searchParams?.noticeId as string;
-  if (!token) {
-    redirect('/signin');
-  }
-
-  if (type !== 'employer') {
-    redirect('/');
-  }
-
-  if (!shopId) {
-    redirect('/');
-  }
 
   if (!noticeId) {
     redirect('/');
