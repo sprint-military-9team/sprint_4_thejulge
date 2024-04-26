@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 import Image from 'next/image';
 import { CLOCK, CLOCKGRAY, GPS, GPSGRAY, CARDARROW, CARDCOMPLETEARROW, CARDMOBILEARROW } from '@/utils/constants';
 import getWorkTime from '@/utils/getWorkTime';
@@ -49,6 +50,8 @@ function Card({
   const clockSrc = completed ? CLOCKGRAY : CLOCK;
   const locationSrc = completed ? GPSGRAY : GPS;
   const router = useRouter();
+  const type = Cookies.get('type');
+  console.log(type);
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 767);
@@ -83,7 +86,11 @@ function Card({
     }
 
     localStorage.setItem('cardDataList', JSON.stringify(saveData));
-    router.push(`/shop?shopId=${shopId}&noticeId=${noticeId}`);
+    if (type === 'employer') {
+      router.push(`/ownerNoticeDetail?noticeId=${noticeId}`);
+    } else {
+      router.push(`/shop?shopId=${shopId}&noticeId=${noticeId}`);
+    }
   };
   return (
     <div className={styles.cardWrapper} onClick={handleRouteNotice}>

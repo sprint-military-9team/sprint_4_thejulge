@@ -48,6 +48,11 @@ function extractShopInfo(items: Items[]) {
   return shopInfoArray;
 }
 
+const INITIAL_LATLNG = {
+  lat: 37.52361111,
+  lng: 126.9883517,
+};
+
 export default function Map() {
   const [shop, setShop] = useState({
     id: '-1',
@@ -59,6 +64,7 @@ export default function Map() {
     originalHourlyPay: -1,
     description: '',
   } as ShopInfo);
+  const [latLng, setLatLng] = useState(INITIAL_LATLNG);
 
   useEffect(() => {
     if (!localStorage.getItem('shop')) return;
@@ -72,7 +78,21 @@ export default function Map() {
     document.head.appendChild(mapScript);
     const container = document.getElementById('map')!;
     const onLoadKakaoMap = () => {
+      // window.kakao.maps.event.addEventListener(map);
       window.kakao.maps.load(() => {
+        const options = {
+          center: new window.kakao.maps.LatLng(latLng.lat, latLng.lng),
+
+          level: 7,
+        };
+
+        const map = new window.kakao.maps.Map(container, options);
+
+        window.kakao.maps.event.addListener(map, 'center_changed', () => {
+          const latlng = map.getCenter();
+          setLatLng({ lat: latLng.lat, lng: latLng.lng });
+        });
+
         function addMarker(position: any) {
           const imageSrc = 'http://localhost:3000/assets/gps.svg';
           const imageSize = new window.kakao.maps.Size(34, 39);
@@ -120,14 +140,6 @@ export default function Map() {
             });
           })();
         }
-
-        const options = {
-          center: new window.kakao.maps.LatLng(37.52361111, 126.8983417),
-
-          level: 7,
-        };
-
-        const map = new window.kakao.maps.Map(container, options);
 
         searchPlaces();
       });
