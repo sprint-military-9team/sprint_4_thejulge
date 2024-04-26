@@ -51,6 +51,7 @@ function extractShopInfo(items: Items[]) {
 const INITIAL_LATLNG = {
   lat: 37.52361111,
   lng: 126.9883517,
+  level: 7,
 };
 
 export default function Map() {
@@ -64,7 +65,6 @@ export default function Map() {
     originalHourlyPay: -1,
     description: '',
   } as ShopInfo);
-  const [latLng, setLatLng] = useState(INITIAL_LATLNG);
 
   useEffect(() => {
     if (!localStorage.getItem('shop')) return;
@@ -80,17 +80,30 @@ export default function Map() {
     const onLoadKakaoMap = () => {
       // window.kakao.maps.event.addEventListener(map);
       window.kakao.maps.load(() => {
-        const options = {
-          center: new window.kakao.maps.LatLng(latLng.lat, latLng.lng),
+        const lastLocation = localStorage.getItem('LAST_LOCATION')
+          ? JSON.parse(localStorage.getItem('LAST_LOCATION'))
+          : INITIAL_LATLNG;
 
-          level: 7,
+        const options = {
+          center: new window.kakao.maps.LatLng(lastLocation.lat, lastLocation.lng),
+
+          level: lastLocation.level,
         };
 
         const map = new window.kakao.maps.Map(container, options);
 
-        window.kakao.maps.event.addListener(map, 'center_changed', () => {
+        window.kakao.maps.event.addListener(map, 'dragend', () => {
           const latlng = map.getCenter();
-          setLatLng({ lat: latLng.lat, lng: latLng.lng });
+          const level = map.getLevel();
+
+          localStorage.setItem('LAST_LOCATION', JSON.stringify({ lat: latlng.getLat(), lng: latlng.getLng(), level }));
+        });
+
+        window.kakao.maps.event.addListener(map, 'zoom_changed', () => {
+          const level = map.getLevel();
+          const latlng = map.getCenter();
+
+          localStorage.setItem('LAST_LOCATION', JSON.stringify({ lat: latlng.getLat(), lng: latlng.getLng(), level }));
         });
 
         function addMarker(position: any) {
