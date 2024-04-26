@@ -6,24 +6,18 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { CLOSE_ICON, NOTIFICATION_ACTIVE, NOTIFICATION_INACTIVE } from '@/utils/constants';
 import useOutsideClick from '@/hooks/useOutsideClick';
 import getTimeDifference from '@/utils/getTimeDifference';
+import { getUserAlert, putUserAlert } from '@/apis/alert';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 import { NotificationDataType } from './types';
 import styles from './Notification.module.scss';
 
-type NotificationProps = {
-  notificationData: NotificationDataType[];
-  notificationNumber: number;
-  handleClickNotification: (event: React.MouseEvent<HTMLDivElement>, read: boolean) => void;
-  changeNotificationData: () => void;
-};
-
-export default function Notification({
-  notificationData,
-  notificationNumber,
-  handleClickNotification,
-  changeNotificationData,
-}: NotificationProps) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function Notification() {
+  const router = useRouter();
   const notificationRef = useRef<HTMLDivElement>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [notificationNumber, setNotificationNumber] = useState<number>(0);
+  const [notificationData, setNotificationData] = useState<NotificationDataType[]>([]);
 
   const handleClickNotificationButton = () => {
     setIsOpen((previousStatus) => !previousStatus);
@@ -43,9 +37,44 @@ export default function Notification({
 
   useEffect(() => {
     if (!isOpen) {
-      changeNotificationData();
+      setNotificationData((previousData) => previousData.filter((notification) => !notification.read && notification));
     }
-  }, [isOpen, changeNotificationData]);
+  }, [isOpen]);
+
+  useEffect(() => {
+    const getData = async () => {
+      const token = Cookies.get('token');
+      if (token) {
+        const alertData = await getUserAlert();
+        if (typeof alertData === 'number') {
+          throw new Error(`Alert API Error ${alertData}`);
+        }
+        setNotificationData(alertData);
+        setNotificationNumber(alertData.length);
+      }
+    };
+    getData();
+  }, []);
+
+  const handleClickNotification = async (id: string, isRead: boolean) => {
+    if (isRead) {
+      return;
+    }
+    const status = await putUserAlert(id);
+    if (status === '400' || status === '404') {
+      throw new Error(`${status}`);
+    }
+    if (status === '403') {
+      alert('로그인 해주세요.');
+      router.push('/signin');
+      return;
+    }
+    setNotificationData((previousData) =>
+      previousData.map((notification) => (notification.id === id ? { ...notification, read: true } : notification)),
+    );
+    setNotificationNumber((previousCount) => previousCount - 1);
+  };
+
   return (
     <div className={styles.notification}>
       <Image
@@ -77,7 +106,7 @@ export default function Notification({
                     id={notification.id}
                     key={notification.id}
                     className={notification.read ? styles.notificationReadWrapper : styles.notificationWrapper}
-                    onClick={(event) => handleClickNotification(event, notification.read)}
+                    onClick={() => handleClickNotification(notification.id, notification.read)}
                     role="presentation"
                   >
                     <div

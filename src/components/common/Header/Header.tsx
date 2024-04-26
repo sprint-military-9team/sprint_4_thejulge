@@ -3,18 +3,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { SEARCH_ICON, HEADER_LOGO } from '@/utils/constants';
 import Cookies from 'js-cookie';
 import Notification from './notification';
 import styles from './Header.module.scss';
-import { ButtonListType, NotificationDataType } from './types';
+import { ButtonListType } from './types';
 
 export default function Header() {
   const router = useRouter();
   const [memberType, setMemberType] = useState('none');
-  const [notificationData, setNotificationData] = useState<NotificationDataType[]>([]);
-  const [notificationNumber, setNotificationNumber] = useState(notificationData.length);
   const [input, setInput] = useState('');
   const logout = () => {
     const removeData = ['id', 'token', 'type', 'shopId', 'userId'];
@@ -33,7 +31,7 @@ export default function Header() {
     },
     employer: {
       buttonList: [
-        { name: '내 가게', href: '/mystore' },
+        { name: '내 가게', href: '/shopinfo' },
         { name: '로그아웃', href: '', onClick: logout },
       ],
       notification: true,
@@ -47,23 +45,6 @@ export default function Header() {
     },
   };
   const buttonType = BUTTON_LIST[memberType];
-  const handleClickNotification = useCallback((event: React.MouseEvent<HTMLDivElement>, isRead: boolean) => {
-    if (isRead) {
-      return;
-    }
-    /* api function */
-    const notificationId = event.currentTarget.id;
-    setNotificationData((previousData) =>
-      previousData.map((notification) =>
-        notification.id === notificationId ? { ...notification, read: true } : notification,
-      ),
-    );
-    setNotificationNumber((previousCount) => previousCount - 1);
-  }, []);
-
-  const changeNotificationData = useCallback(() => {
-    setNotificationData((previousData) => previousData.filter((notification) => !notification.read && notification));
-  }, []);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
@@ -110,14 +91,7 @@ export default function Header() {
               </Link>
             ),
           )}
-          {buttonType.notification && (
-            <Notification
-              notificationData={notificationData}
-              notificationNumber={notificationNumber}
-              handleClickNotification={handleClickNotification}
-              changeNotificationData={changeNotificationData}
-            />
-          )}
+          {buttonType.notification && <Notification />}
         </div>
       </div>
     </div>

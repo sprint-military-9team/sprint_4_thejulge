@@ -15,6 +15,7 @@ interface FilterInfo {
 interface FilterProps {
   onClick: (filter: FilterInfo | null) => void;
   removeFilter: () => void;
+  initialFilter: FilterInfo | null;
 }
 
 interface BadgeProps {
@@ -46,11 +47,11 @@ function Badge({ children, onClick, removeLocation }: BadgeProps) {
   );
 }
 
-function Filter({ onClick, removeFilter }: FilterProps) {
-  const [selectedLocationList, setSelectedLocationList] = useState<string[]>([]);
-  const [startAt, setStartAt] = useState<string | null>(null);
-  const [pay, setPay] = useState<number | null>(null);
-  const [filterData, setFilterData] = useState<FilterInfo | null>(null);
+function Filter({ onClick, removeFilter, initialFilter }: FilterProps) {
+  const [selectedLocationList, setSelectedLocationList] = useState<string[]>(initialFilter?.location || []);
+  const [startAt, setStartAt] = useState<string | null>(initialFilter?.startAt);
+  const [pay, setPay] = useState<number | null>(initialFilter?.pay);
+  const [filterData, setFilterData] = useState<FilterInfo | null>(initialFilter || null);
   const [isSetTimeValid, setIsSetTimeValid] = useState<boolean>(true);
   const handleAddLocation = (location: string) => {
     setSelectedLocationList((prev) => {
@@ -69,7 +70,6 @@ function Filter({ onClick, removeFilter }: FilterProps) {
   const handleInputStartChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputTime = new Date(event.target.value);
     const currentTime = new Date();
-    console.log(currentTime, inputTime, currentTime < inputTime);
     if (inputTime < currentTime) {
       setIsSetTimeValid(false);
     } else {
@@ -92,13 +92,23 @@ function Filter({ onClick, removeFilter }: FilterProps) {
     setFilterData(null);
   };
 
-  const handleSubmitClick = (data: FilterInfo | null) => {
-    if (isSetTimeValid) {
-      onClick(data);
-    } else {
-      alert('시작일은 현재 시간 이후로 입력해주세요');
+  function formatDateTimeForInput(dateTime) {
+    if (!dateTime) {
+      return '';
     }
-  };
+
+    const dateObject = new Date(dateTime);
+    return dateObject
+      .toLocaleString('sv-SE', {
+        timeZone: 'UTC',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+      })
+      .replace(' ', 'T');
+  }
 
   useEffect(() => {
     setFilterData({ location: selectedLocationList, startAt, pay });
@@ -128,6 +138,7 @@ function Filter({ onClick, removeFilter }: FilterProps) {
           className={`${styles.input} ${styles.inputStart}`}
           placeholder="입력"
           onChange={handleInputStartChange}
+          value={formatDateTimeForInput(startAt)}
         />
         {!isSetTimeValid && <span className={styles.alert}>현재 시간 이후로 입력해주세요</span>}
       </div>
@@ -154,14 +165,15 @@ function Filter({ onClick, removeFilter }: FilterProps) {
           </Button>
         </div>
         <div>
-          <Button
-            onClick={() => handleSubmitClick(filterData)}
-            size="large"
-            color="orange"
-            style={{ padding: '1.4rem' }}
-          >
-            적용하기
-          </Button>
+          {isSetTimeValid ? (
+            <Button onClick={() => onClick(filterData)} size="large" color="orange" style={{ padding: '1.4rem' }}>
+              적용하기
+            </Button>
+          ) : (
+            <Button size="large" color="disabled" style={{ padding: '1.4rem' }}>
+              적용하기
+            </Button>
+          )}
         </div>
       </div>
     </div>

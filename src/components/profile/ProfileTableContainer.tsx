@@ -4,7 +4,7 @@ import getTimeDifference from '@/utils/getTimeDifference';
 import { cookies } from 'next/headers';
 import styles from './ProfileTableContainer.module.scss';
 import Banner from './Banner';
-import Pagination from '../common/PaginationSSR/PaginationSSR';
+import Pagination from '../common/Pagination/Pagination';
 
 const LIMIT = 4;
 
@@ -21,9 +21,11 @@ const header: HeaderType[] = [
 ];
 
 export default async function ProfileTableContainer({ currentPage }: { currentPage: number }) {
-  const cookie = cookies().get('userId');
+  const cookiesStorage = cookies();
+  const token = cookiesStorage.get('token').value as string;
+  const cookie = cookies().get('userId').value as string;
 
-  const data = await getUserApplicationData(cookie?.value as string, LIMIT, LIMIT * (currentPage - 1));
+  const data = await getUserApplicationData(token, cookie, LIMIT, LIMIT * (currentPage - 1));
 
   const body = data.items.map((application) => {
     const {

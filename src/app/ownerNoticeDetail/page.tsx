@@ -15,6 +15,7 @@ export default async function ownerNoticeDetail({ searchParams }: OwnerNoticeDet
   const cookieStore = cookies();
   const shopId = cookieStore.get('shopId')?.value as string;
   const noticeId = searchParams?.noticeId as string;
+  const currentPage = searchParams?.page ?? '1';
 
   if (!noticeId) {
     redirect('/');
@@ -38,7 +39,7 @@ export default async function ownerNoticeDetail({ searchParams }: OwnerNoticeDet
       <Header />
       <div style={{ position: 'relative', width: '100%', height: 'fit-content' }}>
         <NoticeInformation noticeData={NOTICE_DATA} storeData={STORE_DATA} />
-        <ApplicationList shopId={shopId} noticeId={noticeId} />
+        <ApplicationList shopId={shopId} noticeId={noticeId} currentPage={currentPage as string} />
       </div>
       <Footer />
     </>

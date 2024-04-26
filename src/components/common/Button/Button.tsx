@@ -1,13 +1,15 @@
 import React from 'react';
 import styles from './button.module.scss';
 
+type ClickEventHandler = (() => void) | ((event: React.MouseEvent) => void);
+
 interface ButtonProps {
   children: React.ReactNode;
   color: 'orange' | 'white' | 'disabled' | 'blue';
   size: 'small' | 'medium' | 'large';
   style?: React.CSSProperties;
   submit?: boolean;
-  onClick?: () => void;
+  onClick?: ClickEventHandler;
   isDisabled?: boolean;
 }
 
@@ -15,7 +17,7 @@ function Button({ children, color, size, style, submit, onClick, isDisabled }: B
   const classProp = styles[color];
   const sizeClass = styles[size];
   return (
-    <div>
+    <div className={styles.layout}>
       <button
         type={submit ? 'submit' : 'button'}
         onClick={onClick}
