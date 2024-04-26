@@ -33,7 +33,7 @@ export default function Header() {
     },
     employer: {
       buttonList: [
-        { name: '내 가게', href: '/mystore' },
+        { name: '내 가게', href: '/shopinfo' },
         { name: '로그아웃', href: '', onClick: logout },
       ],
       notification: true,
