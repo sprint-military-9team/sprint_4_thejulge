@@ -47,7 +47,7 @@ export default function Notification() {
       if (token) {
         const alertData = await getUserAlert();
         if (typeof alertData === 'number') {
-          throw new Error(`Alert API Error ${alertData}`);
+          throw new Error(`알림 목록 조회 오류: ${alertData}`);
         }
         setNotificationData(alertData);
         setNotificationNumber(alertData.length);
@@ -62,11 +62,14 @@ export default function Notification() {
     }
     const status = await putUserAlert(id);
     if (status === '400' || status === '404') {
-      throw new Error(`${status}`);
+      throw new Error(`알림 읽음 처리 오류 ${status}`);
     }
     if (status === '403') {
-      alert('로그인 해주세요.');
+      Cookies.remove('token');
+      Cookies.remove('userId');
+      Cookies.remove('type');
       router.push('/signin');
+      Cookies.set('redirectStatus', 'needLogin');
       return;
     }
     setNotificationData((previousData) =>
