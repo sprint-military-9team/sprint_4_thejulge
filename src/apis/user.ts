@@ -39,6 +39,10 @@ export const postSignin = async (email: string, password: string) => {
   Cookies.set('token', token);
   Cookies.set('userId', id);
   Cookies.set('type', type);
+  if (type === 'employer') {
+    const shopId = await getShopId(id);
+    Cookies.set('shopId', shopId);
+  }
   return APIData;
 };
 
