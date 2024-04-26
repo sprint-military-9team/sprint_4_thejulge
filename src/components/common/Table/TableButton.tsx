@@ -31,8 +31,8 @@ export default function TableButton({ id }: TableButtonProps) {
     if (!status) {
       router.refresh();
     } else if (status === 400) {
-      Cookies.set('redirectStatus', 'closedNotice');
       router.refresh();
+      Cookies.set('redirectStatus', 'closedNotice');
     } else if (status === 401) {
       router.push('/login');
       Cookies.set('redirectStatus', 'needLogin');
@@ -43,7 +43,6 @@ export default function TableButton({ id }: TableButtonProps) {
   const onReject = async () => {
     if (!isLoading) {
       setIsLoading(true);
-      console.log(`reject: ${id}`);
       const error = await setSpecifyNoticeApplicationStatus(shopId, noticeId, id, 'rejected');
       handleError(error);
       setIsLoading(false);
@@ -52,7 +51,6 @@ export default function TableButton({ id }: TableButtonProps) {
   const onAccept = async () => {
     if (!isLoading) {
       setIsLoading(true);
-      console.log(`accept: ${id}`);
       const error = await setSpecifyNoticeApplicationStatus(shopId, noticeId, id, 'accepted');
       handleError(error);
       setIsLoading(false);

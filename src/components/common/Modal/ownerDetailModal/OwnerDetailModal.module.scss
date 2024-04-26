@@ -11,6 +11,8 @@
 }
 
 .text {
+  font-size: 1.6rem;
+  line-height: 2.6rem;
   @include font-normal;
 }
 
@@ -22,9 +24,13 @@
 }
 
 .negativeButton {
+  font-size: 1.4rem;
+  line-height: 1.753rem;
   @include color-box;
 }
 
 .positiveButton {
+  font-size: 1.4rem;
+  line-height: 1.753rem;
   @include color-box(fill);
 }
