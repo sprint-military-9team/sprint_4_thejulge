@@ -51,7 +51,7 @@ export default function Header() {
   };
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && input) {
-      router.push(`/announcelist?keyword=${input}`);
+      router.push(`/?keyword=${input}`);
     }
   };
   useEffect(() => {
