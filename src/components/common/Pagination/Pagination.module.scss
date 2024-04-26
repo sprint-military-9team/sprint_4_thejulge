@@ -14,9 +14,7 @@
   height: 4rem;
   align-items: center;
   list-style-type: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
   cursor: pointer;
   color: #111322;
 }
@@ -39,6 +37,9 @@
   width: 100%;
   height: 100%;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .button {
@@ -49,4 +50,9 @@
   img {
     vertical-align: top;
   }
+}
+
+.link {
+  width: 100%;
+  height: 100%;
 }

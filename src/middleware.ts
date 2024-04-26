@@ -19,7 +19,7 @@ export default function middleware(request: NextRequest) {
       return loginResponse;
     }
 
-    if (type !== 'employee') {
+    if (type !== 'employer') {
       mainResponse.cookies.set('redirectStatus', 'invalidAuthority');
       return mainResponse;
     }

@@ -10,10 +10,12 @@
   justify-content: space-between;
   align-items: center;
   border: 1px solid $gray-500;
-  padding: 1rem;
+  padding: 1.6rem 2rem;
+  margin-top: 0.8rem;
+
   width: 100%;
   text-align: left;
-  background: none;
+  background: $white;
 
   @include rounded-lg;
 }

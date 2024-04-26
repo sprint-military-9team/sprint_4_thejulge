@@ -1,0 +1,23 @@
+@import '@/styles/_index';
+
+.layout {
+  width: 30rem;
+  height: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text {
+  font-size: 1.6rem;
+  height: 5rem;
+
+  @include font-normal;
+}
+
+.buttonBox {
+  position: absolute;
+  width: 16rem;
+  right: 1.6rem;
+  bottom: 1.6rem;
+}
