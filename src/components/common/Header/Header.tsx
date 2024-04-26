@@ -3,12 +3,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { SEARCH_ICON, HEADER_LOGO } from '@/utils/constants';
 import Cookies from 'js-cookie';
 import Notification from './notification';
 import styles from './Header.module.scss';
-import { ButtonListType, NotificationDataType } from './types';
+import { ButtonListType } from './types';
 
 export default function Header() {
   const router = useRouter();
@@ -110,14 +110,7 @@ export default function Header() {
               </Link>
             ),
           )}
-          {buttonType.notification && (
-            <Notification
-              notificationData={notificationData}
-              notificationNumber={notificationNumber}
-              handleClickNotification={handleClickNotification}
-              changeNotificationData={changeNotificationData}
-            />
-          )}
+          {buttonType.notification && <Notification />}
         </div>
       </div>
     </div>
