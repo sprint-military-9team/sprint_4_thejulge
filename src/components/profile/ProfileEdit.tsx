@@ -92,9 +92,9 @@ export default function ProfileEdit({ isOpend, onClose, defaultValues }: Profile
       // eslint-disable-next-line no-alert
       // 행동만 막으면 되지 굳이 값을 삭제할 필요가 있을까
       if (error.message === '401') {
-        toast.error('유저 토큰에 문제가 생겼습니다. 로그아웃 후 다시 로그인 해주세요.');
+        toast.error('문제가 생겼습니다. 로그아웃 후 다시 로그인 해주세요.');
       } else if (error.message === '403') {
-        toast.error('프로필 수정 권한이 없어요. 로그아웃 후 다시 로그인 해주세요.');
+        toast.error('문제가 생겼습니다. 로그아웃 후 다시 로그인 해주세요.');
       } else {
         toast.error(`${error.message}`);
       }

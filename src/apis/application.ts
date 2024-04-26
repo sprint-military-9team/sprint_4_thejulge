@@ -56,7 +56,7 @@ export const getUserApplicationData = async (
     },
   });
   if (!response.ok) {
-    throw new Error('API 오류');
+    throw new Error(`${response.statusText}`);
   }
   const data = await response.json();
   return { count: data.count, items: data.items };
