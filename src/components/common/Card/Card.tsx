@@ -74,11 +74,15 @@ function Card({
       noticeId,
     };
     const currentData = JSON.parse(localStorage.getItem('cardDataList') || '[]');
-    if (currentData.length >= 6) {
-      currentData.shift();
+    const saveData = currentData.filter((item: CardProps) => item.noticeId !== noticeId);
+    if (saveData.length === 6) {
+      saveData.pop();
+      saveData.unshift(cardData);
+    } else {
+      saveData.unshift(cardData);
     }
-    currentData.unshift(cardData);
-    localStorage.setItem('cardDataList', JSON.stringify(currentData));
+
+    localStorage.setItem('cardDataList', JSON.stringify(saveData));
     router.push(`/shop?shopId=${shopId}&noticeId=${noticeId}`);
   };
   return (
