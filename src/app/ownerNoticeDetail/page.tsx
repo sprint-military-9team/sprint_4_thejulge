@@ -4,6 +4,7 @@ import { getShopData } from '@/apis/shop';
 import { getSpecifyNoticeData } from '@/apis/notice';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import RedirectToast from '@/components/common/RedirectToast/RedirectToast';
 import NoticeInformation from '../../components/ownerNoticeDetail/NoticeInformation/NoticeInformation';
 import ApplicationList from '../../components/ownerNoticeDetail/ApplicationList/ApplicationList';
 
@@ -36,6 +37,7 @@ export default async function ownerNoticeDetail({ searchParams }: OwnerNoticeDet
 
   return (
     <>
+      <RedirectToast />
       <Header />
       <div style={{ position: 'relative', width: '100%', height: 'fit-content' }}>
         <NoticeInformation noticeData={NOTICE_DATA} storeData={STORE_DATA} />

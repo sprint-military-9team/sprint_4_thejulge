@@ -8,7 +8,7 @@ export const getSpecifyNoticeData = async (shopId: string, noticeId: string): Pr
     cache: 'no-store',
   });
   if (!response.ok) {
-    throw new Error('API 오류');
+    throw new Error('가게 특정 공고 조회 오류');
   }
   const data = await response.json();
   return data.item;
