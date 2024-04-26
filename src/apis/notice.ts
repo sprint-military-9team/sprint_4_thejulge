@@ -14,8 +14,9 @@ export const getSpecifyNoticeData = async (shopId: string, noticeId: string): Pr
   return data.item;
 };
 
-export const postNotice = async (shopId: string, data: NoticeUploadDataType) => {
+export const postNotice = async (data: NoticeUploadDataType) => {
   const token = Cookies.get('token');
+  const shopId = Cookies.get('shopId');
   const response = await fetch(`${BASE_URL}/shops/${shopId}/notices`, {
     method: 'POST',
     headers: {
@@ -25,10 +26,13 @@ export const postNotice = async (shopId: string, data: NoticeUploadDataType) => 
     body: JSON.stringify(data),
   });
   if (!response.ok) {
-    return false;
+    if (response.status === 403) {
+      throw new Error('가게 공고 수정 오류');
+    }
+    return { data: null, error: response.status };
   }
   const noticeData = await response.json();
-  return noticeData.item.id;
+  return { data: noticeData.item.id, error: null };
 };
 
 export const putSpecifyNotice = async (noticeId: string, data: NoticeUploadDataType) => {
@@ -42,8 +46,8 @@ export const putSpecifyNotice = async (noticeId: string, data: NoticeUploadDataT
     },
     body: JSON.stringify(data),
   });
-  if (!response.ok) {
-    return false;
+  if (response.status === 403) {
+    throw new Error('가게 공고 생성 오류');
   }
-  return true;
+  return response.status;
 };
