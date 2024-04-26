@@ -13,8 +13,6 @@ import { ButtonListType } from './types';
 export default function Header() {
   const router = useRouter();
   const [memberType, setMemberType] = useState('none');
-  const [notificationData, setNotificationData] = useState<NotificationDataType[]>([]);
-  const [notificationNumber, setNotificationNumber] = useState(notificationData.length);
   const [input, setInput] = useState('');
   const logout = () => {
     const removeData = ['id', 'token', 'type', 'shopId', 'userId'];
@@ -47,23 +45,6 @@ export default function Header() {
     },
   };
   const buttonType = BUTTON_LIST[memberType];
-  const handleClickNotification = useCallback((event: React.MouseEvent<HTMLDivElement>, isRead: boolean) => {
-    if (isRead) {
-      return;
-    }
-    /* api function */
-    const notificationId = event.currentTarget.id;
-    setNotificationData((previousData) =>
-      previousData.map((notification) =>
-        notification.id === notificationId ? { ...notification, read: true } : notification,
-      ),
-    );
-    setNotificationNumber((previousCount) => previousCount - 1);
-  }, []);
-
-  const changeNotificationData = useCallback(() => {
-    setNotificationData((previousData) => previousData.filter((notification) => !notification.read && notification));
-  }, []);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
