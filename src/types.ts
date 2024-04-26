@@ -123,3 +123,25 @@ export type NoticeUploadDataType = {
   workhour: number;
   description: string;
 };
+
+export type NoticeSearchDataType = {
+  offset: number;
+  limit: number;
+  count: number;
+  hasNext: boolean;
+  items: NoticeDataType[];
+
+  links: [];
+};
+
+export type NoticeDataType = {
+  item: {
+    id: string;
+    hourlyPay: number;
+    startsAt: string;
+    workhour: number;
+    description: string;
+    closed: boolean;
+  };
+  links: [];
+};
