@@ -61,6 +61,11 @@ export default function Map() {
   } as ShopInfo);
 
   useEffect(() => {
+    if (!localStorage.getItem('shop')) return;
+    setShop(JSON.parse(localStorage.getItem('shop')));
+  }, []);
+
+  useEffect(() => {
     const mapScript = document.createElement('script');
     mapScript.async = true;
     mapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=0d11bce1f9666f33dfb8ded92b365644&autoload=false&libraries=services`;
@@ -91,6 +96,7 @@ export default function Map() {
 
             window.kakao.maps.event.addListener(marker, 'click', () => {
               setShop(marker.shop);
+              localStorage.setItem('shop', JSON.stringify(marker.shop));
             });
           }
         }
