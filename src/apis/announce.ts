@@ -1,8 +1,7 @@
 import { AnnounceData } from '@/types/announcePageType';
+import BASE_URL from '@/constants/BASEURL';
 
-const BASE_URL = 'https://bootcamp-api.codeit.kr/api/0-1/the-julge/notices';
-
-const getAnnounceData = async (
+export const getAnnounceData = async (
   offset: number,
   limit: number,
   address: string[] | null,
@@ -32,7 +31,7 @@ const getAnnounceData = async (
     queryParams.set('hourlyPayGte', hourlyPayGte.toString());
   }
 
-  const apiUrl = `${BASE_URL}?${queryParams.toString()}`;
+  const apiUrl = `${BASE_URL}/notices?${queryParams.toString()}`;
   try {
     const response = await fetch(apiUrl, {
       method: 'GET',
@@ -48,4 +47,13 @@ const getAnnounceData = async (
   }
 };
 
-export default getAnnounceData;
+export const getUserProfileAddress = async (userId: string): Promise<string> => {
+  const response = await fetch(`${BASE_URL}/users/${userId}`, {
+    method: 'GET',
+  });
+  if (!response.ok) {
+    throw new Error(`${response.status}`);
+  }
+  const data = await response.json();
+  return data.item.shop.item.address1;
+};

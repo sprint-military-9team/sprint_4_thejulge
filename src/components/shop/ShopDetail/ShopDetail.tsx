@@ -55,6 +55,7 @@ function ShopDetail() {
 
   const token = Cookies.get('token');
   const userId = Cookies.get('userId');
+  const type = Cookies.get('type');
 
   const handleClickApplicationButton = () => {
     if (token) {
@@ -171,7 +172,7 @@ function ShopDetail() {
               <span>{noticeData?.item.shop.item.address1}</span>
             </div>
             <span className={styles.noticeInfoDescription}>{noticeData?.item.shop.item.description}</span>
-            {completed ? (
+            {completed || type === 'employer' ? (
               <Button color="disabled" size="large">
                 신청 불가
               </Button>

@@ -6,7 +6,7 @@ import Card from '@/components/common/Card';
 import Filter from '@/components/announcelist/Filter';
 import { ARROW_DOWN, ARROW_UP } from '@/utils/constants';
 import raisePercent from '@/utils/getRaisePercent';
-import getAnnounceData from '@/apis/announce';
+import { getAnnounceData } from '@/apis/announce';
 import Link from 'next/link';
 import Pagination from './Pagination';
 import styles from './announce.module.scss';
