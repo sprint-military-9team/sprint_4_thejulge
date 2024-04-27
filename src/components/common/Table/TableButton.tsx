@@ -6,7 +6,7 @@ import { setSpecifyNoticeApplicationStatus } from '@/apis/application';
 import Cookies from 'js-cookie';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Modal from '../Modal/Modal';
-import styles from './TableButton.module.scss';
+import styles from './Tablebutton.module.scss';
 import OwnerDetailModal from '../Modal/ownerDetailModal/OwnerDetailModal';
 
 type TableButtonProps = {
