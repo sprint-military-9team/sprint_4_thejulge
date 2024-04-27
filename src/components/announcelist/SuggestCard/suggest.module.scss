@@ -37,7 +37,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 96.4rem;
 }
 
 @include media(tablet) {
@@ -54,6 +54,9 @@
       }
     }
   }
+  .alertWrapper {
+    width: 63.8rem;
+  }
 }
 @include media(mobile) {
   .cardWrapper {
@@ -67,6 +70,12 @@
       .slick-slide {
         width: 18.5rem !important;
       }
+    }
+  }
+  .alertWrapper {
+    width: 35.6rem;
+    span {
+      font-size: 2.4rem;
     }
   }
 }
