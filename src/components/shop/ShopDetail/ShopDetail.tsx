@@ -9,11 +9,11 @@ import raisePercent from '@/utils/getRaisePercent';
 import getWorkTime from '@/utils/getWorkTime';
 import getShopDetailData from '@/apis/shopdetail';
 import { CLOCK, CARDARROW } from '@/utils/constants';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { postApplicationNotice, putApplicationNotice, getUserApplication } from '@/apis/applicationNotice';
+import 'react-toastify/dist/ReactToastify.css';
 import Button from '@/components/common/Button/';
 import RejectionModal from '@/components/common/Modal/RejectionModal/RejectionModal';
-
 import LocationLabel from '@/components/common/LocationLabel/LocationLabel';
 import styles from './shopdetail.module.scss';
 import { MainData, ButtonProps } from './type';
@@ -147,62 +147,73 @@ function ShopDetail() {
   }, [shopId, noticeId]);
 
   return (
-    <div className={styles.shopDetail}>
-      <div className={styles.titleWrapper}>
-        <span className={styles.title}>식당</span>
-        <p className={styles.shopTitle}>{noticeData?.item.shop.item.name}</p>
-      </div>
-      <div className={styles.notice}>
-        <div className={styles.shopImageWrapper}>
-          <Image fill src={shopImage} alt="shopImage" />
-          {completed && <CompletedMessage completed={completed} />}
+    <>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar
+        closeOnClick
+        pauseOnHover
+        draggable
+        limit={1}
+      />
+      <div className={styles.shopDetail}>
+        <div className={styles.titleWrapper}>
+          <span className={styles.title}>식당</span>
+          <p className={styles.shopTitle}>{noticeData?.item.shop.item.name}</p>
         </div>
-        <div className={styles.noticeContent}>
-          <div className={styles.noticeInfo}>
-            <div className={styles.noticeInfoTitle}>
-              <span className={styles.title}>시급</span>
-              <div className={styles.noticeInfoSalary}>
-                <span className={styles.shopTitle}>{noticeData?.item.hourlyPay}원</span>
-                <div className={styles.raise}>
-                  <span>기존 시급보다 {raise}%</span>
-                  <Image src={CARDARROW} alt="arrow" width={20} height={20} />
+        <div className={styles.notice}>
+          <div className={styles.shopImageWrapper}>
+            <Image fill src={shopImage} alt="shopImage" />
+            {completed && <CompletedMessage completed={completed} />}
+          </div>
+          <div className={styles.noticeContent}>
+            <div className={styles.noticeInfo}>
+              <div className={styles.noticeInfoTitle}>
+                <span className={styles.title}>시급</span>
+                <div className={styles.noticeInfoSalary}>
+                  <span className={styles.shopTitle}>{noticeData?.item.hourlyPay}원</span>
+                  <div className={styles.raise}>
+                    <span>기존 시급보다 {raise}%</span>
+                    <Image src={CARDARROW} alt="arrow" width={20} height={20} />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className={styles.noticeInfoTimeLoc}>
-              <Image src={CLOCK} alt="clock" width={20} height={20} />
-              <span>{workTime}</span>
-            </div>
-            <LocationLabel
-              address1={noticeData?.item.shop.item.address1}
-              address2={noticeData?.item.shop.item.address2}
-            />
-            <span className={styles.noticeInfoDescription}>{noticeData?.item.shop.item.description}</span>
-            {completed || type === 'employer' ? (
-              <Button color="disabled" size="large">
-                신청 불가
-              </Button>
-            ) : (
-              <div>
-                <ButtonStatus {...buttonProps} />
-                {isWorkerDetailModalOpen && <WorkerDetailModal isModal onClick={handleWorkerModal} />}
-                {isRejectionModalOpen && (
-                  <RejectionModal
-                    isModal={isRejectionModalOpen}
-                    cancelClick={handleModalCancelClick}
-                    noClick={handleModalNoClick}
-                  />
-                )}
+              <div className={styles.noticeInfoTimeLoc}>
+                <Image src={CLOCK} alt="clock" width={20} height={20} />
+                <span>{workTime}</span>
               </div>
-            )}
+              <LocationLabel
+                address1={noticeData?.item.shop.item.address1}
+                address2={noticeData?.item.shop.item.address2}
+              />
+              <span className={styles.noticeInfoDescription}>{noticeData?.item.shop.item.description}</span>
+              {completed || type === 'employer' ? (
+                <Button color="disabled" size="large">
+                  신청 불가
+                </Button>
+              ) : (
+                <div>
+                  <ButtonStatus {...buttonProps} />
+                  {isWorkerDetailModalOpen && <WorkerDetailModal isModal onClick={handleWorkerModal} />}
+                  {isRejectionModalOpen && (
+                    <RejectionModal
+                      isModal={isRejectionModalOpen}
+                      cancelClick={handleModalCancelClick}
+                      noClick={handleModalNoClick}
+                    />
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
+        <div className={styles.shopDescription}>
+          <p className={styles.titleDescription}>공고 설명</p>
+          <p className={styles.description}>{noticeData?.item.description}</p>
+        </div>
       </div>
-      <div className={styles.shopDescription}>
-        <p className={styles.titleDescription}>공고 설명</p>
-        <p className={styles.description}>{noticeData?.item.description}</p>
-      </div>
-    </div>
+    </>
   );
 }
 
