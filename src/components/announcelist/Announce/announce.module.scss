@@ -72,6 +72,10 @@
   cursor: pointer;
 }
 
+.mapButton {
+  background: #dc4d2d;
+}
+
 .sortList {
   display: flex;
   width: 11rem;
@@ -119,6 +123,12 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+}
+
+.mapBtn {
+  padding: 0.6rem 1.5rem;
+  border: none;
+  cursor: pointer;
 }
 
 @include media(tablet) {

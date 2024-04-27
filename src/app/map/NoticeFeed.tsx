@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { PENCEL_ICON } from '@/utils/constants';
+import Cookies from 'js-cookie';
 import styles from './NoticeFeed.module.scss';
 
 type BoxProps = {
@@ -31,6 +32,7 @@ type NoticeType = {
 
 export default function NoticeFeed({ shop }: BoxProps) {
   const [notice, setNotice] = useState<NoticeType[]>([]);
+  const shopId = Cookies.get('shopId');
   useEffect(() => {
     if (Number(shop.id) < 0) return;
     // eslint-disable-next-line func-names
@@ -82,7 +84,13 @@ export default function NoticeFeed({ shop }: BoxProps) {
                     {item.item.closed ? '마감' : '모집중'}
                   </p>
                 </div>
-                <Link href={`shop?shopId=${shop.id}&noticeId=${item.item.id}`}>
+                <Link
+                  href={
+                    shopId !== shop.id
+                      ? `shop?shopId=${shop.id}&noticeId=${item.item.id}`
+                      : `ownerNoticeDetail?noticeId=${item.item.id}`
+                  }
+                >
                   <button type="button" className={styles.btn}>
                     공고 보러가기
                   </button>
