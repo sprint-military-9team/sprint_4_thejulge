@@ -7,7 +7,10 @@ export const getUserProfile = async (userId: string): Promise<UserProfileType> =
     method: 'GET',
   });
   if (!response.ok) {
-    throw new Error(`${response.status}`);
+    if (response.status === 404) {
+      throw new Error('존재하지 않는 사용자입니다.');
+    }
+    throw new Error(`unexpected error`);
   }
   const data = await response.json();
   return data.item;
@@ -31,7 +34,7 @@ export const setUserProfile = async (
     if (response.status === 400) {
       throw new Error((await response.json()).message);
     }
-    if (response.status === 401 || response.status === 403) {
+    if (response.status === 401 || response.status === 403 || response.status === 404) {
       throw new Error(`${response.status}`);
     }
     throw new Error(`unexpected error`);

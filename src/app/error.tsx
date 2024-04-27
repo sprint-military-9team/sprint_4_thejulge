@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import styles from './Error.module.scss';
 
-export default function Error({ error }: { error: { message: '404' | '500' } }) {
+export default function Error({ error }: { error: { message: string } }) {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>{error.message}</h1>
