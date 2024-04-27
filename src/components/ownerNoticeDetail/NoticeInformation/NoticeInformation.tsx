@@ -42,7 +42,7 @@ export default function NoticeInformation({ noticeData, storeData }: NoticeInfor
                   <p>{`${noticeData.hourlyPay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원`}</p>
                   {viewLabel && (
                     <div className={styles.hourlyPayLabel}>
-                      <span>기존 시급보다 {additionRate}%</span>
+                      <span>기존 시급보다 {`${additionRate > 100 ? '100% 이상' : `${additionRate}%`}`}</span>
                       <Image
                         width={20}
                         height={20}
