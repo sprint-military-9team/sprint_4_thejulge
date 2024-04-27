@@ -130,13 +130,13 @@ export default function Registration({ onClose }: { onClose: () => void }) {
             <div className={styles.uploadImage}>
               <UploadImage onUploadImage={onUploadImage} />
             </div>
-            <div className={`${styles.inputWrapper} ${styles.description}`}>
-              <Input
-                type="textArea"
-                label="가게 설명"
+            <div className={`${styles.textareaWrapper} ${styles.description}`}>
+              <p className={styles.label}>가게 설명</p>
+              <textarea
                 id="description"
+                className={styles.textarea}
                 value={inputValue.description}
-                onChange={(value) => onValueChange('description', value)}
+                onChange={(event) => onValueChange('description', event.target.value)}
               />
             </div>
             <div className={styles.registerButton}>
