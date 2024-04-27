@@ -78,72 +78,74 @@ export default function Registration({ onClose }: { onClose: () => void }) {
   return (
     <div className={styles.layout}>
       <section className={styles.Box}>
-        <div className={styles.titleBox}>
-          <h2>가게 정보</h2>
-          <Image className={styles.closeIcon} src={CLOSE_ICON} alt="close" width={35} height={35} onClick={onClose} />
+        <div>
+          <div className={styles.titleBox}>
+            <h2 className={styles.title}>가게 정보</h2>
+            <Image className={styles.closeIcon} src={CLOSE_ICON} alt="close" width={35} height={35} onClick={onClose} />
+          </div>
+          <form className={styles.form}>
+            <div className={`${styles.inputWrapper} ${styles.name}`}>
+              <Input
+                type="text"
+                label=" 가게 이름*"
+                id="name"
+                value={inputValue.name}
+                onChange={(value) => onValueChange('name', value)}
+              />
+            </div>
+            <div className={`${styles.inputWrapper} ${styles.category}`}>
+              <p className={styles.text}>분류*</p>
+              <Dropdown
+                optionList={FOOD_CATEGORIES}
+                initialOption={inputValue.category}
+                onClick={(value) => onValueChange('category', value)}
+              />
+            </div>
+            <div className={`${styles.inputWrapper} ${styles.address1}`}>
+              <p className={styles.text}>주소*</p>
+              <Dropdown
+                optionList={SEOULGROUPLIST.sort()}
+                initialOption={inputValue.address1}
+                onClick={(value) => onValueChange('address1', value)}
+              />
+            </div>
+            <div className={`${styles.inputWrapper} ${styles.address2}`}>
+              <Input
+                type="text"
+                label="상세 주소*"
+                id="address2"
+                value={inputValue.address2}
+                onChange={(value) => onValueChange('address2', value)}
+              />
+            </div>
+            <div className={`${styles.inputWrapper} ${styles.originalHourlyPay}`}>
+              <Input
+                type="text"
+                label="기본 시급*"
+                id="originalHourlyPay"
+                value={String(inputValue.originalHourlyPay)}
+                onChange={(value) => onValueChange('originalHourlyPay', value)}
+              />
+            </div>
+            <div className={styles.uploadImage}>
+              <UploadImage onUploadImage={onUploadImage} />
+            </div>
+            <div className={`${styles.inputWrapper} ${styles.description}`}>
+              <Input
+                type="textArea"
+                label="가게 설명"
+                id="description"
+                value={inputValue.description}
+                onChange={(value) => onValueChange('description', value)}
+              />
+            </div>
+            <div className={styles.registerButton}>
+              <Button color="orange" size="large" onClick={handleButtonClick}>
+                {shopData?.id ? '완료하기' : '등록하기'}
+              </Button>
+            </div>
+          </form>
         </div>
-        <form className={styles.form}>
-          <div className={styles.name}>
-            <Input
-              type="text"
-              label=" 가게 이름*"
-              id="name"
-              value={inputValue.name}
-              onChange={(value) => onValueChange('name', value)}
-            />
-          </div>
-          <div className={styles.category}>
-            <p className={styles.text}>분류*</p>
-            <Dropdown
-              optionList={FOOD_CATEGORIES}
-              initialOption={inputValue.category}
-              onClick={(value) => onValueChange('category', value)}
-            />
-          </div>
-          <div className={styles.address1}>
-            <p className={styles.text}>주소*</p>
-            <Dropdown
-              optionList={SEOULGROUPLIST}
-              initialOption={inputValue.address1}
-              onClick={(value) => onValueChange('address1', value)}
-            />
-          </div>
-          <div className={styles.address2}>
-            <Input
-              type="text"
-              label="상세 주소*"
-              id="address2"
-              value={inputValue.address2}
-              onChange={(value) => onValueChange('address2', value)}
-            />
-          </div>
-          <div className={styles.originalHourlyPay}>
-            <Input
-              type="text"
-              label="기본 시급*"
-              id="originalHourlyPay"
-              value={String(inputValue.originalHourlyPay)}
-              onChange={(value) => onValueChange('originalHourlyPay', value)}
-            />
-          </div>
-          <div className={styles.uploadImage}>
-            <UploadImage onUploadImage={onUploadImage} />
-          </div>
-          <div className={styles.description}>
-            <Input
-              type="textArea"
-              label="가게 설명"
-              id="description"
-              value={inputValue.description}
-              onChange={(value) => onValueChange('description', value)}
-            />
-          </div>
-          <div className={styles.registerButton}>
-            <Button color="orange" size="large" onClick={handleButtonClick}>
-              {shopData?.id ? '완료하기' : '등록하기'}
-            </Button>
-          </div>
-        </form>
       </section>
       <CompletionModal
         isModal={showModal}

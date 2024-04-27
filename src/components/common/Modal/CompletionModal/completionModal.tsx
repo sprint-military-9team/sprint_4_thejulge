@@ -18,7 +18,7 @@ export default function CompletionModal({
           <div className={styles.layout}>
             <h2 className={styles.text}>{type === 'edit' ? '수정' : '등록'}이 완료되었습니다. </h2>
             <div className={styles.buttonBox}>
-              <Button color="orange" size="medium" onClick={onClose}>
+              <Button color="orange" size="large" onClick={onClose}>
                 확인
               </Button>
             </div>

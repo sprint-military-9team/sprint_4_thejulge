@@ -1,8 +1,9 @@
 @import '@/styles/_index';
+@import '@/styles/_media';
 
 .layout {
-  width: 30rem;
-  height: 10rem;
+  width: 54rem;
+  height: 25rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,7 +18,19 @@
 
 .buttonBox {
   position: absolute;
-  width: 16rem;
-  right: 1.6rem;
-  bottom: 1.6rem;
+  width: 12rem;
+  right: 2rem;
+  bottom: 2rem;
+}
+
+@include media(mobile) {
+  .layout {
+    width: 32.7rem;
+    height: 22rem;
+  }
+  .buttonBox {
+    width: 13.8rem;
+    right: 9rem;
+    bottom: 3rem;
+  }
 }

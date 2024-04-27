@@ -1,19 +1,30 @@
 @import '@/styles/_index';
+@import '@/styles/_media';
 
 .layout {
-  font-size: 1.6rem;
-  padding: 3rem;
   flex-grow: 1;
 }
 
+.section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  padding: 6rem 0;
+}
+
 .title {
-  margin: 3rem 0;
+  font-size: 2.8rem;
+  line-height: 3.36rem;
+  margin-bottom: 3rem;
 }
 
 .shopLayout {
+  width: 96.4rem;
   background: $red-600;
-  padding: 2.6rem;
-  @include rounded-xl;
+  border-radius: 1.2rem;
+  padding: 2.4rem;
 }
 
 .shopBox {
@@ -22,10 +33,12 @@
 }
 
 .shopInfoBox {
-  width: 100%;
+  position: relative;
+  width: 34.6rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  padding-top: 1.6rem;
 }
 
 .mainImage {
@@ -35,17 +48,35 @@
 .label {
   color: $red-400;
   @include font-bold;
+  font-size: 1.6rem;
+  line-height: 2rem;
 }
 
-.address1 {
-  display: flex;
-  align-items: center;
-  color: $gray-500;
+.name {
+  @include font-bold;
+  font-size: 2.8rem;
+  line-height: 3.36rem;
+}
+
+.description {
+  font-size: 1.6rem;
+  line-height: 2.6rem;
+  overflow: hidden;
+  word-break: break-all;
+  white-space: pre-wrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  @include font-normal;
+  color: $black;
 }
 
 .buttonBox {
+  position: absolute;
+  bottom: 0;
   display: flex;
   gap: 3rem;
+  width: 100%;
 }
 
 .registerLayout {
@@ -54,13 +85,17 @@
   justify-content: center;
   align-items: center;
   border: 1px solid $gray-400;
-  padding: 10rem;
+  border-radius: 0.6rem;
   gap: 3rem;
+  width: 96.5rem;
+  height: 21.7rem;
+  font-size: 1.6rem;
+  line-height: 2.6rem;
 }
 
 .registerButton {
-  width: 100%;
-  padding: 0 10rem;
+  width: 34.6rem;
+  height: 4.7rem;
 }
 
 .modalBox {
@@ -73,7 +108,71 @@
 }
 
 .cardList {
+  width: 96.5rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+  gap: 3.2rem 1.4rem;
+}
+
+@include media(tablet) {
+  .buttonBox {
+    position: relative;
+  }
+  .shopLayout {
+    width: 68rem;
+    padding: 2.4rem;
+  }
+  .shopBox {
+    flex-direction: column;
+    gap: 0;
+  }
+  .mainImage {
+    width: 63.2rem;
+    height: 36.086rem;
+  }
+
+  .shopInfoBox {
+    width: 63.2rem;
+  }
+
+  .registerLayout {
+    width: 68rem;
+    height: 21.7rem;
+  }
+
+  .cardList {
+    width: 67.8rem;
+    grid-template-columns: repeat((2, 1fr));
+  }
+}
+
+@include media(mobile) {
+  .section {
+    padding: 4rem 0;
+  }
+
+  .shopLayout {
+    width: 35.1rem;
+    padding: 2rem;
+  }
+  .mainImage {
+    width: 31.1rem;
+    height: 17.771rem;
+  }
+
+  .shopInfoBox {
+    width: 31.1rem;
+  }
+
+  .registerLayout {
+    width: 35.1rem;
+    height: 19.5rem;
+  }
+  .cardList {
+    width: 35.1rem;
+  }
+  .registerButton {
+    width: 10.8rem;
+    height: 3.7rem;
+  }
 }
