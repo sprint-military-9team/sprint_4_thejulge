@@ -107,7 +107,7 @@ export default function Map() {
         });
 
         function addMarker(position: any) {
-          const imageSrc = 'http://localhost:3000/assets/gps.svg';
+          const imageSrc = `${window.location.origin}/assets/gps.svg`;
           const imageSize = new window.kakao.maps.Size(34, 39);
           const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
           const marker = new window.kakao.maps.Marker({
