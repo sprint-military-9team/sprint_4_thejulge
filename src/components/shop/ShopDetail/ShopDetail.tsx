@@ -43,7 +43,7 @@ function ShopDetail() {
   const params = useSearchParams();
   const shopId = params.get('shopId');
   const noticeId = params.get('noticeId');
-  const raise = noticeData ? raisePercent(noticeData.item.shop.item.originalHourlyPay, noticeData.item.hourlyPay) : 0;
+  const raise = noticeData ? raisePercent(noticeData.item.hourlyPay, noticeData.item.shop.item.originalHourlyPay) : 0;
   const workTime = noticeData ? getWorkTime(noticeData.item.startsAt, noticeData.item.workhour) : '00:00';
   const today = new Date();
   const completed = noticeData

@@ -114,7 +114,6 @@ function Announce({ headerData }: AnnounceProps) {
     };
     fetchData();
   }, [headerData, selectedSort, selectedFilter, pageNumber]);
-
   return (
     <section className={styles.sectionWrapper}>
       <div className={styles.announceWrapper}>
