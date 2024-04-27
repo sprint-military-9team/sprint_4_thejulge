@@ -18,6 +18,7 @@ export default function TableButton({ id }: TableButtonProps) {
   const params = useSearchParams();
   const shopId = Cookies.get('shopId') as string;
   const noticeId = params.get('noticeId') as string;
+  const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState<ModalType>({
     type: 'none',
     onClick: () => {},
@@ -25,15 +26,35 @@ export default function TableButton({ id }: TableButtonProps) {
   const onClose = () => {
     setShowModal({ type: 'none', onClick: () => {} });
   };
+
+  const handleError = (status: number | null) => {
+    if (!status) {
+      router.refresh();
+    } else if (status === 400) {
+      router.refresh();
+      Cookies.set('redirectStatus', 'closedNotice');
+    } else if (status === 401) {
+      router.push('/login');
+      Cookies.set('redirectStatus', 'needLogin');
+    } else if (status === 404) {
+      throw new Error('가게 특정 공고 지원 상태 변경 오류');
+    }
+  };
   const onReject = async () => {
-    console.log(`reject: ${id}`);
-    await setSpecifyNoticeApplicationStatus(shopId, noticeId, id, 'rejected');
-    router.refresh();
+    if (!isLoading) {
+      setIsLoading(true);
+      const error = await setSpecifyNoticeApplicationStatus(shopId, noticeId, id, 'rejected');
+      handleError(error);
+      setIsLoading(false);
+    }
   };
   const onAccept = async () => {
-    console.log(`accept: ${id}`);
-    await setSpecifyNoticeApplicationStatus(shopId, noticeId, id, 'accepted');
-    router.refresh();
+    if (!isLoading) {
+      setIsLoading(true);
+      const error = await setSpecifyNoticeApplicationStatus(shopId, noticeId, id, 'accepted');
+      handleError(error);
+      setIsLoading(false);
+    }
   };
 
   const handleClickAcceptButton = () => {
