@@ -261,7 +261,11 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
             />
           </div>
           <div className={styles.buttonWrapper} onClick={handleSubmit}>
-            <Button color={isLoading ? 'disabled' : 'orange'} size="large" submit>
+            <Button
+              color={hourlyPayError || startsAtError || workhourError || isLoading ? 'disabled' : 'orange'}
+              size="large"
+              submit
+            >
               등록하기
             </Button>
           </div>

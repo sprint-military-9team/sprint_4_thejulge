@@ -8,12 +8,13 @@ import WorkerDetailModal from '@/components/common/Modal/workerDetailModal/Worke
 import raisePercent from '@/utils/getRaisePercent';
 import getWorkTime from '@/utils/getWorkTime';
 import getShopDetailData from '@/apis/shopdetail';
+import { CLOCK, CARDARROW } from '@/utils/constants';
 import { toast } from 'react-toastify';
-import { CLOCK, GPS, CARDARROW } from '@/utils/constants';
 import { postApplicationNotice, putApplicationNotice, getUserApplication } from '@/apis/applicationNotice';
 import Button from '@/components/common/Button/';
 import RejectionModal from '@/components/common/Modal/RejectionModal/RejectionModal';
 
+import LocationLabel from '@/components/common/LocationLabel/LocationLabel';
 import styles from './shopdetail.module.scss';
 import { MainData, ButtonProps } from './type';
 import ButtonStatus from './ButtonStatus';
@@ -172,10 +173,10 @@ function ShopDetail() {
               <Image src={CLOCK} alt="clock" width={20} height={20} />
               <span>{workTime}</span>
             </div>
-            <div className={styles.noticeInfoTimeLoc}>
-              <Image src={GPS} alt="gps" width={20} height={20} />
-              <span>{noticeData?.item.shop.item.address1}</span>
-            </div>
+            <LocationLabel
+              address1={noticeData?.item.shop.item.address1}
+              address2={noticeData?.item.shop.item.address2}
+            />
             <span className={styles.noticeInfoDescription}>{noticeData?.item.shop.item.description}</span>
             {completed || type === 'employer' ? (
               <Button color="disabled" size="large">

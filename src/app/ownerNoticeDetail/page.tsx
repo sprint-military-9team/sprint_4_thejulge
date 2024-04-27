@@ -23,8 +23,9 @@ export default async function ownerNoticeDetail({ searchParams }: OwnerNoticeDet
   }
 
   const getStoreData = async (shopID: string) => {
-    const { id, name, category, address1, description, imageUrl, originalHourlyPay } = await getShopData(shopID);
-    return { id, name, category, address1, description, imageUrl, originalHourlyPay };
+    const { id, name, category, address1, address2, description, imageUrl, originalHourlyPay } =
+      await getShopData(shopID);
+    return { id, name, category, address1, address2, description, imageUrl, originalHourlyPay };
   };
 
   const getNoticeData = async (shopID: string, noticeID: string) => {

@@ -6,7 +6,7 @@ import { createContext, useState, useMemo } from 'react';
 export const ShopDataContext = createContext<{
   shopData: ShopDataType;
   updateShopData: (date: ShopDataType) => void;
-}>({ shopData: {} as ShopDataType, updateShopData: () => { } });
+}>({ shopData: {} as ShopDataType, updateShopData: () => {} });
 
 export function ShopDataContextProvider({ children }: { children: React.ReactNode }) {
   const [shopData, setShopData] = useState<ShopDataType>({
