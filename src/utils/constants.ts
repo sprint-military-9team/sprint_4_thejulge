@@ -2,6 +2,7 @@ const BASE_PATH = '/assets';
 
 export const ARROW_DOWN = `${BASE_PATH}/arrow_down.svg`;
 export const ARROW_NEXT = `${BASE_PATH}/arrow_next.svg`;
+export const ARROW_NEXT_LIGHT = `${BASE_PATH}/arrow_next_light.svg`;
 export const ARROW_PREV_LIGHT = `${BASE_PATH}/arrow_prev_light.svg`;
 export const ARROW_PREV = `${BASE_PATH}/arrow_prev.svg`;
 export const ARROW_UP = `${BASE_PATH}/arrow_up.svg`;
