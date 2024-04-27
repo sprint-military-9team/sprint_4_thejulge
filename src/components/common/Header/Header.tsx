@@ -22,14 +22,14 @@ export default function Header() {
     },
     employer: {
       buttonList: [
-        { name: '내 가게', href: '/mystore' },
+        { name: '내 가게', href: '/shopinfo' },
         { name: '로그아웃', href: '' },
       ],
       notification: true,
     },
     employee: {
       buttonList: [
-        { name: '내 프로필', href: '/myprofile' },
+        { name: '내 프로필', href: '/profile' },
         { name: '로그아웃', href: '' },
       ],
       notification: true,

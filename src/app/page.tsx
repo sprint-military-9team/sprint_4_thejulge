@@ -1,7 +1,4 @@
-'use client';
-
 import React from 'react';
-import { useSearchParams } from 'next/navigation';
 import Header from '@/components/common/Header/Header';
 import Footer from '@/components/common/Footer/Footer';
 import Announce from '@/components/announcelist/Announce/Announce';
@@ -9,9 +6,12 @@ import SuggestCard from '@/components/announcelist/SuggestCard/SuggestCard';
 import RedirectToast from '@/components/common/RedirectToast/RedirectToast';
 import styles from './page.module.scss';
 
-export default function Home() {
-  const params = useSearchParams();
-  const headerData = params.get('keyword');
+type HomeProps = {
+  searchParams?: { [key: string]: string | string[] | undefined };
+};
+
+export default function Home({ searchParams }: HomeProps) {
+  const headerData = searchParams?.keyword as string;
   const headerDataExisted = headerData
     ? `${styles.suggestWrapper} ${styles.headerDataExisted}`
     : `${styles.suggestWrapper}`;
