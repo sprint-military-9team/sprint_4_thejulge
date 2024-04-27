@@ -9,10 +9,12 @@ import Cookies from 'js-cookie';
 import { NoticeInformationDataType } from '@/app/ownerNoticeDetail/types';
 import { checkInputList } from '@/utils/checkLoginInput';
 import { useRouter } from 'next/navigation';
+import { toast, ToastContainer } from 'react-toastify';
 import styles from './OwnerAddNotice.module.scss';
 import Input from '../common/Input/Input';
 import Button from '../common/Button';
 import { InputDataType } from './types';
+import 'react-toastify/dist/ReactToastify.css';
 
 type OwnerAddNoticeProps = {
   onClose?: () => void;
@@ -20,7 +22,6 @@ type OwnerAddNoticeProps = {
 };
 
 export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticeProps) {
-  const shopId = Cookies.get('shopId') as string;
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -52,11 +53,22 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
   const onBlurHourlyPay = () => {
     if (!hourlyPay) {
       changeHourlyPayError('값을 입력해주세요.');
+      return;
+    }
+    const pay = Number(hourlyPay.replace(',', ''));
+    if (pay < 10000) {
+      changeHourlyPayError('10,000원 이상부터 가능합니다.');
     }
   };
   const onBlurStartsAt = () => {
     if (!startsAt) {
       changeStartsAtError('값을 입력해주세요.');
+      return;
+    }
+    const date = new Date(startsAt);
+    const today = new Date();
+    if (date < today) {
+      changeStartsAtError('현재 일시보다 이전 일시로 설정할 수 없습니다.');
     }
   };
   const onBlurWorkhour = () => {
@@ -100,7 +112,7 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
       type: 'string',
       value: hourlyPay,
       label: '시급*',
-      errorMessage: '제대로 된 값을 입력해주세요',
+      errorMessage: hourlyPayError,
       isError: Boolean(hourlyPayError),
       onChange: onChangeHourlyPay,
       onFocus: clearHourlyPayError,
@@ -112,7 +124,7 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
       type: 'datetime-local',
       value: startsAt,
       label: '시작 일시*',
-      errorMessage: '제대로 된 값을 입력해주세요',
+      errorMessage: startsAtError,
       isError: Boolean(startsAtError),
       onChange: changeStartsAt,
       onFocus: clearStartsAtError,
@@ -123,7 +135,7 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
       type: 'number',
       value: workhour,
       label: '업무 시간*',
-      errorMessage: '제대로 된 값을 입력해주세요',
+      errorMessage: workhourError,
       isError: Boolean(workhourError),
       onChange: changeWorkhour,
       onFocus: clearWorkhourError,
@@ -136,7 +148,7 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
     event.preventDefault();
     checkInputList(formRef);
 
-    if (!hourlyPay || !startsAt || !workhour) {
+    if (hourlyPayError || startsAtError || workhourError || isLoading) {
       return;
     }
 
@@ -146,24 +158,50 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
       workhour: Number(workhour),
       description,
     };
-    if (!isLoading) {
-      console.log('ddd');
-      setIsLoading(true);
-      if (noticeData) {
-        const APIFlag = await putSpecifyNotice(noticeData.id, data);
-        if (APIFlag) {
-          alert('등록이 완료되었습니다');
-          window.location.reload();
-          setIsLoading(false);
-        }
+    setIsLoading(true);
+    if (noticeData) {
+      const APIFlag = await putSpecifyNotice(noticeData.id, data);
+      if (APIFlag === 200) {
+        toast.success('등록이 완료되었습니다', {
+          onClose: () => {
+            router.refresh();
+            onClose();
+            setIsLoading(false);
+          },
+        });
         return;
       }
-      const APIFlag = await postNotice(shopId, data);
-      if (APIFlag) {
-        alert('편집이 완료되었습니다');
-        router.push(`/ownerNoticeDetail?noticeId=${APIFlag}`);
+      if (APIFlag === 401) {
+        Cookies.set('redirectStatus', 'needLogin');
+        router.push('/login');
       }
+      if (APIFlag === 404) {
+        throw new Error(`가게 공고 수정 오류: ${APIFlag}`);
+      }
+      onClose();
+      setIsLoading(false);
+      return;
     }
+    const APIFlag = await postNotice(data);
+    if (!APIFlag.error) {
+      toast.success('편집이 완료되었습니다', {
+        onClose: () => {
+          router.push(`/ownerNoticeDetail?noticeId=${APIFlag}`);
+          onClose();
+          setIsLoading(false);
+        },
+      });
+      return;
+    }
+    if (APIFlag.error === 401) {
+      Cookies.set('redirectStatus', 'needLogin');
+      router.push('/login');
+    }
+    if (APIFlag.error === 404) {
+      throw new Error(`가게 공고 등록 오류: ${APIFlag.error}`);
+    }
+    onClose();
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -179,6 +217,7 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
 
   return (
     <div className={styles.wrapper}>
+      <ToastContainer position="top-center" autoClose={3000} closeOnClick pauseOnHover={false} limit={1} />
       <div className={styles.contentWrapper}>
         <div className={styles.titleWrapper}>
           <span>{noticeData ? '공고 편집' : '공고 등록'}</span>
