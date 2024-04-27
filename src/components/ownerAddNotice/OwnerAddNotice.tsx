@@ -186,7 +186,7 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
     if (!APIFlag.error) {
       toast.success('편집이 완료되었습니다', {
         onClose: () => {
-          router.push(`/ownerNoticeDetail?noticeId=${APIFlag}`);
+          router.push(`/ownerNoticeDetail?noticeId=${APIFlag.data}`);
           onClose();
           setIsLoading(false);
         },
