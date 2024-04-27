@@ -61,6 +61,7 @@ export default function Form() {
         return;
       }
       router.push('/');
+      router.refresh();
     }
   };
 

@@ -52,6 +52,7 @@ export default function Form() {
     setShowModal({ type: 'none', onClose: () => {} });
     if (flag) {
       router.push('/');
+      router.refresh();
     }
   }, [router, showModal]);
 
