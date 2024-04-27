@@ -58,7 +58,12 @@ export const getUserApplicationData = async (
     },
   });
   if (!response.ok) {
-    throw new Error('API 오류');
+    if (response.status === 400) {
+      throw new Error(`요청 양식의 오류가 있습니다.`);
+    } else if (response.status === 403) {
+      throw new Error(`권한이 없습니다.`);
+    }
+    throw new Error(`${response.statusText}`);
   }
   const data = await response.json();
   return { count: data.count, items: data.items };

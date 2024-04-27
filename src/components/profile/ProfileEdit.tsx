@@ -89,8 +89,17 @@ export default function ProfileEdit({ isOpend, onClose, defaultValues }: Profile
       onClose();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      // eslint-disable-next-line no-alert
-      toast.error(`${error.message}`);
+      if (error.message === '401' || error.message === '403') {
+        Cookies.remove('token');
+        Cookies.remove('userId');
+        Cookies.remove('type');
+        router.push('/');
+        Cookies.set('redirectStatus', 'invalidAuthority');
+      } else if (error.message === '404') {
+        toast.error('프로필 등록/편집에서 오류가 발생했습니다.');
+      } else {
+        toast.error(`${error.message}`);
+      }
     } finally {
       setLoading(false);
     }

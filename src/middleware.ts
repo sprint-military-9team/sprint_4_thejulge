@@ -29,9 +29,23 @@ export default function middleware(request: NextRequest) {
       return mainResponse;
     }
   }
+
+  if (path.startsWith('/profile')) {
+    const mainResponse = NextResponse.redirect(new URL('/', request.url));
+    const loginResponse = NextResponse.redirect(new URL('/signin', request.url));
+    if (!token) {
+      loginResponse.cookies.set('redirectStatus', 'needLogin');
+      return loginResponse;
+    }
+
+    if (type !== 'employee') {
+      mainResponse.cookies.set('redirectStatus', 'invalidAuthority');
+      return mainResponse;
+    }
+  }
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/signin', '/signup', '/ownerNoticeDetail/:path*'],
+  matcher: ['/signin', '/signup', '/ownerNoticeDetail/:path*', '/profile'],
 };
