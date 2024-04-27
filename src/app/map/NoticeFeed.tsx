@@ -38,7 +38,7 @@ export default function NoticeFeed({ shop }: BoxProps) {
     // eslint-disable-next-line func-names
     (async function () {
       const response = await fetch(
-        `https://bootcamp-api.codeit.kr/api/0-1/the-julge/shops/${shop.id}/notices?limit=100`,
+        `https://bootcamp-api.codeit.kr/api/4-9/the-julge/shops/${shop.id}/notices?limit=100`,
       );
       const data = await response.json();
       setNotice(data.items);

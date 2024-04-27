@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { SEOULGROUPLIST } from '@/constants/SEOUL';
-import { FOOD_CATEGORIES } from '@/constants/SHOP';
+import FOOD_CATEGORIES from '@/constants/SHOP';
 import { CLOSE_ICON } from '@/utils/constants';
 import BASE_URL from '@/constants/BASEURL';
 import Cookies from 'js-cookie';
 import { ShopDataContext } from '@/context/ShopDataContext';
+import { useRouter } from 'next/navigation';
 import Dropdown from '../common/Dropdown/Dropdown';
 import Input from '../common/Input/Input';
 import styles from './Registartion.module.scss';
@@ -13,7 +14,6 @@ import UploadImage from './UploadImage';
 import Button from '../common/Button';
 import CompletionModal from '../common/Modal/CompletionModal/completionModal';
 import { FormData } from './type';
-import { useRouter } from 'next/navigation';
 
 export default function Registration({ onClose }: { onClose: () => void }) {
   const router = useRouter();
@@ -127,7 +127,7 @@ export default function Registration({ onClose }: { onClose: () => void }) {
             />
           </div>
           <div className={styles.uploadImage}>
-            <UploadImage token={token} onUploadImage={onUploadImage} />
+            <UploadImage onUploadImage={onUploadImage} />
           </div>
           <div className={styles.description}>
             <Input

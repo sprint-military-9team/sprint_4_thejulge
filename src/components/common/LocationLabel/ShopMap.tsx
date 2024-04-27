@@ -16,7 +16,6 @@ export default function ShopMap({ address1, address2, isHover }: ShopMapProps) {
         const geocoder = new window.kakao.maps.services.Geocoder();
         const container = document.getElementById('map');
         geocoder.addressSearch(`${address1} ${address2}`, (result: any, status: any) => {
-          console.log(`${address1} ${address2}`);
           if (status === window.kakao.maps.services.Status.OK) {
             const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
             const options = {
