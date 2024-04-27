@@ -51,7 +51,7 @@ function Card({
   const locationSrc = completed ? GPSGRAY : GPS;
   const router = useRouter();
   const type = Cookies.get('type');
-  console.log(type);
+  const shopIdData = Cookies.get('shopId');
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 767);
@@ -86,7 +86,7 @@ function Card({
     }
 
     localStorage.setItem('cardDataList', JSON.stringify(saveData));
-    if (type === 'employer') {
+    if (type === 'employer' && shopIdData === shopId) {
       router.push(`/ownerNoticeDetail?noticeId=${noticeId}`);
     } else {
       router.push(`/shop?shopId=${shopId}&noticeId=${noticeId}`);
@@ -95,7 +95,7 @@ function Card({
   return (
     <div className={styles.cardWrapper} onClick={handleRouteNotice}>
       <div className={styles.imageWrapper}>
-        <Image src={image} fill alt="store image" />
+        <Image src={image} fill alt="store image" priority />
         {completed && <CompletedMessage completed={completed} />}
       </div>
       <div className={styles.contentWrapper}>

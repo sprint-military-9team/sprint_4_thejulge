@@ -1,18 +1,20 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Cookies from 'js-cookie';
 import WorkerDetailModal from '@/components/common/Modal/workerDetailModal/WorkerDetailModal';
 import raisePercent from '@/utils/getRaisePercent';
 import getWorkTime from '@/utils/getWorkTime';
 import getShopDetailData from '@/apis/shopdetail';
-import { CLOCK, GPS, CARDARROW } from '@/utils/constants';
+import { CLOCK, CARDARROW } from '@/utils/constants';
+import { toast } from 'react-toastify';
 import { postApplicationNotice, putApplicationNotice, getUserApplication } from '@/apis/applicationNotice';
 import Button from '@/components/common/Button/';
 import RejectionModal from '@/components/common/Modal/RejectionModal/RejectionModal';
 
+import LocationLabel from '@/components/common/LocationLabel/LocationLabel';
 import styles from './shopdetail.module.scss';
 import { MainData, ButtonProps } from './type';
 import ButtonStatus from './ButtonStatus';
@@ -53,8 +55,10 @@ function ShopDetail() {
     : '';
   const shopImage = noticeData ? noticeData?.item.shop.item.imageUrl : '';
 
+  const router = useRouter();
   const token = Cookies.get('token');
   const userId = Cookies.get('userId');
+  const type = Cookies.get('type');
 
   const handleClickApplicationButton = () => {
     if (token) {
@@ -62,8 +66,9 @@ function ShopDetail() {
         try {
           const data = await postApplicationNotice(shopId, noticeId, token);
           setUserApplicationStatus({ id: data.item.id, status: data.item.status });
+          toast.success('공고 신청이 완료되었습니다.');
         } catch (error) {
-          console.error('API 전송 실패:', error);
+          toast.error('공고 신청에 실패했습니다.');
         }
       };
       postApplication();
@@ -71,13 +76,14 @@ function ShopDetail() {
       setIsWorkerDetailModalOpen(true);
     }
   };
+
   const handleClickCancelButton = () => {
     setIsRejectionModalOpen(true);
   };
 
   const handleWorkerModal = (event: React.MouseEvent) => {
     event.preventDefault();
-    setIsWorkerDetailModalOpen(false);
+    router.push('/signin');
   };
 
   const handleModalCancelClick = () => {
@@ -86,8 +92,9 @@ function ShopDetail() {
         try {
           const data = await putApplicationNotice(shopId, noticeId, token, userApplicationStatus.id, 'canceled');
           setUserApplicationStatus({ id: data.item.id, status: data.item.status });
+          toast.success('공고 신청 취소가 완료되었습니다.');
         } catch (error) {
-          console.error('API 전송 실패:', error);
+          toast.error('공고 신청 취소에 실패했습니다.');
         }
       };
       putApplication();
@@ -115,7 +122,7 @@ function ShopDetail() {
         const data = await getShopDetailData(shopId, noticeId);
         setNoticeData(data);
       } catch (error) {
-        console.error('API 호출 실패:', error);
+        toast.error('가게정보를 불러오는데 실패했습니다.');
       }
     };
     fetchData();
@@ -130,7 +137,7 @@ function ShopDetail() {
             fetchUserApplication(offset + limit, limit);
           }
         } catch (error) {
-          console.error('API 호출 실패:', error);
+          toast.error('유저지원 정보를 불러오는데 실패하였습니다.');
         }
       };
       fetchUserApplication();
@@ -166,12 +173,12 @@ function ShopDetail() {
               <Image src={CLOCK} alt="clock" width={20} height={20} />
               <span>{workTime}</span>
             </div>
-            <div className={styles.noticeInfoTimeLoc}>
-              <Image src={GPS} alt="gps" width={20} height={20} />
-              <span>{noticeData?.item.shop.item.address1}</span>
-            </div>
+            <LocationLabel
+              address1={noticeData?.item.shop.item.address1}
+              address2={noticeData?.item.shop.item.address2}
+            />
             <span className={styles.noticeInfoDescription}>{noticeData?.item.shop.item.description}</span>
-            {completed ? (
+            {completed || type === 'employer' ? (
               <Button color="disabled" size="large">
                 신청 불가
               </Button>

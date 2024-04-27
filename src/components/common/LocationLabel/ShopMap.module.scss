@@ -1,0 +1,29 @@
+@import '@/styles/_index';
+
+.wrapper {
+  width: 30rem;
+  height: 30rem;
+  position: absolute;
+  top: 2.5rem;
+  left: '0';
+  border: 1px solid $gray-400;
+  border-radius: 1.5rem;
+  box-shadow: 0 0.5rem 2.5rem 0 rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.contentWrapper {
+  width: 100%;
+  height: 100%;
+  border-radius: 1.5rem;
+  background-color: $white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include font-bold;
+  font-size: 1.6rem;
+}
