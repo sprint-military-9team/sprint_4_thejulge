@@ -49,7 +49,12 @@ export default function Notification() {
       if (token) {
         const alertData = await getUserAlert();
         if (typeof alertData === 'number') {
-          throw new Error(`알림 목록 조회 오류: ${alertData}`);
+          Cookies.remove('token');
+          Cookies.remove('userId');
+          Cookies.remove('type');
+          router.push('/');
+          Cookies.set('redirectStatus', 'invalidAuthority');
+          return;
         }
         setNotificationData(alertData);
         setNotificationNumber(alertData.length);
