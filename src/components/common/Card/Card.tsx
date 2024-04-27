@@ -95,7 +95,7 @@ function Card({
   return (
     <div className={styles.cardWrapper} onClick={handleRouteNotice}>
       <div className={styles.imageWrapper}>
-        <Image src={image} fill alt="store image" priority />
+        <Image src={image} fill alt="store image" priority style={{ objectFit: 'cover' }} />
         {completed && <CompletedMessage completed={completed} />}
       </div>
       <div className={styles.contentWrapper}>
