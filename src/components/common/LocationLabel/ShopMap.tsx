@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import styles from './ShopMap.module.scss';
 
 type ShopMapProps = {
   address1: string;
@@ -49,5 +50,5 @@ export default function ShopMap({ address1, address2 }: ShopMapProps) {
     document.head.appendChild(mapScript);
     mapScript.addEventListener('load', onLoadKakaoMap, { passive: true });
   }, []);
-  return <div id="map" style={{ width: '30rem', height: '30rem' }} />;
+  return <div id="map" className={styles.wrapper} />;
 }

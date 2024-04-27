@@ -1,0 +1,11 @@
+@import '@/styles/_index';
+
+.wrapper {
+  width: 30rem;
+  height: 30rem;
+  position: absolute;
+  top: 2.5rem;
+  left: '0';
+  border: 1px solid $gray-300;
+  border-radius: 1.5rem;
+}
