@@ -6,7 +6,9 @@ import Card from '@/components/common/Card';
 import Filter from '@/components/announcelist/Filter';
 import { ARROW_DOWN, ARROW_UP } from '@/utils/constants';
 import raisePercent from '@/utils/getRaisePercent';
-import getAnnounceData from '@/apis/announce';
+import { getAnnounceData } from '@/apis/announce';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
 import Pagination from './Pagination';
 import styles from './announce.module.scss';
@@ -95,16 +97,20 @@ function Announce({ headerData }: AnnounceProps) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getAnnounceData(
-        6 * (pageNumber - 1),
-        6,
-        selectedFilter?.location ?? null,
-        headerData ?? null,
-        selectedFilter?.startAt ?? null,
-        selectedFilter?.pay ?? null,
-        sortList[selectedSort],
-      );
-      setCardData(response);
+      try {
+        const response = await getAnnounceData(
+          6 * (pageNumber - 1),
+          6,
+          selectedFilter?.location ?? null,
+          headerData ?? null,
+          selectedFilter?.startAt ?? null,
+          selectedFilter?.pay ?? null,
+          sortList[selectedSort],
+        );
+        setCardData(response);
+      } catch (error) {
+        toast.error('공고를 불러오는데 실패했습니다.');
+      }
     };
     fetchData();
   }, [headerData, selectedSort, selectedFilter, pageNumber]);
