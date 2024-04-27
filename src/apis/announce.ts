@@ -32,19 +32,14 @@ export const getAnnounceData = async (
   }
 
   const apiUrl = `${BASE_URL}/notices?${queryParams.toString()}`;
-  try {
-    const response = await fetch(apiUrl, {
-      method: 'GET',
-    });
-    if (!response.ok) {
-      throw new Error('API 호출에 실패했습니다.');
-    }
-    const data: AnnounceData = await response.json();
-    return data;
-  } catch (error) {
-    console.error('API호출 실패:', error);
-    throw error;
+  const response = await fetch(apiUrl, {
+    method: 'GET',
+  });
+  if (!response.ok) {
+    throw new Error(`${response.status}`);
   }
+  const data: AnnounceData = await response.json();
+  return data;
 };
 
 export const getUserProfileAddress = async (userId: string): Promise<string> => {
@@ -55,5 +50,5 @@ export const getUserProfileAddress = async (userId: string): Promise<string> => 
     throw new Error(`${response.status}`);
   }
   const data = await response.json();
-  return data.item.shop.item.address1;
+  return data?.item.address ?? '';
 };

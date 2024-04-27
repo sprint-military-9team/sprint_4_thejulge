@@ -1,13 +1,14 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Cookies from 'js-cookie';
 import WorkerDetailModal from '@/components/common/Modal/workerDetailModal/WorkerDetailModal';
 import raisePercent from '@/utils/getRaisePercent';
 import getWorkTime from '@/utils/getWorkTime';
 import getShopDetailData from '@/apis/shopdetail';
+import { toast } from 'react-toastify';
 import { CLOCK, GPS, CARDARROW } from '@/utils/constants';
 import { postApplicationNotice, putApplicationNotice, getUserApplication } from '@/apis/applicationNotice';
 import Button from '@/components/common/Button/';
@@ -53,6 +54,7 @@ function ShopDetail() {
     : '';
   const shopImage = noticeData ? noticeData?.item.shop.item.imageUrl : '';
 
+  const router = useRouter();
   const token = Cookies.get('token');
   const userId = Cookies.get('userId');
   const type = Cookies.get('type');
@@ -63,8 +65,9 @@ function ShopDetail() {
         try {
           const data = await postApplicationNotice(shopId, noticeId, token);
           setUserApplicationStatus({ id: data.item.id, status: data.item.status });
+          toast.success('공고 신청이 완료되었습니다.');
         } catch (error) {
-          console.error('API 전송 실패:', error);
+          toast.error('공고 신청에 실패했습니다.');
         }
       };
       postApplication();
@@ -72,13 +75,14 @@ function ShopDetail() {
       setIsWorkerDetailModalOpen(true);
     }
   };
+
   const handleClickCancelButton = () => {
     setIsRejectionModalOpen(true);
   };
 
   const handleWorkerModal = (event: React.MouseEvent) => {
     event.preventDefault();
-    setIsWorkerDetailModalOpen(false);
+    router.push('/signin');
   };
 
   const handleModalCancelClick = () => {
@@ -87,8 +91,9 @@ function ShopDetail() {
         try {
           const data = await putApplicationNotice(shopId, noticeId, token, userApplicationStatus.id, 'canceled');
           setUserApplicationStatus({ id: data.item.id, status: data.item.status });
+          toast.success('공고 신청 취소가 완료되었습니다.');
         } catch (error) {
-          console.error('API 전송 실패:', error);
+          toast.error('공고 신청 취소에 실패했습니다.');
         }
       };
       putApplication();
@@ -116,7 +121,7 @@ function ShopDetail() {
         const data = await getShopDetailData(shopId, noticeId);
         setNoticeData(data);
       } catch (error) {
-        console.error('API 호출 실패:', error);
+        toast.error('가게정보를 불러오는데 실패했습니다.');
       }
     };
     fetchData();
@@ -131,7 +136,7 @@ function ShopDetail() {
             fetchUserApplication(offset + limit, limit);
           }
         } catch (error) {
-          console.error('API 호출 실패:', error);
+          toast.error('유저지원 정보를 불러오는데 실패하였습니다.');
         }
       };
       fetchUserApplication();

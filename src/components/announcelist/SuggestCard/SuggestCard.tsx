@@ -6,16 +6,17 @@ import Cookies from 'js-cookie';
 import Card from '@/components/common/Card';
 import raisePercent from '@/utils/getRaisePercent';
 import { getAnnounceData, getUserProfileAddress } from '@/apis/announce';
-import { SEOULGROUPLIST, CLOSELOCATIONLIST } from '@/constants/SEOUL';
+import { CLOSELOCATIONLIST } from '@/constants/SEOUL';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styles from './suggest.module.scss';
 import { Data, MainData } from './type';
 
 function SuggestCard() {
-  const randomIndex = Math.floor(Math.random() * SEOULGROUPLIST.length);
   const [data, setData] = useState<Data | null>(null);
-  const [userResidence, setUserResidence] = useState<string>(SEOULGROUPLIST[randomIndex]);
+  const [userResidence, setUserResidence] = useState<string | null>();
 
   const today = new Date();
 
@@ -44,17 +45,24 @@ function SuggestCard() {
   };
   const userId = Cookies.get('userId');
   const token = Cookies.get('token');
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (!userId) return;
-      const response = await getUserProfileAddress(userId);
-      setUserResidence(response);
-    };
-    fetchUserData();
-  }, [userId]);
 
   useEffect(() => {
     if (token) {
+      const fetchData = async () => {
+        try {
+          const response = await getUserProfileAddress(userId);
+          setUserResidence(response);
+        } catch (error) {
+          toast.error('유저 정보를 불러오는데 실패했습니다.');
+        }
+      };
+
+      fetchData();
+    }
+  }, [userId, token]);
+
+  useEffect(() => {
+    if (token && userResidence) {
       const fetchData = async () => {
         const response = await getAnnounceData(0, 100, CLOSELOCATIONLIST[userResidence], null, null, null, 'pay');
         setData(response);
