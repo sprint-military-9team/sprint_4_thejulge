@@ -2,7 +2,7 @@ export interface ShopDetailData {
   item: Item;
 }
 
-interface Item {
+export interface Item {
   id: string;
   hourlyPay: number;
   startsAt: string;
@@ -17,7 +17,8 @@ interface Shop {
   item: ShopInfo;
   href: string;
 }
-interface ShopInfo {
+
+export interface ShopInfo {
   id: string;
   name: string;
   category: string;
