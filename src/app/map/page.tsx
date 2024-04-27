@@ -20,7 +20,6 @@ function extractShopInfo(items: Items[]) {
   const shopNameList: string[] = [];
   items.forEach((item) => {
     const { shop } = item.item;
-    console.log('check: ', shop.item.name === '행복한유부');
     if (
       shop &&
       shop.item &&
@@ -145,7 +144,7 @@ export default function Map() {
           // eslint-disable-next-line func-names
           (async function () {
             const response = await fetch(
-              'https://bootcamp-api.codeit.kr/api/0-1/the-julge/notices?limit=100&sort=time',
+              'https://bootcamp-api.codeit.kr/api/4-9/the-julge/notices?limit=100&sort=time',
             );
             const resData = await response.json();
             const datas = extractShopInfo(resData.items);

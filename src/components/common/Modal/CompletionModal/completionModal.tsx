@@ -14,7 +14,7 @@ export default function CompletionModal({
   return (
     <div>
       {isModal && (
-        <Modal onClose={onClose}>
+        <Modal>
           <div className={styles.layout}>
             <h2 className={styles.text}>{type === 'edit' ? '수정' : '등록'}이 완료되었습니다. </h2>
             <div className={styles.buttonBox}>
