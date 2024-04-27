@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import getTimeDifference from '@/utils/getTimeDifference';
 import { CLOCK, NOTICE_DETAIL_ARROW_UP } from '@/utils/constants';
-import Location from '@/components/common/LocationLabel/LocationLabel';
+import LocationLabel from '@/components/common/LocationLabel/LocationLabel';
 import styles from './NoticeInformation.module.scss';
 import { NoticeInformationDataType, StoreInformationDataType } from '../../../app/ownerNoticeDetail/types';
 import NotificationInformationButton from '../NotificationInformationButton/NotificationInformationButton';
@@ -58,7 +58,7 @@ export default function NoticeInformation({ noticeData, storeData }: NoticeInfor
                 <Image src={CLOCK} alt="시간" width={20} height={20} className={styles.notionLabelImage} />
                 <span>{`${getTimeDifference(noticeData.startsAt, noticeData.workhour)} (${noticeData.workhour}시간)`}</span>
               </div>
-              <Location address1="서울특별시 중구" address2="손기정로 12길" />
+              <LocationLabel address1={storeData.address1} address2={storeData.address2} />
               <pre className={`${styles.storeDescription} ${styles.textMediumLarge}`}>{storeData.description}</pre>
             </div>
             <NotificationInformationButton noticeData={noticeData} />

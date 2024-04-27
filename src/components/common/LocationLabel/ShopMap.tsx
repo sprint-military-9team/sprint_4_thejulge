@@ -6,8 +6,9 @@ import styles from './ShopMap.module.scss';
 type ShopMapProps = {
   address1: string;
   address2: string;
+  isHover: boolean;
 };
-export default function ShopMap({ address1, address2 }: ShopMapProps) {
+export default function ShopMap({ address1, address2, isHover }: ShopMapProps) {
   useEffect(() => {
     const onLoadKakaoMap = () => {
       window.kakao.maps.load(() => {
@@ -28,18 +29,35 @@ export default function ShopMap({ address1, address2 }: ShopMapProps) {
             });
             marker.setMap(map);
           } else {
-            const coords = new window.kakao.maps.LatLng(33.450701, 126.570667);
-            const options = {
-              center: coords,
-              level: 3,
-            };
-            const map = new window.kakao.maps.Map(container, options);
+            geocoder.addressSearch(`${address1}`, (result2: any, status2: any) => {
+              if (status2 === window.kakao.maps.services.Status.OK) {
+                const coords = new window.kakao.maps.LatLng(result2[0].y, result2[0].x);
+                const options = {
+                  center: coords,
+                  level: 3,
+                };
 
-            const marker = new window.kakao.maps.Marker({
-              map,
-              position: coords,
+                const map = new window.kakao.maps.Map(container, options);
+                const marker = new window.kakao.maps.Marker({
+                  map,
+                  position: coords,
+                });
+                marker.setMap(map);
+              } else {
+                const coords = new window.kakao.maps.LatLng(33.450701, 126.570667);
+                const options = {
+                  center: coords,
+                  level: 3,
+                };
+                const map = new window.kakao.maps.Map(container, options);
+
+                const marker = new window.kakao.maps.Marker({
+                  map,
+                  position: coords,
+                });
+                marker.setMap(map);
+              }
             });
-            marker.setMap(map);
           }
         });
       });
@@ -50,5 +68,5 @@ export default function ShopMap({ address1, address2 }: ShopMapProps) {
     document.head.appendChild(mapScript);
     mapScript.addEventListener('load', onLoadKakaoMap, { passive: true });
   }, []);
-  return <div id="map" className={styles.wrapper} />;
+  return <div id="map" className={`${styles.wrapper} ${!isHover && `${styles.invisible}`}`} />;
 }

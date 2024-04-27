@@ -11,11 +11,12 @@ type LocationProps = {
   address2: string;
 };
 
-export default function Location({ address1, address2 }: LocationProps) {
+export default function LocationLabel({ address1, address2 }: LocationProps) {
   const [isHover, setIsHover] = useState(false);
   const handleClickLabel = () => {
     window.open(`https://map.kakao.com/?q=${address1}%20${address2}`);
   };
+  console.log(address1, address2);
 
   return (
     <div onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)} className={styles.wrapper}>
@@ -24,7 +25,7 @@ export default function Location({ address1, address2 }: LocationProps) {
         <span>{address1}</span>
       </div>
 
-      {isHover && <ShopMap address1={address1} address2={address2} />}
+      <ShopMap address1={address1} address2={address2} isHover={isHover} />
     </div>
   );
 }
