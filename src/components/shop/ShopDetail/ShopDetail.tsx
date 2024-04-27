@@ -43,7 +43,12 @@ function ShopDetail() {
   const params = useSearchParams();
   const shopId = params.get('shopId');
   const noticeId = params.get('noticeId');
-  const raise = noticeData ? raisePercent(noticeData.item.hourlyPay, noticeData.item.shop.item.originalHourlyPay) : 0;
+  const raise = noticeData
+    ? raisePercent(noticeData.item.hourlyPay, noticeData.item.shop.item.originalHourlyPay) >= 100
+      ? '기존 시급보다 100% 이상'
+      : `기존 시급보다 ${raisePercent(noticeData.item.hourlyPay, noticeData.item.shop.item.originalHourlyPay)}% 이상`
+    : '0%';
+  const isRaised = noticeData ? noticeData.item.hourlyPay > noticeData.item.shop.item.originalHourlyPay : false;
   const workTime = noticeData ? getWorkTime(noticeData.item.startsAt, noticeData.item.workhour) : '00:00';
   const today = new Date();
   const completed = noticeData
@@ -173,10 +178,12 @@ function ShopDetail() {
                 <span className={styles.title}>시급</span>
                 <div className={styles.noticeInfoSalary}>
                   <span className={styles.shopTitle}>{noticeData?.item.hourlyPay}원</span>
-                  <div className={styles.raise}>
-                    <span>기존 시급보다 {raise}%</span>
-                    <Image src={CARDARROW} alt="arrow" width={20} height={20} />
-                  </div>
+                  {isRaised && (
+                    <div className={styles.raise}>
+                      <span>{raise}</span>
+                      <Image src={CARDARROW} alt="arrow" width={20} height={20} />
+                    </div>
+                  )}
                 </div>
               </div>
               <div className={styles.noticeInfoTimeLoc}>
