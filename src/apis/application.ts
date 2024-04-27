@@ -26,7 +26,7 @@ export const setSpecifyNoticeApplicationStatus = async (
   noticeId: string,
   applicationId: string,
   status: 'accepted' | 'rejected',
-) => {
+): Promise<number | null> => {
   const token = Cookies.get('token');
   const response = await fetch(`${BASE_URL}/shops/${shopId}/notices/${noticeId}/applications/${applicationId}`, {
     method: 'PUT',
@@ -39,8 +39,10 @@ export const setSpecifyNoticeApplicationStatus = async (
     }),
   });
   if (!response.ok) {
-    throw new Error('API 오류');
+    return response.status;
   }
+
+  return null;
 };
 
 export const getUserApplicationData = async (

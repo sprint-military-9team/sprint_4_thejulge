@@ -7,6 +7,7 @@ import Filter from '@/components/announcelist/Filter';
 import { ARROW_DOWN, ARROW_UP } from '@/utils/constants';
 import raisePercent from '@/utils/getRaisePercent';
 import getAnnounceData from '@/apis/announce';
+import Link from 'next/link';
 import Pagination from './Pagination';
 import styles from './announce.module.scss';
 import { Data, MainData, SortButtonProps, SortListProps, FilterButtonProps, FilterInfo } from './type';
@@ -114,10 +115,17 @@ function Announce({ headerData }: AnnounceProps) {
         <div className={styles.titleWrapper}>
           <span className={styles.title}>전체 공고</span>
           <div className={styles.filterArea}>
+            <Link href="/map">
+              <button type="button" className={`${styles.filterButton} ${styles.mapButton}`}>
+                지도로 찾기
+              </button>
+            </Link>
             <SortButton selected={selectedSort} onClick={handleSortButtonClick} isSortOpen={isSortOpen} />
             <FilterButton count={countSelectedLocation} onClick={handleFilterButtonClick} />
             {isSortOpen && <SortList onClick={handleSortListClick} />}
-            {isFilterOpen && <Filter onClick={handleFilterClick} removeFilter={removeFilter} />}
+            {isFilterOpen && (
+              <Filter onClick={handleFilterClick} removeFilter={removeFilter} initialFilter={selectedFilter} />
+            )}
           </div>
         </div>
         <div className={styles.cardWrapper}>

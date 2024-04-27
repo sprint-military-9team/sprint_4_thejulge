@@ -18,7 +18,7 @@ export default function Header() {
     const removeData = ['id', 'token', 'type', 'shopId', 'userId'];
     removeData.forEach((data) => Cookies.remove(data));
     setMemberType('none');
-    router.refresh();
+    router.push('/');
   };
 
   const BUTTON_LIST: ButtonListType = {
@@ -51,7 +51,7 @@ export default function Header() {
   };
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && input) {
-      router.push(`/announcelist?keyword=${input}`);
+      router.push(`/?keyword=${input}`);
     }
   };
   useEffect(() => {

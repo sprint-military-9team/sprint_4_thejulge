@@ -21,6 +21,9 @@ export default function RedirectToast() {
     if (status === 'invalidAuthority') {
       toast.error('접근 권한이 없습니다.');
     }
+    if (status === 'closedNotice') {
+      toast.error('이미 닫힌 공고입니다.');
+    }
     Cookies.remove('redirectStatus');
   }, []);
 

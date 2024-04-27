@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 import Image from 'next/image';
 import { CLOCK, CLOCKGRAY, GPS, GPSGRAY, CARDARROW, CARDCOMPLETEARROW, CARDMOBILEARROW } from '@/utils/constants';
 import getWorkTime from '@/utils/getWorkTime';
@@ -49,6 +50,8 @@ function Card({
   const clockSrc = completed ? CLOCKGRAY : CLOCK;
   const locationSrc = completed ? GPSGRAY : GPS;
   const router = useRouter();
+  const type = Cookies.get('type');
+  console.log(type);
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 767);
@@ -74,12 +77,20 @@ function Card({
       noticeId,
     };
     const currentData = JSON.parse(localStorage.getItem('cardDataList') || '[]');
-    if (currentData.length >= 6) {
-      currentData.shift();
+    const saveData = currentData.filter((item: CardProps) => item.noticeId !== noticeId);
+    if (saveData.length === 6) {
+      saveData.pop();
+      saveData.unshift(cardData);
+    } else {
+      saveData.unshift(cardData);
     }
-    currentData.unshift(cardData);
-    localStorage.setItem('cardDataList', JSON.stringify(currentData));
-    router.push(`/shop?shopId=${shopId}&noticeId=${noticeId}`);
+
+    localStorage.setItem('cardDataList', JSON.stringify(saveData));
+    if (type === 'employer') {
+      router.push(`/ownerNoticeDetail?noticeId=${noticeId}`);
+    } else {
+      router.push(`/shop?shopId=${shopId}&noticeId=${noticeId}`);
+    }
   };
   return (
     <div className={styles.cardWrapper} onClick={handleRouteNotice}>
