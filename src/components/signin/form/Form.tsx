@@ -9,7 +9,7 @@ import { postSignin } from '@/apis/user';
 import Modal from '@/components/common/Modal/Modal';
 import LoginModal from '@/components/common/Modal/LoginModal/LoginModal';
 import { useRouter } from 'next/navigation';
-import styles from './form.module.scss';
+import styles from './Form.module.scss';
 
 type LoginModalDataType = {
   type: 'none' | 'signinError' | 'duplicatedEmailError' | 'signupAccepted' | 'error';

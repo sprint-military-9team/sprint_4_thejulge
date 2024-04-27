@@ -9,7 +9,7 @@ import { postSignin, postSignup } from '@/apis/user';
 import LoginModal from '@/components/common/Modal/LoginModal/LoginModal';
 import Modal from '@/components/common/Modal/Modal';
 import { useRouter } from 'next/navigation';
-import styles from './form.module.scss';
+import styles from './Form.module.scss';
 import MemberButton from '../MemberButton/MemberButton';
 
 type LoginModalDataType = {
