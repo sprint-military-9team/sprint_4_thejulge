@@ -1,12 +1,16 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from '@/components/common/Card';
 import styles from './recentview.module.scss';
 import { Data } from './type';
 
 function RecentView() {
-  const recentData = JSON.parse(localStorage.getItem('cardDataList') || '[]');
+  const [recentData, setRecentData] = useState<Data[]>([]);
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem('cardDataList') || '[]');
+    setRecentData(data);
+  }, []);
 
   return (
     <div className={styles.recentViewWrapper}>

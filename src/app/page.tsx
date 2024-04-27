@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '@/components/common/Header/Header';
 import Footer from '@/components/common/Footer/Footer';
-import Announce from '@/components/announcelist/Announce/Announce';
+import Announce from '@/components/announcelist/Announce';
 import SuggestCard from '@/components/announcelist/SuggestCard/SuggestCard';
 import RedirectToast from '@/components/common/RedirectToast/RedirectToast';
 import styles from './page.module.scss';
@@ -24,7 +24,7 @@ export default function Home({ searchParams }: HomeProps) {
         <div className={styles.content}>
           <div className={styles.wrapper}>
             <article className={headerDataExisted}>
-              <SuggestCard residence="서울시 중구" />
+              <SuggestCard />
             </article>
             <main className={styles.mainWrapper}>
               <Announce headerData={headerData} />
