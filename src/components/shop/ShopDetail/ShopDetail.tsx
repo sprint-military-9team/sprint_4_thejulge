@@ -11,6 +11,7 @@ import getShopDetailData from '@/apis/shopdetail';
 import { CLOCK, CARDARROW } from '@/utils/constants';
 import { toast, ToastContainer } from 'react-toastify';
 import { postApplicationNotice, putApplicationNotice, getUserApplication } from '@/apis/applicationNotice';
+import { getUserProfile } from '@/apis/profile';
 import 'react-toastify/dist/ReactToastify.css';
 import Button from '@/components/common/Button/';
 import RejectionModal from '@/components/common/Modal/RejectionModal/RejectionModal';
@@ -40,10 +41,16 @@ function ShopDetail() {
   });
   const [isRejectionModalOpen, setIsRejectionModalOpen] = useState(false);
   const [isWorkerDetailModalOpen, setIsWorkerDetailModalOpen] = useState(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const params = useSearchParams();
   const shopId = params.get('shopId');
   const noticeId = params.get('noticeId');
-  const raise = noticeData ? raisePercent(noticeData.item.hourlyPay, noticeData.item.shop.item.originalHourlyPay) : 0;
+  const raise = noticeData
+    ? raisePercent(noticeData.item.hourlyPay, noticeData.item.shop.item.originalHourlyPay) >= 100
+      ? '기존 시급보다 100% 이상'
+      : `기존 시급보다 ${raisePercent(noticeData.item.hourlyPay, noticeData.item.shop.item.originalHourlyPay)}% 이상`
+    : '0%';
+  const isRaised = noticeData ? noticeData.item.hourlyPay > noticeData.item.shop.item.originalHourlyPay : false;
   const workTime = noticeData ? getWorkTime(noticeData.item.startsAt, noticeData.item.workhour) : '00:00';
   const today = new Date();
   const completed = noticeData
@@ -54,26 +61,31 @@ function ShopDetail() {
         : ''
     : '';
   const shopImage = noticeData ? noticeData?.item.shop.item.imageUrl : '';
-
   const router = useRouter();
   const token = Cookies.get('token');
   const userId = Cookies.get('userId');
   const type = Cookies.get('type');
-
-  const handleClickApplicationButton = () => {
-    if (token) {
-      const postApplication = async () => {
-        try {
-          const data = await postApplicationNotice(shopId, noticeId, token);
-          setUserApplicationStatus({ id: data.item.id, status: data.item.status });
-          toast.success('공고 신청이 완료되었습니다.');
-        } catch (error) {
-          toast.error('공고 신청에 실패했습니다.');
+  const handleClickApplicationButton = async () => {
+    try {
+      const data = await getUserProfile(userId);
+      const userProfileExists = !!data.name;
+      if (token) {
+        if (userProfileExists) {
+          try {
+            const applicationData = await postApplicationNotice(shopId, noticeId, token);
+            setUserApplicationStatus({ id: applicationData.item.id, status: applicationData.item.status });
+            toast.success('공고 신청이 완료되었습니다.');
+          } catch (error) {
+            toast.error('공고 신청에 실패했습니다.');
+          }
+        } else {
+          setIsProfileModalOpen(true);
         }
-      };
-      postApplication();
-    } else {
-      setIsWorkerDetailModalOpen(true);
+      } else {
+        setIsWorkerDetailModalOpen(true);
+      }
+    } catch (error) {
+      toast.error('유저정보를 불러오는데 실패했습니다.');
     }
   };
 
@@ -84,6 +96,10 @@ function ShopDetail() {
   const handleWorkerModal = (event: React.MouseEvent) => {
     event.preventDefault();
     router.push('/signin');
+  };
+  const handleProfileModal = (event: React.MouseEvent) => {
+    event.preventDefault();
+    router.push('/profile');
   };
 
   const handleModalCancelClick = () => {
@@ -144,7 +160,7 @@ function ShopDetail() {
     } else {
       setUserApplicationStatus({ id: '', status: 'none' });
     }
-  }, [shopId, noticeId]);
+  }, []);
 
   return (
     <>
@@ -173,10 +189,12 @@ function ShopDetail() {
                 <span className={styles.title}>시급</span>
                 <div className={styles.noticeInfoSalary}>
                   <span className={styles.shopTitle}>{noticeData?.item.hourlyPay}원</span>
-                  <div className={styles.raise}>
-                    <span>기존 시급보다 {raise}%</span>
-                    <Image src={CARDARROW} alt="arrow" width={20} height={20} />
-                  </div>
+                  {isRaised && (
+                    <div className={styles.raise}>
+                      <span>{raise}</span>
+                      <Image src={CARDARROW} alt="arrow" width={20} height={20} />
+                    </div>
+                  )}
                 </div>
               </div>
               <div className={styles.noticeInfoTimeLoc}>
@@ -195,7 +213,12 @@ function ShopDetail() {
               ) : (
                 <div>
                   <ButtonStatus {...buttonProps} />
-                  {isWorkerDetailModalOpen && <WorkerDetailModal isModal onClick={handleWorkerModal} />}
+                  {isWorkerDetailModalOpen && (
+                    <WorkerDetailModal isModal modalText="로그인을 먼저해주세요" onClick={handleWorkerModal} />
+                  )}
+                  {isProfileModalOpen && (
+                    <WorkerDetailModal isModal modalText="내 프로필을 먼저 등록해주세요" onClick={handleProfileModal} />
+                  )}
                   {isRejectionModalOpen && (
                     <RejectionModal
                       isModal={isRejectionModalOpen}
