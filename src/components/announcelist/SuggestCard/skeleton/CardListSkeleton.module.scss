@@ -31,6 +31,15 @@
   .cardWrapper {
     width: 66.6rem;
   }
+
+  .cardWrapper {
+    width: 37.1rem;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cardWrapper>*:nth-child(n + 3) {
+    display: none;
+  }
 }
 
 @include media(mobile) {
