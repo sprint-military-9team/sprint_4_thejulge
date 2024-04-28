@@ -49,7 +49,9 @@
 
 .modalBox {
   position: absolute;
-  inset: 8rem 0 k;
+  top: 6rem;
+  right: 0;
+  left: 0;
   z-index: 10;
   display: flex;
   justify-content: center;
