@@ -32,6 +32,7 @@ export default function Registration({ onClose }: { onClose: () => void }) {
     description: '',
     originalHourlyPay: 0,
   });
+  const sortedCategory = FOOD_CATEGORIES.sort();
 
   const onUploadImage = (imageUrl: string) => {
     setInputValue((prevState: FormData) => ({
@@ -79,7 +80,7 @@ export default function Registration({ onClose }: { onClose: () => void }) {
 
   return (
     <div className={styles.layout}>
-      <section className={styles.Box}>
+      <section className={styles.box}>
         <div className={styles.titleBox}>
           <h2 className={styles.title}>가게 정보</h2>
           <Image className={styles.closeIcon} src={CLOSE_ICON} alt="close" width={35} height={35} onClick={onClose} />
@@ -97,7 +98,7 @@ export default function Registration({ onClose }: { onClose: () => void }) {
           <div className={styles.category}>
             <p className={styles.text}>분류*</p>
             <Dropdown
-              optionList={FOOD_CATEGORIES}
+              optionList={sortedCategory}
               initialOption={inputValue.category}
               onClick={(value) => onValueChange('category', value)}
             />

@@ -45,7 +45,6 @@ export default function ShopInformation() {
     <div className={styles.layout}>
       <MyShop shopData={shopData} />
       <section>
-        <h2 className={styles.title}>등록한 공고</h2>
         {hasNoticeList ? <CardList noticeList={noticeList} shopData={shopData} /> : <NoticeRegistration />}
       </section>
     </div>
