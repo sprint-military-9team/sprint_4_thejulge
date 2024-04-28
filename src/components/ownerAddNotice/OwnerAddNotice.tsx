@@ -75,6 +75,9 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
     if (!workhour) {
       changeWorkhourError('값을 입력해주세요.');
     }
+    if (Number(workhour) < 0) {
+      changeWorkhourError('유효한 값을 입력해주세요.');
+    }
   };
   const changeMoneyType = (number: string) => {
     const realNumber = Number(number.replaceAll(',', ''));
@@ -162,7 +165,7 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
     if (noticeData) {
       const APIFlag = await putSpecifyNotice(noticeData.id, data);
       if (APIFlag === 200) {
-        toast.success('등록이 완료되었습니다', {
+        toast.success('편집이 완료되었습니다', {
           onClose: () => {
             router.refresh();
             onClose();
@@ -184,7 +187,7 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
     }
     const APIFlag = await postNotice(data);
     if (!APIFlag.error) {
-      toast.success('편집이 완료되었습니다', {
+      toast.success('등록이 완료되었습니다', {
         onClose: () => {
           router.push(`/ownerNoticeDetail?noticeId=${APIFlag.data}`);
           onClose();
@@ -266,7 +269,7 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
               size="large"
               submit
             >
-              등록하기
+              {noticeData ? '편집하기' : '등록하기'}
             </Button>
           </div>
         </form>
