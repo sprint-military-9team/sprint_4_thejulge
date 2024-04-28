@@ -2,7 +2,7 @@ import getTimeDifference from '@/utils/getTimeDifference';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { PENCEL_ICON } from '@/utils/constants';
+import { PENCEL_ICON, CLOSE_ICON } from '@/utils/constants';
 import Cookies from 'js-cookie';
 import styles from './NoticeFeed.module.scss';
 
@@ -17,6 +17,8 @@ type BoxProps = {
     originalHourlyPay: number;
     category: string;
   };
+  show: boolean;
+  onShow: (id: boolean) => void;
 };
 
 type NoticeType = {
@@ -30,7 +32,7 @@ type NoticeType = {
   };
 };
 
-export default function NoticeFeed({ shop }: BoxProps) {
+export default function NoticeFeed({ shop, show, onShow }: BoxProps) {
   const [notice, setNotice] = useState<NoticeType[]>([]);
   const shopId = Cookies.get('shopId');
   useEffect(() => {
@@ -45,9 +47,18 @@ export default function NoticeFeed({ shop }: BoxProps) {
     })();
   }, [shop.id]);
 
+  if (!show) {
+    return <div />;
+  }
+
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>내가 선택한 가게</h2>
+      <h2 className={`${styles.title} ${styles.shopTitle}`}>
+        <span>내가 선택한 가게</span>
+        <button type="button" className={styles.closeButton} onClick={() => onShow(false)}>
+          <Image width={20} height={20} src={CLOSE_ICON} alt="close_icon" />
+        </button>
+      </h2>
 
       {Number(shop.id) < 0 ? (
         <div className={styles.empty}>지도에서 가게를 선택해주세요</div>

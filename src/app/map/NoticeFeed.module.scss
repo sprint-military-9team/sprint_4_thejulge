@@ -23,6 +23,16 @@
   gap: 0.4rem;
 }
 
+.shopTitle {
+  justify-content: space-between;
+}
+
+.closeButton {
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+}
+
 .title.noticeTitle {
   border-bottom: 2px solid #f5613d;
   padding-bottom: 1rem;

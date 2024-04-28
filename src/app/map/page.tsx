@@ -65,6 +65,7 @@ export default function Map() {
     originalHourlyPay: -1,
     description: '',
   } as ShopInfo);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (!localStorage.getItem('shop')) return;
@@ -129,6 +130,7 @@ export default function Map() {
 
             window.kakao.maps.event.addListener(marker, 'click', () => {
               setShop(marker.shop);
+              setShow(true);
               localStorage.setItem('shop', JSON.stringify(marker.shop));
             });
           }
@@ -164,7 +166,7 @@ export default function Map() {
 
   return (
     <div id="map" style={{ width: '100%', height: '100vh', position: 'relative' }}>
-      <NoticeFeed shop={shop} />
+      <NoticeFeed shop={shop} show={show} onShow={setShow} />
     </div>
   );
 }
