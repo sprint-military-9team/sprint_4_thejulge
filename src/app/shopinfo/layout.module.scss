@@ -3,22 +3,24 @@
 .layout {
   width: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
   min-height: 100vh;
+  position: relative;
 }
 
 .box {
   display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  position: relative;
   width: 100%;
   max-width: 1200px;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  padding: 0 6rem;
 }
 
 @include media(mobile) {
   .box {
-    padding: 0 1rem;
+    margin: 0 1rem;
   }
 }

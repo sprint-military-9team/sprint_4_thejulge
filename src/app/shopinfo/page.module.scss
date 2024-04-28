@@ -2,6 +2,7 @@
 @import '@/styles/_media';
 
 .layout {
+  width: 100%;
   font-size: 1.6rem;
   padding: 3rem;
   flex-grow: 1;
@@ -9,12 +10,14 @@
 }
 
 .title {
-  margin: 3rem 0;
+  font-size: 2.8rem;
+  margin-bottom: 3rem;
 }
 
 .shopLayout {
   background: $red-600;
   padding: 2.6rem;
+  margin-bottom: 5rem;
   @include rounded-xl;
 }
 
@@ -66,13 +69,16 @@
 }
 
 .modalBox {
-  height: 100%;
-  z-index: 100;
+  display: flex;
+  justify-content: center;
+  z-index: 10;
   position: absolute;
-  top: 0;
-  bottom: 0;
+  top: 8rem;
+  bottom: k;
   left: 0;
   right: 0;
+  background: $gray-100;
+  min-height: 100%;
 }
 
 .cardList {
@@ -80,7 +86,7 @@
   place-items: center;
   width: 100%;
   grid-template-columns: repeat(3, 1fr);
-  grid-column-gap: 1.4rem;
+  gap: 1.4rem;
 }
 
 @include media(mobile) {

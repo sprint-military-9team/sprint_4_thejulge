@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import { GPS } from '@/utils/constants';
 import { NoticeDataType, NoticeSearchDataType } from '@/types';
@@ -13,20 +15,27 @@ import { ShopDataContext } from '@/context/ShopDataContext';
 import styles from './page.module.scss';
 
 export default function ShopInformation() {
+  const { shopData, updateShopData } = useContext(ShopDataContext);
   const [showShopEdit, setShowShopEdit] = useState(false);
   const [showAddNotice, setShowAddNotice] = useState(false);
-  const { shopData } = useContext(ShopDataContext);
   const [noticeList, setNoticeList] = useState<NoticeDataType[] | []>([]);
   const shopId = Cookies.get('shopId') || '';
   const hasNoticeList = noticeList.length !== 0;
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchShopData = async () => {
+      const result = await fetch(`${BASE_URL}/shops/${shopId}`);
+      const data = await result.json();
+      updateShopData(data.item);
+    };
+
+    const fetchNoticeData = async () => {
       const response = await fetch(`${BASE_URL}/shops/${shopId}/notices`);
       const data: NoticeSearchDataType = await response.json();
       setNoticeList(data.items);
     };
-    fetchData();
+    fetchShopData();
+    fetchNoticeData();
   }, [shopId]);
 
   return (

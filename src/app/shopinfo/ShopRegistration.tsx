@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import Registration from '@/components/shopinfoPage/Registration';
 import Button from '@/components/common/Button';
@@ -15,7 +17,11 @@ export default function ShopRegistration() {
             가게 등록하기
           </Button>
         </div>
-        {showShopRegistration && <Registration onClose={() => setShowShopRegisteration(false)} />}
+        {showShopRegistration && (
+          <div className={styles.modalBox}>
+            <Registration onClose={() => setShowShopRegisteration(false)} />
+          </div>
+        )}
       </article>
     </section>
   );

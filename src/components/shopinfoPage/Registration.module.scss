@@ -3,6 +3,7 @@
 
 .layout {
   width: 100%;
+  max-width: 1200px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -13,7 +14,7 @@
 }
 
 .title {
-  font-size: 2rem;
+  font-size: 2.6rem;
 }
 
 .Box {
@@ -25,6 +26,7 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
+  padding: 2rem 0 5rem 0;
 }
 
 .closeIcon {
@@ -80,7 +82,7 @@
 }
 
 .registerButton {
-  padding: 0 15rem;
+  width: 100%;
   grid-area: registerButton;
 }
 
