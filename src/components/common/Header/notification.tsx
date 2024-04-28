@@ -85,7 +85,7 @@ export default function Notification() {
   return (
     <div className={styles.notification}>
       <Image
-        src={3 ? NOTIFICATION_ACTIVE : NOTIFICATION_INACTIVE}
+        src={notificationNumber ? NOTIFICATION_ACTIVE : NOTIFICATION_INACTIVE}
         style={
           isDarkMode && {
             filter: 'invert(100%) sepia(0%) saturate(7484%) hue-rotate(242deg) brightness(300%) contrast(100%)',
