@@ -54,7 +54,7 @@ export default function NoticeFeed({ shop }: BoxProps) {
       ) : (
         <div className={styles.shop}>
           <div className={styles.cover}>
-            <Image fill src={shop.imageUrl} alt="af" />
+            <Image fill src={shop.imageUrl} alt="af" style={{ objectFit: 'cover' }} />
           </div>
           <div>
             <h3 className={styles.shopName}>{shop.name}</h3>
@@ -90,6 +90,7 @@ export default function NoticeFeed({ shop }: BoxProps) {
                       ? `shop?shopId=${shop.id}&noticeId=${item.item.id}`
                       : `ownerNoticeDetail?noticeId=${item.item.id}`
                   }
+                  style={{ flexShrink: 0 }}
                 >
                   <button type="button" className={styles.btn}>
                     공고 보러가기

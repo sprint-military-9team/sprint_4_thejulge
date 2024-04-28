@@ -39,12 +39,14 @@ function SuggestCard() {
   const [data, setData] = useState<Data | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [userResidence, setUserResidence] = useState<string | null>();
-
   const today = new Date();
 
   const suggestData = data?.items
     .filter((cardData) => !cardData.item.closed && today <= new Date(cardData.item.startsAt))
     .slice(0, 30);
+
+  const len = suggestData?.length;
+
   const userId = Cookies.get('userId');
   const token = Cookies.get('token');
 
@@ -62,7 +64,6 @@ function SuggestCard() {
       fetchData();
     }
   }, [userId, token]);
-
   useEffect(() => {
     setIsLoading(true);
     if (token && userResidence) {
@@ -109,7 +110,7 @@ function SuggestCard() {
         </Slider>
       ) : (
         <div className={styles.alertWrapper}>
-          <p>X</p>
+          <span className={styles.title}>선호지역 근처 공고가 없습니다</span>
         </div>
       )}
     </section>

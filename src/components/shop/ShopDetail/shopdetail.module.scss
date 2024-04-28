@@ -108,6 +108,7 @@
 
 .noticeInfoSalary {
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
   align-items: flex-start;
   gap: 0.8rem;
