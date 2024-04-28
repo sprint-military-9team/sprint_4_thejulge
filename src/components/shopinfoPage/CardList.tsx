@@ -17,7 +17,7 @@ export default function CardList({ noticeList, shopData }: { noticeList: NoticeD
             image={shopData.imageUrl}
             startTime={notice.item.startsAt}
             workHour={notice.item.workhour}
-            salary={notice.item.hourlyPay}
+            salary={String(notice.item.hourlyPay)}
             raise={shopData ? raisePercent(notice.item.hourlyPay, shopData.originalHourlyPay) : 0}
             isRaised={notice?.item.hourlyPay > shopData?.originalHourlyPay}
             location={shopData.address1}
