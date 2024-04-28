@@ -44,39 +44,28 @@
   justify-content: center;
   align-items: center;
   height: 34.8rem;
-  width: 100%;
+  width: 96.4rem;
 }
 
 @include media(tablet) {
   .cardWrapper {
     width: 66.6rem;
-
-    :global {
-      .slick-track {
-        display: flex;
-        gap: 1.4rem;
-      }
-
-      .slick-slide {
-        width: 32.8rem !important;
-      }
     }
+  
+  .alertWrapper {
+    width: 63.8rem;
   }
 }
 
 @include media(mobile) {
   .cardWrapper {
     width: 37.1rem;
-
-    :global {
-      .slick-track {
-        display: flex;
-        gap: 1.4rem;
-      }
-
-      .slick-slide {
-        width: 18.5rem !important;
-      }
+  }
+  
+  .alertWrapper {
+    width: 35.6rem;
+    span {
+      font-size: 2.4rem;
     }
   }
 }

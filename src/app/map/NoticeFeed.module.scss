@@ -30,8 +30,8 @@
 }
 
 .cover {
-  width: 8rem;
-  height: 8rem;
+  width: 9rem;
+  height: 9rem;
   position: relative;
   border-radius: 0.6rem;
   overflow: hidden;
@@ -59,7 +59,12 @@
   color: #ee4116;
   margin-bottom: 0.7rem;
   font-size: 1.2rem;
+  line-height: 1.2;
   font-weight: bold;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .address {

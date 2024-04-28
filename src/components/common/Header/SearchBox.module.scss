@@ -40,3 +40,35 @@
     width: 100%;
   }
 }
+
+.itemBox {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 5rem;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  overflow: hidden;
+  background: $white;
+  border: 2px solid $red-200;
+
+  @include rounded-lg;
+}
+
+.item {
+  padding: 0.6rem 1.5rem;
+  font-size: 1.6rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border: 1px solid $red-600;
+
+  span {
+    @include font-bold;
+  }
+
+  &:hover {
+    background: $red-600;
+  }
+}
