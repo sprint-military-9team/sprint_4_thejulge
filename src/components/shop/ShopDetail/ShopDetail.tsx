@@ -66,10 +66,10 @@ function ShopDetail() {
   const userId = Cookies.get('userId');
   const type = Cookies.get('type');
   const handleClickApplicationButton = async () => {
-    try {
-      const data = await getUserProfile(userId);
-      const userProfileExists = !!data.name;
-      if (token) {
+    if (token) {
+      try {
+        const data = await getUserProfile(userId);
+        const userProfileExists = !!data.name;
         if (userProfileExists) {
           try {
             const applicationData = await postApplicationNotice(shopId, noticeId, token);
@@ -81,11 +81,11 @@ function ShopDetail() {
         } else {
           setIsProfileModalOpen(true);
         }
-      } else {
-        setIsWorkerDetailModalOpen(true);
+      } catch (error) {
+        toast.error('유저정보를 불러오는데 실패했습니다.');
       }
-    } catch (error) {
-      toast.error('유저정보를 불러오는데 실패했습니다.');
+    } else {
+      setIsWorkerDetailModalOpen(true);
     }
   };
 

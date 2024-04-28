@@ -63,6 +63,13 @@ export default function SuggestCard() {
               setIsLoading(false);
             };
             fetchData();
+          } else {
+            const fetchData = async () => {
+              const response = await getAnnounceData(0, 100, null, null, null, null, 'pay');
+              setData(response);
+              setIsLoading(false);
+            };
+            fetchData();
           }
         } catch (error) {
           toast.error('유저 정보를 불러오는데 실패했습니다.');
