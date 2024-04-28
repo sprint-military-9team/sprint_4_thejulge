@@ -4,8 +4,8 @@ import NoticeRegistration from '@/components/shopinfoPage/NoticeRegistration';
 import Cookies from 'js-cookie';
 import BASE_URL from '@/constants/BASEURL';
 import { ShopDataContext } from '@/context/ShopDataContext';
-import styles from './page.module.scss';
 import CardList from '@/components/shopinfoPage/CardList';
+import styles from './page.module.scss';
 
 export default function ShopInformation() {
   const { shopData, updateShopData } = useContext(ShopDataContext);
