@@ -3,24 +3,24 @@
 
 .container {
   position: absolute;
-  width: 400px;
-  height: 700px;
-  background-color: #fff;
-  z-index: 9999;
   top: 8%;
   right: 4rem;
-  padding: 3rem;
-  border-radius: 2rem;
+  z-index: 9999;
   display: flex;
   flex-direction: column;
+  width: 400px;
+  height: 700px;
+  padding: 3rem;
+  background-color: $white;
+  border-radius: 2rem;
 }
 
 .title {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
   padding-bottom: 2rem;
   font-size: 1.4rem;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
 }
 
 .shopTitle {
@@ -28,31 +28,31 @@
 }
 
 .closeButton {
-  border: none;
-  background-color: inherit;
   cursor: pointer;
+  background-color: inherit;
+  border: none;
 }
 
 .title.noticeTitle {
-  border-bottom: 2px solid #f5613d;
   padding-bottom: 1rem;
   margin-bottom: 1.3rem;
+  border-bottom: 2px solid $red-600;
 }
 
 .cover {
+  position: relative;
+  flex-shrink: 0;
   width: 9rem;
   height: 9rem;
-  position: relative;
-  border-radius: 0.6rem;
   overflow: hidden;
-  flex-shrink: 0;
+  border-radius: 0.6rem;
 }
 
 .shop {
   display: flex;
   gap: 1.5rem;
-  padding-bottom: 2rem;
   align-items: center;
+  padding-bottom: 2rem;
 }
 
 .shopName .shopDescription .shopOriginalPay {
@@ -60,37 +60,37 @@
 }
 
 .shopName {
-  font-size: 1.4rem;
   margin-top: 0.5rem;
   margin-bottom: 1rem;
+  font-size: 1.4rem;
 }
 
 .shopDescription {
-  color: #ee4116;
-  margin-bottom: 0.7rem;
-  font-size: 1.2rem;
-  line-height: 1.2;
-  font-weight: bold;
-  overflow: hidden;
   display: -webkit-box;
+  margin-bottom: 0.7rem;
+  overflow: hidden;
+  font-size: 1.2rem;
+  font-weight: bold;
+  line-height: 1.2;
+  color: $orange-200;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
 
 .address {
-  color: #888888;
   margin-bottom: 1rem;
+  color: $gray-700;
 }
 
 .shopOriginalPay {
   margin-bottom: 0.5rem;
-  color: #888888;
+  color: $gray-700;
 }
 
 .shopListContainer {
-  overflow: scroll;
   height: 50rem;
   padding-top: 0.5rem;
+  overflow: scroll;
 }
 
 .shopListContainer::-webkit-scrollbar {
@@ -99,7 +99,7 @@
 }
 
 .shopListContainer::-webkit-scrollbar-thumb {
-  color: red;
+  color: $red-400;
 }
 
 .shopList {
@@ -109,44 +109,43 @@
 }
 
 .shopListItem {
-  border-bottom: 1px solid #e4e4e4;
   padding-bottom: 1rem;
+  border-bottom: 1px solid $beige;
 }
 
 .btn {
-  border: none;
   padding: 0.5em 1.2em;
-  border-radius: 3rem;
-  font-weight: bold;
-  color: $white;
-  background-color: #f5613d;
-  font-size: 1rem;
-  cursor: pointer;
   margin-top: 1rem;
   margin-left: auto;
+  font-size: 1rem;
+  font-weight: bold;
+  color: $white;
+  cursor: pointer;
+  background-color: $orange-100;
+  border: none;
+  border-radius: 3rem;
 }
 
 .itemDes {
-  font-size: 1.3rem;
   margin-bottom: 0.5rem;
+  font-size: 1.3rem;
 }
 
 .itemPay {
-  font-size: 1.1rem;
   margin-bottom: 0.4rem;
+  font-size: 1.1rem;
 }
 
 .itemDay {
-  font-size: 1.1rem;
   margin-bottom: 1rem;
+  font-size: 1.1rem;
 }
 
 .empty {
   margin-bottom: 2rem;
 }
 
-.shopListTitle {
-}
+.shopListTitle {}
 
 .closed {
   font-size: 1.2rem;

@@ -3,79 +3,79 @@
 
 .sectionWrapper {
   display: flex;
-  width: 100%;
   flex-direction: column;
-  align-items: flex-start;
   gap: 4rem;
+  align-items: flex-start;
+  width: 100%;
 }
 
 .announceWrapper {
   display: flex;
   flex-direction: column;
+  gap: 3.2rem;
   align-items: flex-start;
   width: 100%;
-  gap: 3.2rem;
 }
 
 .titleWrapper {
   display: flex;
   flex-wrap: wrap;
+  gap: 2rem;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  gap: 2rem;
 
   .title {
-    color: $black;
     font-family: 'Spoqa Han Sans Neo';
     font-size: 2.8rem;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    color: $black;
     letter-spacing: 0.56px;
   }
 
   .filterArea {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
     position: relative;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
   }
 }
 
 .sortButton {
   display: flex;
+  gap: 0.6rem;
+  align-items: center;
   height: 3rem;
   padding: 1.2rem;
-  align-items: center;
-  gap: 0.6rem;
-  border-radius: 0.5rem;
-  background: $gray-400;
-  color: $black;
   font-family: 'Spoqa Han Sans Neo';
   font-size: 1.4rem;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  border: none;
+  color: $black;
   cursor: pointer;
+  background: $gray-400;
+  border: none;
+  border-radius: 0.5rem;
 }
 
 .filterButton {
   display: flex;
+  align-items: center;
   height: 3rem;
   padding: 1.2rem;
-  align-items: center;
-  border-radius: 0.5rem;
-  background: #ff8d72;
-  color: $white;
   font-family: 'Spoqa Han Sans Neo';
   font-size: 1.4rem;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  border: none;
+  color: $white;
   cursor: pointer;
+  background: #ff8d72;
+  border: none;
+  border-radius: 0.5rem;
 }
 
 .mapButton {
@@ -83,34 +83,34 @@
 }
 
 .sortList {
-  display: flex;
-  width: 11rem;
-  left: 10.89rem;
-  padding: 0.4rem 0;
-  flex-direction: column;
   position: absolute;
   top: 4rem;
-  border-radius: 0.6rem;
-  border: 1px solid $gray-300;
-  background: $white;
-  box-shadow: 0 0.4rem 2.5rem 0 rgba(0, 0, 0, 0.1);
+  left: 10.89rem;
   z-index: 10;
+  display: flex;
+  flex-direction: column;
+  width: 11rem;
+  padding: 0.4rem 0;
+  background: $white;
+  border: 1px solid $gray-300;
+  border-radius: 0.6rem;
+  box-shadow: 0 0.4rem 2.5rem 0 rgb(0 0 0 / 10%);
 
   .sortItem {
     display: flex;
-    width: 100%;
-    padding: 0.8rem;
     align-items: center;
     justify-content: center;
-    color: $black;
-    text-align: center;
+    width: 100%;
+    padding: 0.8rem;
     font-family: 'Spoqa Han Sans Neo';
     font-size: 1.4rem;
     font-style: normal;
     font-weight: 400;
     line-height: 2.2rem;
-    border-bottom: 0.1rem solid $gray-300;
+    color: $black;
+    text-align: center;
     cursor: pointer;
+    border-bottom: 0.1rem solid $gray-300;
   }
 
   .sortItem:last-child {
@@ -120,10 +120,9 @@
 
 .cardWrapper {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  grid-column-gap: 1.4rem;
-  grid-row-gap: 3.2rem;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 3.2rem 1.4rem;
   width: 100%;
 }
 
@@ -136,17 +135,16 @@
 
 .mapBtn {
   padding: 0.6rem 1.5rem;
-  border: none;
   cursor: pointer;
+  border: none;
 }
 
 @include media(tablet) {
   .cardWrapper {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    grid-column-gap: 1.4rem;
-    grid-row-gap: 3.2rem;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 3.2rem 1.4rem;
     width: 100%;
   }
 }

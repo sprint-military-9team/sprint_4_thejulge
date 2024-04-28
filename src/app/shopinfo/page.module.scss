@@ -2,21 +2,22 @@
 @import '@/styles/_media';
 
 .layout {
-  width: 100%;
-  font-size: 1.6rem;
-  padding: 3rem;
   flex-grow: 1;
+  width: 100%;
   max-width: 1200px;
+  padding: 3rem;
+  font-size: 1.6rem;
+  color: $black;
 }
 
 .registerLayout {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid $gray-400;
-  padding: 10rem;
   gap: 3rem;
+  align-items: center;
+  justify-content: center;
+  padding: 10rem;
+  border: 1px solid $gray-400;
 }
 
 .registerButton {
@@ -25,21 +26,27 @@
 }
 
 .modalBox {
-  display: flex;
-  justify-content: center;
-  z-index: 10;
   position: absolute;
   top: 6rem;
-  left: 0;
   right: 0;
-  background: $gray-100;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
   min-height: 100%;
   overflow-y: scroll;
+  background: $gray-100;
 }
 
 .title {
-  font-size: 2.8rem;
   margin-bottom: 3rem;
+  font-size: 2.8rem;
+  color: $black;
+}
+
+.description {
+  font-size: 1.6rem;
+  color: $black;
 }
 
 @include media(mobile) {
@@ -48,8 +55,8 @@
   }
 
   .registerLayout {
-    padding: 10rem 1rem;
     gap: 1.6rem;
+    padding: 10rem 1rem;
   }
 
   .registerButton {

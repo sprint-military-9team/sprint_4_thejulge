@@ -8,7 +8,7 @@
 
 .contentWrapper {
   display: grid;
-  grid-template: 'logo searchBar buttonWrapper'/ 12rem 45rem;
+  grid-template: 'logo searchBar buttonWrapper' / 12rem 45rem;
   gap: 2rem;
   place-items: center;
   width: 144rem;
@@ -18,6 +18,12 @@
 
 .logo {
   grid-area: logo;
+}
+
+.notificationBox {
+  background: $svg-background;
+
+  @include rounded-lg;
 }
 
 @mixin buttonWrapper {
@@ -45,7 +51,7 @@
   color: $black;
   cursor: pointer;
 
-  @media (width <= 767px) {
+  @media (width <=767px) {
     font-size: 1.4rem;
     line-height: 2rem;
   }
@@ -55,7 +61,7 @@
   @include button;
 }
 
-@media (width <= 1440px) {
+@media (width <=1440px) {
   .contentWrapper {
     width: 104rem;
     padding: 1.5rem 3rem;
@@ -63,7 +69,7 @@
   }
 }
 
-@media (width <= 1040px) {
+@media (width <=1040px) {
   .contentWrapper {
     width: 100%;
     padding: 1.5rem 3rem;
@@ -73,7 +79,7 @@
 /* tablet */
 @include media(tablet) {
   .contentWrapper {
-    grid-template: 'logo searchBar buttonWrapper'/ 12rem 34.4rem;
+    grid-template: 'logo searchBar buttonWrapper' / 12rem 34.4rem;
     gap: 1.6rem;
     padding: 1.5rem 3rem;
   }
@@ -93,6 +99,7 @@
     width: 100%;
     min-width: none;
   }
+
   .logo {
     width: 8.4rem;
     height: 3rem;

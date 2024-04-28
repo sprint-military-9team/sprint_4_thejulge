@@ -2,13 +2,13 @@
 
 .wrapper {
   display: flex;
-  align-items: center;
   gap: 0.9rem;
-  padding: 1.3rem 4.1rem;
+  align-items: center;
   width: 16.7rem;
-  border-radius: 3rem;
-  border: 0.1rem solid $gray-400;
+  padding: 1.3rem 4.1rem;
   cursor: pointer;
+  border: 0.1rem solid $gray-400;
+  border-radius: 3rem;
 }
 
 .checked {
@@ -17,6 +17,7 @@
 
 .text {
   @include font-normal;
+
   font-size: 1.4rem;
   line-height: 2.2rem;
   color: $black;
@@ -25,6 +26,6 @@
 .checkEmpty {
   width: 2rem;
   height: 2rem;
-  border-radius: 100%;
   border: 0.1rem solid $gray-400;
+  border-radius: 100%;
 }

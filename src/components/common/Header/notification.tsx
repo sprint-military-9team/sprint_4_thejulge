@@ -2,13 +2,14 @@
 
 import Image from 'next/image';
 import getCurrentTimeDifference from '@/utils/getCurrentTimeDifference';
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useContext } from 'react';
 import { CLOSE_ICON, NOTIFICATION_ACTIVE, NOTIFICATION_INACTIVE } from '@/utils/constants';
 import useOutsideClick from '@/hooks/useOutsideClick';
 import getTimeDifference from '@/utils/getTimeDifference';
 import { getUserAlert, putUserAlert } from '@/apis/alert';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+import { DarkModeContext } from '@/context/DarkModeContext';
 import { NotificationDataType } from './types';
 import styles from './Notification.module.scss';
 
@@ -18,6 +19,7 @@ export default function Notification() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [notificationNumber, setNotificationNumber] = useState<number>(0);
   const [notificationData, setNotificationData] = useState<NotificationDataType[]>([]);
+  const { isDarkMode } = useContext(DarkModeContext);
 
   const handleClickNotificationButton = () => {
     setIsOpen((previousStatus) => !previousStatus);
@@ -83,7 +85,12 @@ export default function Notification() {
   return (
     <div className={styles.notification}>
       <Image
-        src={notificationNumber ? NOTIFICATION_ACTIVE : NOTIFICATION_INACTIVE}
+        src={3 ? NOTIFICATION_ACTIVE : NOTIFICATION_INACTIVE}
+        style={
+          isDarkMode && {
+            filter: 'invert(100%) sepia(0%) saturate(7484%) hue-rotate(242deg) brightness(300%) contrast(100%)',
+          }
+        }
         alt="notification"
         width={20}
         height={20}

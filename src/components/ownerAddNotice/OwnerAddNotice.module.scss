@@ -11,21 +11,22 @@
 .contentWrapper {
   display: flex;
   flex-direction: column;
+  gap: 3.2rem;
   align-items: center;
   width: 96.4rem;
-  gap: 3.2rem;
   margin: 0 auto;
 }
 
 .titleWrapper {
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  @include font-bold;
+  width: 100%;
   font-size: 2.8rem;
   line-height: 3.36rem;
   letter-spacing: 2%;
+
+  @include font-bold;
 }
 
 .button {
@@ -33,12 +34,13 @@
 }
 
 .form {
-  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 2.4rem;
+  align-items: center;
+  width: 100%;
 }
+
 .inputWrapper {
   display: flex;
   flex-direction: column;
@@ -48,42 +50,49 @@
 
 .inputFlexWrapper {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
   flex-wrap: wrap;
   gap: 2rem;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
 }
 
 .inputComponentWrapper {
   display: flex;
-  width: 30.8rem;
   flex-direction: column;
+  width: 30.8rem;
 }
+
 .descriptionWrapper {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
   width: 100%;
 }
+
 .descriptionLabel {
   @include font-normal;
+
   font-size: 1.6rem;
   line-height: 2.6rem;
   color: $black;
 }
+
 .textArea {
   width: 100%;
   height: 15.3rem;
-  border-radius: 0.6rem;
-  border: 0.1rem solid $gray-400;
   padding: 1.6rem 2rem;
-  @include font-normal;
   font-size: 1.6rem;
   line-height: 2.6rem;
   resize: none;
+  background: $input-background;
+  border: 0.1rem solid $gray-400;
+  border-radius: 0.6rem;
   outline: none;
+
+  @include font-normal;
 }
+
 .buttonWrapper {
   width: 31.2rem;
 }
@@ -92,9 +101,11 @@
   .contentWrapper {
     width: 68rem;
   }
+
   .inputFlexWrapper {
     gap: 0.8rem;
   }
+
   .inputComponentWrapper {
     width: 33rem;
   }

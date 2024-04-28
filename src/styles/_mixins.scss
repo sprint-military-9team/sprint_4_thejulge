@@ -41,6 +41,7 @@
 @mixin color-box($fill: false, $color: $red-400) {
   padding: 0.6rem 1rem;
   border: 1px solid $color;
+
   @include rounded-lg;
 
   @if $fill {

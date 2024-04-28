@@ -2,19 +2,24 @@
 @import '@/styles/_media';
 
 .layout {
-  width: 100%;
-  max-width: 1200px;
+  z-index: 999;
   display: flex;
   flex-direction: column;
-  justify-content: start;
   align-items: center;
+  justify-content: start;
+  width: 100%;
+  max-width: 1200px;
   padding: 1.6rem;
-  z-index: 999;
   background: $gray-100;
 }
 
 .title {
   font-size: 2.6rem;
+  color: $black;
+}
+
+.text {
+  color: $black;
 }
 
 .box {
@@ -25,7 +30,7 @@
 .titleBox {
   display: flex;
   justify-content: space-between;
-  padding: 2rem 0 5rem 0;
+  padding: 2rem 0 5rem;
 }
 
 .closeIcon {
@@ -33,9 +38,7 @@
 }
 
 .form {
-  width: 100%;
   display: grid;
-  gap: 2rem;
   grid-template:
     'name category'
     'address1 address2'
@@ -44,6 +47,8 @@
     'description description'
     'registerButton registerButton';
   grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  width: 100%;
 }
 
 .text {
@@ -81,13 +86,13 @@
 }
 
 .registerButton {
-  width: 100%;
   grid-area: registerButton;
+  width: 100%;
 }
 
 .margin {
-  margin-top: 0.8rem;
   min-height: 1.6rem;
+  margin-top: 0.8rem;
 }
 
 @include media(mobile) {

@@ -2,14 +2,15 @@
 @import '@/styles/_media';
 
 .title {
-  font-size: 2.8rem;
   margin-bottom: 3rem;
+  font-size: 2.8rem;
 }
 
 .shopLayout {
-  background: $red-600;
   padding: 2.6rem;
   margin-bottom: 5rem;
+  background: $red-100;
+
   @include rounded-xl;
 }
 
@@ -19,10 +20,10 @@
 }
 
 .shopInfoBox {
-  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  width: 100%;
 }
 
 .mainImage {
@@ -31,6 +32,7 @@
 
 .label {
   color: $red-400;
+
   @include font-bold;
 }
 
@@ -46,16 +48,13 @@
 }
 
 .modalBox {
+  position: absolute;
+  inset: 8rem 0 k;
+  z-index: 10;
   display: flex;
   justify-content: center;
-  z-index: 10;
-  position: absolute;
-  top: 8rem;
-  bottom: k;
-  left: 0;
-  right: 0;
-  background: $gray-100;
   min-height: 100%;
+  background: $gray-100;
 }
 
 @include media(mobile) {

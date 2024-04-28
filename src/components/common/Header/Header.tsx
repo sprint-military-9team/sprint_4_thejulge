@@ -7,6 +7,7 @@ import styles from './Header.module.scss';
 import { ButtonListType } from './types';
 import SearchBox from './SearchBox';
 import LogoutButton from './LogoutButton';
+import DarkModeButton from '../Button/DarkModeButton';
 
 export default function Header() {
   const cookieStore = cookies();
@@ -55,6 +56,7 @@ export default function Header() {
             ),
           )}
           {buttonType.notification && <Notification />}
+          <DarkModeButton />
         </div>
       </div>
     </div>

@@ -2,28 +2,31 @@
 
 .wrapper {
   display: flex;
-  padding: 24px;
   flex-direction: column;
+  gap: 32px;
   align-items: center;
   justify-content: center;
-  gap: 32px;
+  padding: 24px;
 }
+
 .warningWrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 16px;
+  align-items: center;
 }
+
 .text {
   width: 100%;
-  color: $black;
-  text-align: center;
   font-family: 'Spoqa Han Sans Neo';
   font-size: 1.6rem;
   font-style: normal;
   font-weight: 400;
   line-height: 2.6rem;
+  color: $black;
+  text-align: center;
 }
+
 .buttonWrapper {
   display: flex;
   align-items: center;

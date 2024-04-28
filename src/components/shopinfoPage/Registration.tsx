@@ -9,6 +9,7 @@ import BASE_URL from '@/constants/BASEURL';
 import Cookies from 'js-cookie';
 import { ShopDataContext } from '@/context/ShopDataContext';
 import { useRouter } from 'next/navigation';
+import { DarkModeContext } from '@/context/DarkModeContext';
 import Dropdown from '../common/Dropdown/Dropdown';
 import Input from '../common/Input/Input';
 import styles from './Registration.module.scss';
@@ -32,6 +33,7 @@ export default function Registration({ onClose }: { onClose: () => void }) {
     description: '',
     originalHourlyPay: 0,
   });
+  const { isDarkMode } = useContext(DarkModeContext);
   const sortedCategory = FOOD_CATEGORIES.sort();
 
   const onUploadImage = (imageUrl: string) => {
@@ -83,7 +85,18 @@ export default function Registration({ onClose }: { onClose: () => void }) {
       <section className={styles.box}>
         <div className={styles.titleBox}>
           <h2 className={styles.title}>가게 정보</h2>
-          <Image className={styles.closeIcon} src={CLOSE_ICON} alt="close" width={35} height={35} onClick={onClose} />
+          <Image
+            style={
+              isDarkMode && {
+                filter: 'invert(100%) sepia(0%) saturate(7484%) hue-rotate(242deg) brightness(300%) contrast(100%)',
+              }
+            }
+            src={CLOSE_ICON}
+            alt="close"
+            width={35}
+            height={35}
+            onClick={onClose}
+          />
         </div>
         <form className={styles.form}>
           <div className={styles.name}>
