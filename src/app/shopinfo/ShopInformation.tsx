@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { GPS } from '@/utils/constants';
 import { NoticeDataType, NoticeSearchDataType } from '@/types';
 import { useContext, useEffect, useState } from 'react';
-import Registration from '@/components/shopinfoPage/Registartion';
+import Registration from '@/components/shopinfoPage/Registration';
 import OwnerAddNotice from '@/components/ownerAddNotice/OwnerAddNotice';
 import Cookies from 'js-cookie';
 import Button from '@/components/common/Button';
@@ -54,7 +54,11 @@ export default function ShopInformation() {
           </div>
         </article>
       </section>
-      {showShopEdit && <Registration onClose={() => setShowShopEdit(false)} />}
+      {showShopEdit && (
+        <div className={styles.modalBox}>
+          <Registration onClose={() => setShowShopEdit(false)} />
+        </div>
+      )}
       {showAddNotice && (
         <div className={styles.modalBox}>
           <OwnerAddNotice onClose={() => setShowAddNotice(false)} />
@@ -73,6 +77,7 @@ export default function ShopInformation() {
                 workHour={notice.item.workhour}
                 salary={notice.item.hourlyPay}
                 raise={shopData ? raisePercent(notice.item.hourlyPay, shopData.originalHourlyPay) : 0}
+                isRaised={notice?.item.hourlyPay > shopData?.originalHourlyPay}
                 location={shopData.address1}
                 shopId={shopId}
                 completed={

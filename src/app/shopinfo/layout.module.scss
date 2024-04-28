@@ -1,6 +1,10 @@
+@import '@/styles/_media.scss';
+
 .layout {
+  width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   min-height: 100vh;
 }
 
@@ -9,4 +13,12 @@
   flex-direction: column;
   flex-grow: 1;
   position: relative;
+  width: 100%;
+  max-width: 1200px;
+}
+
+@include media(mobile) {
+  .box {
+    padding: 0 1rem;
+  }
 }

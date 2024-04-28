@@ -9,7 +9,7 @@ import { ShopDataContext } from '@/context/ShopDataContext';
 import { useRouter } from 'next/navigation';
 import Dropdown from '../common/Dropdown/Dropdown';
 import Input from '../common/Input/Input';
-import styles from './Registartion.module.scss';
+import styles from './Registration.module.scss';
 import UploadImage from './UploadImage';
 import Button from '../common/Button';
 import CompletionModal from '../common/Modal/CompletionModal/completionModal';
@@ -79,7 +79,7 @@ export default function Registration({ onClose }: { onClose: () => void }) {
     <div className={styles.layout}>
       <section className={styles.Box}>
         <div className={styles.titleBox}>
-          <h2>가게 정보</h2>
+          <h2 className={styles.title}>가게 정보</h2>
           <Image className={styles.closeIcon} src={CLOSE_ICON} alt="close" width={35} height={35} onClick={onClose} />
         </div>
         <form className={styles.form}>
@@ -99,6 +99,7 @@ export default function Registration({ onClose }: { onClose: () => void }) {
               initialOption={inputValue.category}
               onClick={(value) => onValueChange('category', value)}
             />
+            <p className={styles.margin}> </p>
           </div>
           <div className={styles.address1}>
             <p className={styles.text}>주소*</p>
@@ -107,6 +108,7 @@ export default function Registration({ onClose }: { onClose: () => void }) {
               initialOption={inputValue.address1}
               onClick={(value) => onValueChange('address1', value)}
             />
+            <p className={styles.margin}> </p>
           </div>
           <div className={styles.address2}>
             <Input
