@@ -56,7 +56,7 @@ export default function NoticeInformation({ noticeData, storeData }: NoticeInfor
               </div>
               <div className={`${styles.noticeLabelWrapper} ${styles.textMediumLarge}`}>
                 <Image src={CLOCK} alt="시간" width={20} height={20} className={styles.notionLabelImage} />
-                <span>{`${getWorkTime(noticeData.startsAt, noticeData.workhour)} (${noticeData.workhour}시간)`}</span>
+                <span>{getWorkTime(noticeData.startsAt, noticeData.workhour)}</span>
               </div>
               <LocationLabel address1={storeData.address1} address2={storeData.address2} />
               <pre className={`${styles.storeDescription} ${styles.textMediumLarge}`}>{storeData.description}</pre>
