@@ -35,52 +35,49 @@ const SLICK_SETTINGS = {
   ],
 };
 
-function SuggestCard() {
+export default function SuggestCard() {
   const [data, setData] = useState<Data | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [userResidence, setUserResidence] = useState<string | null>();
+
   const today = new Date();
 
   const suggestData = data?.items
     .filter((cardData) => !cardData.item.closed && today <= new Date(cardData.item.startsAt))
     .slice(0, 30);
-
-  const len = suggestData?.length;
-
   const userId = Cookies.get('userId');
   const token = Cookies.get('token');
+  const type = Cookies.get('type');
 
   useEffect(() => {
-    if (token) {
-      const fetchData = async () => {
+    if (token && type === 'employee') {
+      let userResidence;
+      setIsLoading(true);
+      const fetchUserData = async () => {
         try {
-          const response = await getUserProfileAddress(userId);
-          setUserResidence(response);
+          const res = await getUserProfileAddress(userId);
+          userResidence = res;
+          if (userResidence) {
+            const fetchData = async () => {
+              const response = await getAnnounceData(0, 100, CLOSELOCATIONLIST[userResidence], null, null, null, 'pay');
+              setData(response);
+              setIsLoading(false);
+            };
+            fetchData();
+          }
         } catch (error) {
           toast.error('유저 정보를 불러오는데 실패했습니다.');
         }
       };
-
-      fetchData();
-    }
-  }, [userId, token]);
-  useEffect(() => {
-    setIsLoading(true);
-    if (token && userResidence) {
-      const fetchData = async () => {
-        const response = await getAnnounceData(0, 100, CLOSELOCATIONLIST[userResidence], null, null, null, 'pay');
-        setData(response);
-      };
-      fetchData();
+      fetchUserData();
     } else {
       const fetchData = async () => {
         const response = await getAnnounceData(0, 100, null, null, null, null, 'pay');
         setData(response);
+        setIsLoading(false);
       };
       fetchData();
     }
-    setIsLoading(false);
-  }, [userResidence]);
+  }, []);
 
   if (isLoading) return <CardListSkeleton title="맞춤 공고" length={3} />;
 
@@ -110,10 +107,9 @@ function SuggestCard() {
         </Slider>
       ) : (
         <div className={styles.alertWrapper}>
-          <span className={styles.title}>선호지역 근처 공고가 없습니다</span>
+          <p>맞춤 데이터가 없습니다.</p>
         </div>
       )}
     </section>
   );
 }
-export default SuggestCard;
