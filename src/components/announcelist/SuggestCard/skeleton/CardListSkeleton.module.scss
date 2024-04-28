@@ -1,0 +1,45 @@
+@import '@/styles/_index';
+@import '@/styles/_media';
+
+.sectionWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3.2rem;
+}
+
+.title {
+  color: $black;
+  font-family: 'Spoqa Han Sans Neo';
+  font-size: 2.8rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 0.056rem;
+  margin-left: 0.3rem;
+}
+
+.cardWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 98rem;
+  position: relative;
+  gap: 1.4rem;
+}
+
+@include media(tablet) {
+  .cardWrapper {
+    width: 66.6rem;
+  }
+}
+
+@include media(mobile) {
+  .cardWrapper {
+    width: 37.1rem;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cardWrapper>*:nth-child(n + 3) {
+    display: none;
+  }
+}
