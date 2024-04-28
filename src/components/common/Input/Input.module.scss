@@ -20,6 +20,7 @@
   border: 1px solid $gray-500;
   padding: 1.6rem 2rem;
   margin-top: 0.8rem;
+  resize: none;
 
   @include rounded-sm;
 }

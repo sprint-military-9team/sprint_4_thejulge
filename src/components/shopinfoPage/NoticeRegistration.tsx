@@ -6,18 +6,21 @@ import OwnerAddNotice from '../ownerAddNotice/OwnerAddNotice';
 export default function NoticeRegistration() {
   const [showAddNotice, setShowAddNotice] = useState(false);
   return (
-    <article className={styles.registerLayout}>
-      <p>공고를 등록해 보세요</p>
-      <div className={styles.registerButton}>
-        <Button color="orange" size="medium" onClick={() => setShowAddNotice(true)}>
-          공고 등록하기
-        </Button>
-      </div>
-      {showAddNotice && (
-        <div className={styles.modalBox}>
-          <OwnerAddNotice onClose={() => setShowAddNotice(false)} />
+    <>
+      <h2 className={styles.title}>등록한 공고</h2>
+      <article className={styles.registerLayout}>
+        <p>공고를 등록해 보세요</p>
+        <div className={styles.registerButton}>
+          <Button color="orange" size="medium" onClick={() => setShowAddNotice(true)}>
+            공고 등록하기
+          </Button>
         </div>
-      )}
-    </article>
+        {showAddNotice && (
+          <div className={styles.modalBox}>
+            <OwnerAddNotice onClose={() => setShowAddNotice(false)} />
+          </div>
+        )}
+      </article>
+    </>
   );
 }

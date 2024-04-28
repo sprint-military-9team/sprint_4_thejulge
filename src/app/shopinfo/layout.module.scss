@@ -21,6 +21,12 @@
 
 @include media(mobile) {
   .box {
-    margin: 0 1rem;
+    padding: 0 3rem;
+  }
+}
+
+@include media(tablet) {
+  .box {
+    padding: 0 2rem;
   }
 }
