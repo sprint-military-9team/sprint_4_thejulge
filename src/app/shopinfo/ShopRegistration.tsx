@@ -1,5 +1,3 @@
-'use client';
-
 import { useState } from 'react';
 import Registration from '@/components/shopinfoPage/Registration';
 import Button from '@/components/common/Button';

@@ -1,0 +1,15 @@
+@import '@/styles/_media';
+
+.layout {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+}
+
+@include media(tablet) {
+  .cardList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
