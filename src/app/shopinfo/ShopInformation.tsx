@@ -1,4 +1,3 @@
-import { NoticeDataType, NoticeSearchDataType } from '@/types';
 import { useContext, useEffect, useState } from 'react';
 import MyShop from '@/components/shopinfoPage/MyShop';
 import NoticeRegistration from '@/components/shopinfoPage/NoticeRegistration';
@@ -6,31 +5,42 @@ import Cookies from 'js-cookie';
 import BASE_URL from '@/constants/BASEURL';
 import { ShopDataContext } from '@/context/ShopDataContext';
 import styles from './page.module.scss';
-import CardList from './CardList';
+import CardList from '@/components/shopinfoPage/CardList';
 
 export default function ShopInformation() {
   const { shopData, updateShopData } = useContext(ShopDataContext);
-  const [noticeList, setNoticeList] = useState<NoticeDataType[] | []>([]);
+  const [noticeList, setNoticeList] = useState([]);
   const shopId = Cookies.get('shopId') || '';
-  const hasNoticeList = noticeList.length !== 0;
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const fetchShopData = async () => {
-      const result = await fetch(`${BASE_URL}/shops/${shopId}`);
-      const data = await result.json();
-      updateShopData(data.item);
+      try {
+        const shopResponse = await fetch(`${BASE_URL}/shops/${shopId}`);
+        const shopResponseData = await shopResponse.json();
+        updateShopData(shopResponseData.item);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     const fetchNoticeData = async () => {
-      const response = await fetch(`${BASE_URL}/shops/${shopId}/notices`);
-      const data: NoticeSearchDataType = await response.json();
-      setNoticeList(data.items);
+      try {
+        const noticeResponse = await fetch(`${BASE_URL}/shops/${shopId}/notices`);
+        const noticeData = await noticeResponse.json();
+        setNoticeList(noticeData.items);
+      } catch (error) {
+        console.log(error);
+      }
     };
-
     fetchShopData();
     fetchNoticeData();
+    setMounted(true);
   }, [shopId]);
 
+  const hasNoticeList = noticeList.length !== 0;
+
+  if (!mounted) return null;
   return (
     <div className={styles.layout}>
       <MyShop shopData={shopData} />

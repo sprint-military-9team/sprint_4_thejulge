@@ -5,6 +5,7 @@ import styles from './page.module.scss';
 
 export default function ShopRegistration() {
   const [showShopRegistration, setShowShopRegisteration] = useState(false);
+
   return (
     <section className={styles.layout}>
       <h2 className={styles.title}>내 가게</h2>

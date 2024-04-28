@@ -2,8 +2,8 @@ import { NoticeDataType, ShopDataType } from '@/types';
 import Card from '@/components/common/Card';
 import Cookies from 'js-cookie';
 import raisePercent from '@/utils/getRaisePercent';
-
 import styles from './CardList.module.scss';
+
 export default function CardList({ noticeList, shopData }: { noticeList: NoticeDataType[]; shopData: ShopDataType }) {
   const shopId = Cookies.get('shopId');
   return (
