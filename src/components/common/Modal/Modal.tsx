@@ -9,13 +9,15 @@ type ModalProps = {
 
 function ModalPortal({ children }: { children: React.ReactNode }) {
   const [isRendering, setIsRendering] = useState(true);
+  const [element, setElement] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
     setIsRendering(false);
+    setElement(document.getElementById('modal'));
   }, []);
 
-  if (isRendering) return null;
-  return ReactDOM.createPortal(children, document.getElementById('modal') as HTMLElement) as JSX.Element;
+  if (isRendering || !element) return null;
+  return ReactDOM.createPortal(children, element) as JSX.Element;
 }
 
 export default function Modal({ children }: ModalProps) {

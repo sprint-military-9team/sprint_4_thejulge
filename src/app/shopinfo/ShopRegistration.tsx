@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import Registration from '@/components/shopinfoPage/Registartion';
+import Registration from '@/components/shopinfoPage/Registration';
 import Button from '@/components/common/Button';
 import styles from './page.module.scss';
 
 export default function ShopRegistration() {
-  const [showShopRegistartion, setShowShopRegisteration] = useState(false);
+  const [showShopRegistration, setShowShopRegisteration] = useState(false);
+
   return (
     <section className={styles.layout}>
       <h2 className={styles.title}>내 가게</h2>
@@ -15,7 +16,11 @@ export default function ShopRegistration() {
             가게 등록하기
           </Button>
         </div>
-        {showShopRegistartion && <Registration onClose={() => setShowShopRegisteration(false)} />}
+        {showShopRegistration && (
+          <div className={styles.modalBox}>
+            <Registration onClose={() => setShowShopRegisteration(false)} />
+          </div>
+        )}
       </article>
     </section>
   );

@@ -8,10 +8,8 @@ export default function shopInfoLayout({ children }: { children: React.ReactNode
     <ShopDataContextProvider>
       <div className={styles.layout}>
         <Header />
-        <div className={styles.box}>
-          {children}
-          <Footer />
-        </div>
+        <div className={styles.box}>{children}</div>
+        <Footer />
       </div>
     </ShopDataContextProvider>
   );

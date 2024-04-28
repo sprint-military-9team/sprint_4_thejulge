@@ -1,0 +1,41 @@
+@import '@/styles/_index';
+@import '@/styles/_media';
+
+.registerLayout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid $gray-400;
+  padding: 10rem;
+  gap: 3rem;
+}
+
+.registerButton {
+  width: 100%;
+  padding: 0 10rem;
+}
+
+.modalBox {
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+  position: absolute;
+  top: 8rem;
+  bottom: k;
+  left: 0;
+  right: 0;
+  background: $gray-100;
+  min-height: 100%;
+}
+
+@include media(mobile) {
+  .registerLayout {
+    padding: 10rem 1rem;
+    gap: 1.6rem;
+  }
+
+  .registerButton {
+    padding: 0 1rem;
+  }
+}

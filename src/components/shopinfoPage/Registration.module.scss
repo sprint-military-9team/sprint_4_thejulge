@@ -1,17 +1,20 @@
 @import '@/styles/_index';
+@import '@/styles/_media';
 
 .layout {
+  width: 100%;
+  max-width: 1200px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  padding: 1.6rem;
   z-index: 999;
   background: $gray-100;
+}
+
+.title {
+  font-size: 2.6rem;
 }
 
 .Box {
@@ -23,6 +26,7 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
+  padding: 2rem 0 5rem 0;
 }
 
 .closeIcon {
@@ -40,6 +44,7 @@
     'uploadImage uploadImage'
     'description description'
     'registerButton registerButton';
+  grid-template-columns: 1fr 1fr;
 }
 
 .text {
@@ -73,9 +78,34 @@
 
 .description {
   grid-area: description;
+  width: 100%;
 }
 
 .registerButton {
-  padding: 0 15rem;
+  width: 100%;
   grid-area: registerButton;
+}
+
+.margin {
+  margin-top: 0.8rem;
+  min-height: 1.6rem;
+}
+
+@include media(mobile) {
+  .form {
+    width: 100%;
+    display: grid;
+    grid-template:
+      'name'
+      'category'
+      'address1'
+      'address2'
+      'originalHourlyPay'
+      'uploadImage'
+      'description'
+      'registerButton';
+    grid-template-columns: 1fr;
+
+    gap: 2rem;
+  }
 }

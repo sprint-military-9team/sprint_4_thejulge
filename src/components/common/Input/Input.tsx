@@ -32,7 +32,7 @@ export default function Input({
     1: styles.singleCharacterUnit,
     2: styles.doubleCharacterUnit,
   };
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     onChange(event.target.value);
   };
   const handleFocusOut = () => {
@@ -53,18 +53,22 @@ export default function Input({
           {label}
         </label>
         <div className={styles.inputWrapper}>
-          <input
-            id={id}
-            name={id}
-            className={cn(styles.input, isError && styles.error, unit && UINT_LENGTH[unit.length])}
-            value={value}
-            placeholder={placeholder}
-            type={type}
-            onChange={handleChange}
-            onBlur={handleFocusOut}
-            onFocus={handleFocusIn}
-            autoComplete="off"
-          />
+          {type === 'textArea' ? (
+            <textarea className={styles.input} value={value} onChange={handleChange} rows={4} />
+          ) : (
+            <input
+              id={id}
+              name={id}
+              className={cn(styles.input, isError && styles.error, unit && UINT_LENGTH[unit.length])}
+              value={value}
+              placeholder={placeholder}
+              type={type}
+              onChange={handleChange}
+              onBlur={handleFocusOut}
+              onFocus={handleFocusIn}
+              autoComplete="off"
+            />
+          )}
           {unit && <p className={styles.unit}>{unit}</p>}
         </div>
       </div>
