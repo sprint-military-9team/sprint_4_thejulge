@@ -13,6 +13,7 @@ import Link from 'next/link';
 import Pagination from './Pagination';
 import styles from './announce.module.scss';
 import { Data, MainData, SortButtonProps, SortListProps, FilterButtonProps, FilterInfo } from './type';
+import CardListSkeleton from '../SuggestCard/skeleton/CardListSkeleton';
 
 interface AnnounceProps {
   headerData: string | null;
@@ -133,24 +134,28 @@ function Announce({ headerData }: AnnounceProps) {
             )}
           </div>
         </div>
-        <div className={styles.cardWrapper}>
-          {cardData?.items.map((data: MainData) => (
-            <Card
-              key={data?.item.id}
-              image={data?.item.shop.item.imageUrl}
-              title={data?.item.shop.item.name}
-              startTime={data?.item.startsAt}
-              workHour={data?.item.workhour}
-              location={data?.item.shop.item.address1}
-              salary={`${data?.item.hourlyPay}`}
-              raise={data ? raisePercent(data.item.hourlyPay, data.item.shop.item.originalHourlyPay) : 0}
-              isRaised={data?.item.hourlyPay > data?.item.shop.item.originalHourlyPay}
-              completed={data?.item.closed ? '모집 완료' : today > new Date(data?.item.startsAt) ? '지난 공고' : ''}
-              shopId={data.item.shop.item.id}
-              noticeId={data.item.id}
-            />
-          ))}
-        </div>
+        {cardData ? (
+          <div className={styles.cardWrapper}>
+            {cardData?.items.map((data: MainData) => (
+              <Card
+                key={data?.item.id}
+                image={data?.item.shop.item.imageUrl}
+                title={data?.item.shop.item.name}
+                startTime={data?.item.startsAt}
+                workHour={data?.item.workhour}
+                location={data?.item.shop.item.address1}
+                salary={`${data?.item.hourlyPay}`}
+                raise={data ? raisePercent(data.item.hourlyPay, data.item.shop.item.originalHourlyPay) : 0}
+                isRaised={data?.item.hourlyPay > data?.item.shop.item.originalHourlyPay}
+                completed={data?.item.closed ? '모집 완료' : today > new Date(data?.item.startsAt) ? '지난 공고' : ''}
+                shopId={data.item.shop.item.id}
+                noticeId={data.item.id}
+              />
+            ))}
+          </div>
+        ) : (
+          <CardListSkeleton title="" length={6} />
+        )}
       </div>
       <div className={styles.paginate}>
         <Pagination
