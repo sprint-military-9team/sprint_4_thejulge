@@ -118,11 +118,11 @@ function Card({
         </div>
         <div className={styles.salaryWrapper}>
           <span style={style} className={styles.salary}>
-            {salary}원
+            {salary.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
           </span>
           {isRaised && (
             <div className={`${styles.raise} ${raiseClass}`}>
-              <span style={style}>기존 시급보다 {raise}%</span>
+              <span style={style}>🔥 {raise}%</span>
               <Image width={24} height={24} className={styles.raiseicon} src={arrowSrc} alt="upmobilearrow" />
             </div>
           )}

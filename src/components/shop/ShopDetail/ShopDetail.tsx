@@ -160,7 +160,7 @@ function ShopDetail() {
     } else {
       setUserApplicationStatus({ id: '', status: 'none' });
     }
-  }, []);
+  }, [shopId, noticeId]);
 
   return (
     <>
@@ -188,7 +188,7 @@ function ShopDetail() {
               <div className={styles.noticeInfoTitle}>
                 <span className={styles.title}>시급</span>
                 <div className={styles.noticeInfoSalary}>
-                  <span className={styles.shopTitle}>{noticeData?.item.hourlyPay}원</span>
+                  <span className={styles.shopTitle}>{noticeData?.item.hourlyPay.toLocaleString()}원</span>
                   {isRaised && (
                     <div className={styles.raise}>
                       <span>{raise}</span>
