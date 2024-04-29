@@ -86,7 +86,7 @@ export default function UploadImage({ onUploadImage }: { onUploadImage: (imageUr
           <Image className={styles.uploadImage} src={UPLOAD} alt="upload" width={100} height={100} />
           <p className={styles.uploadText}>이미지 선택하기</p>
         </button>
-        {isUploading && <LoadingSpinner />}
+        {isUploading && <LoadingSpinner title="업로드 중입니다..." />}
       </div>
     </section>
   );
