@@ -4,29 +4,33 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  background-color: #fff;
+  background-color: $white;
 }
+
 .suggestWrapper {
   display: flex;
-  width: 100vw;
-  padding: 6rem calc(50vw - 48.2rem);
   flex-direction: column;
   align-items: flex-start;
-  background: #ffebe7;
+  width: 100vw;
+  padding: 6rem calc(50vw - 48.2rem);
+  background: $red-100;
 }
+
 .mainWrapper {
   display: flex;
   flex-direction: column;
   width: 100vw;
   padding: 6rem calc(50vw - 48.2rem);
 }
+
 .layout {
   display: flex;
   flex-direction: column;
   width: 100vw;
-  min-height: 100vh;
   height: 100vh;
+  min-height: 100vh;
 }
+
 .headerDataExisted {
   display: none !important;
 }
@@ -35,14 +39,17 @@
   .suggestWrapper {
     padding: 6rem calc(50vw - 31.9rem);
   }
+
   .mainWrapper {
     padding: 6rem calc(50vw - 31.9rem);
   }
 }
+
 @include media(mobile) {
   .suggestWrapper {
     padding: 4rem calc(50vw - 17.8rem);
   }
+
   .mainWrapper {
     padding: 4rem calc(50vw - 17.8rem) 8rem;
   }

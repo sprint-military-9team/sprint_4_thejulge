@@ -7,17 +7,26 @@
 
 .buttonWrapper {
   display: flex;
-  justify-content: center;
   align-items: center;
-  text-align: center;
+  justify-content: center;
+  width: 100%;
   font-family: 'Spoqa Han Sans Neo';
   font-style: normal;
   line-height: 2rem;
-  border: 0;
-  width: 100%;
-  cursor: pointer;
-  @include m.rounded-lg;
+  text-align: center;
   white-space: nowrap;
+  cursor: pointer;
+  border: 0;
+  transition:
+    transform 0.5s ease,
+    box-shadow 0.5s ease;
+
+  &:hover {
+    box-shadow: 5px 5px 5px 5px rgb(0 0 0 / 20%);
+    transform: scale(0.95);
+  }
+
+  @include m.rounded-lg;
 }
 
 .large {
@@ -39,24 +48,24 @@
 }
 
 .orange {
-  background: c.$red-500;
   color: c.$white;
+  background: c.$red-500;
 }
 
 .white {
-  border: 0.1rem solid c.$red-500;
-  background: c.$white;
   color: c.$red-500;
+  background: c.$white;
+  border: 0.1rem solid c.$red-500;
 }
 
 .disabled {
-  background: c.$gray-500;
   color: c.$white;
   pointer-events: none;
+  background: c.$gray-500;
 }
 
 .blue {
-  border: 0.1rem solid c.$blue-200;
-  background: c.$white;
   color: c.$blue-200;
+  background: c.$white;
+  border: 0.1rem solid c.$blue-200;
 }

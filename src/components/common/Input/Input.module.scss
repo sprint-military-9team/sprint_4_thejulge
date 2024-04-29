@@ -5,10 +5,11 @@
 }
 
 .label {
-  color: $black;
-  @include font-normal;
   font-size: 1.6rem;
   line-height: 2.6rem;
+  color: $black;
+
+  @include font-normal;
 }
 
 .inputWrapper {
@@ -17,10 +18,11 @@
 
 .input {
   width: 100%;
-  border: 1px solid $gray-500;
   padding: 1.6rem 2rem;
   margin-top: 0.8rem;
   resize: none;
+  background: $input-background;
+  border: 1px solid $gray-500;
 
   @include rounded-sm;
 }
@@ -37,10 +39,12 @@
   position: absolute;
   top: 2rem;
   right: 2rem;
+
   @include font-normal;
+
   font-size: 1.6rem;
   line-height: 2.6rem;
-  color: $black;
+  color: $all-black;
 }
 
 .error {
@@ -57,12 +61,12 @@
   width: 100%;
   margin-top: 0.8rem;
   margin-left: 0.8rem;
-  color: $red-400;
   font-size: 1.2rem;
   line-height: 1.6rem;
+  color: $red-400;
 }
 
 .messageHidden {
-  visibility: hidden;
   min-height: 1.6rem;
+  visibility: hidden;
 }

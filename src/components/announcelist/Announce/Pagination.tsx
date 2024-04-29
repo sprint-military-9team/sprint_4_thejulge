@@ -43,7 +43,7 @@ export default function Pagination({ currentPage, onPageChange, allDataCount = 0
             item <= totalPages && (
               <li key={item} className={`${styles.listItem} ${currentPage === item ? styles.selected : ''}`}>
                 <button className={styles.pageButton} type="button" onClick={() => onPageChange(item)}>
-                  {item}
+                  <p className={styles.pageNumber}> {item}</p>
                 </button>
               </li>
             ),

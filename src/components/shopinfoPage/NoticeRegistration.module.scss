@@ -4,11 +4,11 @@
 .registerLayout {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid $gray-400;
-  padding: 10rem;
   gap: 3rem;
+  align-items: center;
+  justify-content: center;
+  padding: 10rem;
+  border: 1px solid $gray-400;
 }
 
 .registerButton {
@@ -17,27 +17,24 @@
 }
 
 .modalBox {
+  position: absolute;
+  inset: 8rem 0 k;
+  z-index: 10;
   display: flex;
   justify-content: center;
-  z-index: 10;
-  position: absolute;
-  top: 8rem;
-  bottom: k;
-  left: 0;
-  right: 0;
-  background: $gray-100;
   min-height: 100%;
+  background: $gray-100;
 }
 
 .title {
-  font-size: 2.8rem;
   margin-bottom: 3rem;
+  font-size: 2.8rem;
 }
 
 @include media(mobile) {
   .registerLayout {
-    padding: 10rem 1rem;
     gap: 1.6rem;
+    padding: 10rem 1rem;
   }
 
   .registerButton {

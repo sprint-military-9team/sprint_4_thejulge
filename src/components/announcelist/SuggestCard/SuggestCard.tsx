@@ -40,6 +40,7 @@ export default function SuggestCard() {
   const [isLoading, setIsLoading] = useState(true);
 
   const today = new Date();
+  today.setHours(today.getHours() + 9);
 
   const suggestData = data?.items
     .filter((cardData) => !cardData.item.closed && today <= new Date(cardData.item.startsAt))

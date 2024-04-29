@@ -13,7 +13,10 @@ export default function signup() {
         </Link>
         <Form />
         <div className={styles.text}>
-          이미 가입하셨나요? <Link href="/signin">로그인하기</Link>
+          이미 가입하셨나요?{' '}
+          <Link className={styles.link} href="/signin">
+            로그인하기
+          </Link>
         </div>
       </div>
     </div>

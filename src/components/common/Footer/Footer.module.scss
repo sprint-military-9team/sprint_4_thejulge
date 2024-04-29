@@ -15,6 +15,7 @@
 
 .copyLight {
   @include font-normal;
+
   font-size: 1.4rem;
   line-height: 2.6rem;
   color: $gray-600;
@@ -28,6 +29,7 @@
 
 .privacyButton {
   @include font-normal;
+
   font-size: 1.6rem;
   line-height: 2.6rem;
   color: $gray-600;
@@ -36,15 +38,16 @@
 
 .snsWrapper {
   display: flex;
+  gap: 1rem;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
 }
 
 @include media(tablet) {
   .wrapper {
     padding: 3.7rem 3.2rem;
   }
+
   .copyLight {
     font-size: 1.6rem;
   }
@@ -54,6 +57,7 @@
   .wrapper {
     padding: 3.2rem 2rem 1.6rem;
   }
+
   .contentWrapper {
     display: flex;
     flex-wrap: wrap;
@@ -61,8 +65,8 @@
   }
 
   .copyLight {
-    width: 100%;
     order: 3;
+    width: 100%;
     font-size: 1.2rem;
     line-height: 1.6rem;
   }
