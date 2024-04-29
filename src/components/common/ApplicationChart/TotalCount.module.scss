@@ -1,0 +1,37 @@
+@import '@/styles/_index';
+@import '@/styles/_media';
+
+.textWrapper {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.8rem;
+  height: 100%;
+  @include font-normal;
+}
+
+.textContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem 0.5rem;
+  flex-direction: column;
+  flex-flow: wrap;
+  @include font-bold;
+  font-size: 2.2rem;
+}
+
+.textCount {
+  color: #2d65f2;
+  font-size: 2.4rem;
+  font-weight: 900;
+}
+
+@include media(mobile) {
+  .textWrapper {
+    justify-content: center;
+    width: 35.1rem;
+    height: 23rem;
+  }
+}

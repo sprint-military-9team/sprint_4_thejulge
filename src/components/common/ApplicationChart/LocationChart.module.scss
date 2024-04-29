@@ -1,0 +1,17 @@
+@import '@/styles/_index';
+@import '@/styles/_media';
+
+.wrapper {
+  display: flex !important;
+  width: 25rem;
+  height: 23rem;
+  align-items: center;
+  justify-content: center;
+}
+
+@include media(mobile) {
+  .wrapper {
+    width: 37.3rem;
+    height: 23rem;
+  }
+}

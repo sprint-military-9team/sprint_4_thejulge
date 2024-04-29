@@ -1,6 +1,7 @@
 import Table from '@/components/common/Table';
 import Pagination from '@/components/common/Pagination/Pagination';
 import { getSpecifyNoticeApplicationData } from '@/apis/application';
+import ApplicationChart from '@/components/common/ApplicationChart/ApplicationChart';
 import styles from './ApplicationList.module.scss';
 
 type HeaderType = {
@@ -34,6 +35,7 @@ export default async function ApplicationList({ shopId, noticeId, currentPage }:
     7 * (Number(currentPage) - 1),
     7 * Number(currentPage),
   );
+  const entireApplicationData = await getSpecifyNoticeApplicationData(shopId, noticeId);
   const totalCount = applicationData.count;
   const body = applicationData.items.map((application) => {
     const {
@@ -61,6 +63,7 @@ export default async function ApplicationList({ shopId, noticeId, currentPage }:
     <div className={styles.section}>
       <div className={styles.wrapper}>
         <div className={styles.title}>신청자 목록</div>
+        {entireApplicationData.count !== 0 && <ApplicationChart applicationData={entireApplicationData} />}
         <div>
           <Table header={tableData.header} body={tableData.body} type="owner" />
           <Pagination

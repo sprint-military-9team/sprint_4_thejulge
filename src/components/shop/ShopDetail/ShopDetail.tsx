@@ -16,8 +16,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import Button from '@/components/common/Button/';
 import RejectionModal from '@/components/common/Modal/RejectionModal/RejectionModal';
 import LocationLabel from '@/components/common/LocationLabel/LocationLabel';
+import { getSpecifyNoticeApplicationData } from '@/apis/application';
+import ApplicationChart from '@/components/common/ApplicationChart/ApplicationChart';
+import { ApplicationDataType, MainData, ButtonProps } from './type';
 import styles from './shopdetail.module.scss';
-import { MainData, ButtonProps } from './type';
+
 import ButtonStatus from './ButtonStatus';
 
 interface CompletedMessageProps {
@@ -42,6 +45,7 @@ function ShopDetail() {
   const [isRejectionModalOpen, setIsRejectionModalOpen] = useState(false);
   const [isWorkerDetailModalOpen, setIsWorkerDetailModalOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const [entireApplicationData, setEntireApplicationData] = useState<ApplicationDataType>({ count: 0, items: [] });
   const params = useSearchParams();
   const shopId = params.get('shopId');
   const noticeId = params.get('noticeId');
@@ -163,6 +167,14 @@ function ShopDetail() {
     }
   }, [shopId, noticeId]);
 
+  useEffect(() => {
+    const getApplicationData = async () => {
+      const data = await getSpecifyNoticeApplicationData(shopId, noticeId);
+      setEntireApplicationData(data);
+    };
+    getApplicationData();
+  }, []);
+
   return (
     <>
       <ToastContainer
@@ -236,6 +248,7 @@ function ShopDetail() {
           <p className={styles.titleDescription}>공고 설명</p>
           <p className={styles.description}>{noticeData?.item.description}</p>
         </div>
+        {entireApplicationData.count !== 0 && <ApplicationChart applicationData={entireApplicationData} />}
       </div>
     </>
   );

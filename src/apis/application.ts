@@ -5,15 +5,14 @@ import Cookies from 'js-cookie';
 export const getSpecifyNoticeApplicationData = async (
   shopId: string,
   noticeId: string,
-  offset: number,
-  limit: number,
+  offset?: number,
+  limit?: number,
 ): Promise<{ count: number; items: SpecifyNoticeApplicationsDataType[] }> => {
-  const response = await fetch(
-    `${BASE_URL}/shops/${shopId}/notices/${noticeId}/applications?offset=${offset}&limit=${limit}`,
-    {
-      method: 'GET',
-    },
-  );
+  const baseUrl = `${BASE_URL}/shops/${shopId}/notices/${noticeId}/applications`;
+  const url = offset && limit ? `${baseUrl}?offset=${offset}&limit=${limit}` : baseUrl;
+  const response = await fetch(url, {
+    method: 'GET',
+  });
   if (!response.ok) {
     throw new Error('API 오류');
   }

@@ -1,3 +1,5 @@
+import { SpecifyNoticeApplicationsDataType } from '@/types';
+
 export interface MainData {
   item: Item;
 }
@@ -32,3 +34,8 @@ export interface ButtonProps {
   status: 'pending' | 'accepted' | 'rejected' | 'canceled' | 'none';
   onClick: () => void | null;
 }
+
+export type ApplicationDataType = {
+  count: number;
+  items: SpecifyNoticeApplicationsDataType[];
+};
