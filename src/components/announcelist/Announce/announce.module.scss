@@ -59,6 +59,16 @@
   background: $gray-400;
   border: none;
   border-radius: 0.5rem;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+  &:hover {
+    transform: scale(0.95);
+    box-shadow: 3px 3px 5px 3px rgb(0 0 0 / 20%);
+
+    opacity: 0.9;
+  }
 }
 
 .filterButton {
@@ -76,6 +86,17 @@
   background: #ff8d72;
   border: none;
   border-radius: 0.5rem;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+  &:hover {
+    transform: scale(0.95);
+    box-shadow: 3px 3px 5px 3px rgb(0 0 0 / 20%);
+
+    opacity: 0.9;
+  }
 }
 
 .mapButton {
