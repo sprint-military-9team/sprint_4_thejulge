@@ -35,3 +35,5 @@ export const NOTICE_DETAIL_ARROW_UP = `${BASE_PATH}/notice_detail_arrow_up.svg`;
 export const PENCEL_ICON = `${BASE_PATH}/pencil.svg`;
 export const UPLOAD = `${BASE_PATH}/upload.png`;
 export const WARNING = `${BASE_PATH}/warning.svg`;
+export const LIGHT_ICON = `${BASE_PATH}/light_icon.png`;
+export const DARK_ICON = `${BASE_PATH}/dark_icon.png`;

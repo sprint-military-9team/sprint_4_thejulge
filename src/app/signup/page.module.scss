@@ -9,11 +9,12 @@
   height: 100vh;
   background-color: $white;
 }
+
 .wrapper {
-  width: 35rem;
   display: flex;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
+  width: 35rem;
 }
 
 .logoWrapper {
@@ -23,15 +24,24 @@
 
 .text {
   margin-top: 2rem;
+
   @include font-normal;
+
   font-size: 1.6rem;
   line-height: 1.909rem;
+  color: $black;
+}
+
+.link {
+  margin-left: 1.6rem;
+  color: $blue-200;
 }
 
 @include media(mobile) {
   .logoWrapper {
     height: 3.8rem;
   }
+
   .logo {
     width: 20.8rem;
     height: 3.8rem;

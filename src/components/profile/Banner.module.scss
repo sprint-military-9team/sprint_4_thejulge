@@ -1,14 +1,14 @@
 @import '@/styles/_index';
 
 .banner {
+  padding: 8rem 3rem;
   text-align: center;
   border: 1px solid $gray-400;
   border-radius: 0.7rem;
-  padding: 8rem 3rem;
 }
 
 .bannerDescription {
+  margin-bottom: 2.3rem;
   font-size: 1.6rem;
   font-weight: 400;
-  margin-bottom: 2.3rem;
 }

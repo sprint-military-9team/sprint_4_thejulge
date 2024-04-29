@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { CLOSE_ICON } from '@/utils/constants';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { postNotice, putSpecifyNotice } from '@/apis/notice';
 import useInput from '@/hooks/useInput';
 import Cookies from 'js-cookie';
@@ -10,6 +10,7 @@ import { NoticeInformationDataType } from '@/app/ownerNoticeDetail/types';
 import { checkInputList } from '@/utils/checkLoginInput';
 import { useRouter } from 'next/navigation';
 import { toast, ToastContainer } from 'react-toastify';
+import { DarkModeContext } from '@/context/DarkModeContext';
 import styles from './OwnerAddNotice.module.scss';
 import Input from '../common/Input/Input';
 import Button from '../common/Button';
@@ -26,6 +27,7 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
   const formRef = useRef<HTMLFormElement>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [description, setDescription] = useState('');
+  const { isDarkMode } = useContext(DarkModeContext);
   const {
     value: hourlyPay,
     error: hourlyPayError,
@@ -226,6 +228,11 @@ export default function OwnerAddNotice({ onClose, noticeData }: OwnerAddNoticePr
           <span>{noticeData ? '공고 편집' : '공고 등록'}</span>
           <Image
             src={CLOSE_ICON}
+            style={
+              isDarkMode && {
+                filter: 'invert(100%) sepia(0%) saturate(7484%) hue-rotate(242deg) brightness(300%) contrast(100%)',
+              }
+            }
             alt="close"
             width={32}
             height={32}

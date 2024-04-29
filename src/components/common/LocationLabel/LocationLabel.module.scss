@@ -7,11 +7,12 @@
 .labelWrapper {
   position: relative;
   display: flex;
-  align-items: center;
   gap: 0.6rem;
-  @include font-normal;
-  color: $gray-600;
+  align-items: center;
   font-size: 1.6rem;
   line-height: 2.6rem;
+  color: $gray-600;
   cursor: pointer;
+
+  @include font-normal;
 }

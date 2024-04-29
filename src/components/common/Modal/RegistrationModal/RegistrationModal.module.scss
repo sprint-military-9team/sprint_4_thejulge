@@ -1,13 +1,13 @@
 @import '@/styles/_index';
 
 .wrapper {
-  width: 29.8rem;
-  height: 18.4rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  width: 29.8rem;
+  height: 18.4rem;
 }
 
 .text {

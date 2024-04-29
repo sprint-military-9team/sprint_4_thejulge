@@ -6,13 +6,14 @@
 }
 
 .btn {
-  background-color: inherit;
-  border: 0.1rem solid currentColor;
-  border-radius: 0.5rem;
   padding: 0.8rem 1.3rem;
   font-size: 1.4rem;
-  @include font-bold;
   cursor: pointer;
+  background-color: inherit;
+  border: 0.1rem solid currentcolor;
+  border-radius: 0.5rem;
+
+  @include font-bold;
 }
 
 .btn.accept {
