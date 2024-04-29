@@ -24,7 +24,7 @@ export default function ApplicationSlider({ children }: ApplicationSliderProps) 
     <div className={styles.wrapper}>
       {isMobile ? (
         <div className={styles.sliderWrapper}>
-          <Slider infinite={false} dots speed={500}>
+          <Slider infinite={false} dots speed={500} arrows={false}>
             {children}
           </Slider>
         </div>

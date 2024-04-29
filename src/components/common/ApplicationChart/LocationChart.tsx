@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ResponsiveContainer, Cell, PieChart, Pie, Sector } from 'recharts';
 import { SpecifyNoticeApplicationsDataType } from '@/types';
+import { DarkModeContext } from '@/context/DarkModeContext';
 import styles from './LocationChart.module.scss';
 
 type LocationChartProps = {
@@ -20,6 +21,7 @@ type LocationDataType = {
 export default function LocationChart({ applicationData }: LocationChartProps) {
   const [currentData, setCurrentData] = useState(-1);
   const [locationData, setLocationData] = useState<LocationDataType[]>([]);
+  const { isDarkMode } = useContext(DarkModeContext);
 
   const customStyle = ({ cx, cy, innerRadius, outerRadius, startAngle, endAngle, midAngle, fill }) => {
     const RADIAN = Math.PI / 180;
@@ -32,11 +34,18 @@ export default function LocationChart({ applicationData }: LocationChartProps) {
     const ex = mx + (cos >= 0 ? 1 : -1) * 15;
     const ey = my;
     const textAnchor = cos >= 0 ? 'start' : 'end';
-
+    const LINE_COLOR = '#999';
     return (
       <g>
-        fill
-        <text x={cx} y={cy} dy={8} fill="#000" textAnchor="middle" fontSize={11} fontWeight={600}>
+        <text
+          x={cx}
+          y={cy}
+          dy={8}
+          fill={isDarkMode ? '#fff' : '#000'}
+          textAnchor="middle"
+          fontSize={11}
+          fontWeight={600}
+        >
           {locationData[currentData].name}
         </text>
         <Sector
@@ -55,10 +64,10 @@ export default function LocationChart({ applicationData }: LocationChartProps) {
           endAngle={endAngle}
           innerRadius={outerRadius + 6}
           outerRadius={outerRadius + 10}
-          fill="#999"
+          fill={LINE_COLOR}
         />
-        <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke="#999" fill="none" />
-        <text x={ex + (cos >= 0 ? 1 : -1) * 10} y={ey - 15} dy={18} textAnchor={textAnchor} fill="#999">
+        <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={LINE_COLOR} fill="none" />
+        <text x={ex + (cos >= 0 ? 1 : -1) * 10} y={ey - 15} dy={18} textAnchor={textAnchor} fill={LINE_COLOR}>
           {locationData[currentData].applications}
         </text>
       </g>

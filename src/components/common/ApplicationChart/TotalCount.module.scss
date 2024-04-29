@@ -28,6 +28,14 @@
   font-weight: 900;
 }
 
+.whiteTitle {
+  color: #ffffff;
+}
+
+.countInvert {
+  color: #6ab7ff;
+}
+
 @include media(mobile) {
   .textWrapper {
     justify-content: center;
