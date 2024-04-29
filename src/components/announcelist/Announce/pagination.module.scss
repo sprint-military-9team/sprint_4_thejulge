@@ -29,6 +29,10 @@
     background-color: $red-300;
     border-radius: 0.4rem;
   }
+
+  .pageNumber {
+    @include font-bold;
+  }
 }
 
 .pageButton {
@@ -38,6 +42,15 @@
   cursor: pointer;
   background-color: $white;
   border: none;
+}
+
+.pageNumber {
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.45);
+    @include font-bold;
+  }
 }
 
 .button {
@@ -50,5 +63,11 @@
 
   img {
     vertical-align: top;
+  }
+
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.25);
   }
 }

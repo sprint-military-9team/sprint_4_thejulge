@@ -52,6 +52,15 @@
     min-height: 26rem;
     padding: 1.2rem;
   }
+
+  transition: transform 0.3s ease,
+  box-shadow 0.5s ease;
+
+  &:hover {
+    box-shadow: 5px 5px 8px 5px rgb(0 0 0 / 20%);
+    transform: scale(0.95);
+    background: c.$gray-200;
+  }
 }
 
 .imageWrapper {
@@ -138,7 +147,27 @@
     display: flex;
     align-items: center;
 
-    @media (width >= 768px) {
+    transition: transform infi ease-in-out;
+
+    &:hover {
+      animation: scaleanimation 1s infinite;
+    }
+
+    @keyframes scaleanimation {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.1);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @media (width >=768px) {
       gap: 0.6rem;
       align-items: center;
       padding: 1.2rem;
@@ -183,7 +212,7 @@
 }
 
 .completedDesk {
-  background-color: c.$gray-400 !important;
+  background-color: c.$gray-500 !important;
 }
 
 .completedMobile {

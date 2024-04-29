@@ -1,6 +1,6 @@
 import styles from './LoadingSpinner.module.scss';
 
-export default function LoadingSpinner() {
+export default function LoadingSpinner({ title }: { title: string }) {
   return (
     <div className={styles.loading}>
       <div className={styles['lds-spinner']}>
@@ -17,7 +17,7 @@ export default function LoadingSpinner() {
         <div />
         <div />
       </div>
-      <p className={styles.uploadingText}>uploading...</p>
+      <p className={styles.uploadingText}>{title}</p>
     </div>
   );
 }
