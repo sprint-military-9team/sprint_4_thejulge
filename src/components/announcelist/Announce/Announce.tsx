@@ -95,7 +95,7 @@ function Announce({ headerData }: AnnounceProps) {
   };
 
   const today = new Date();
-
+  today.setHours(today.getHours() + 9);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -104,7 +104,7 @@ function Announce({ headerData }: AnnounceProps) {
           6,
           selectedFilter?.location ?? null,
           headerData ?? null,
-          selectedFilter?.startAt ?? null,
+          selectedFilter?.startAt ?? today.toISOString(),
           selectedFilter?.pay ?? null,
           sortList[selectedSort],
         );

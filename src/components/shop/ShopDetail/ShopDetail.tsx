@@ -53,6 +53,7 @@ function ShopDetail() {
   const isRaised = noticeData ? noticeData.item.hourlyPay > noticeData.item.shop.item.originalHourlyPay : false;
   const workTime = noticeData ? getWorkTime(noticeData.item.startsAt, noticeData.item.workhour) : '00:00';
   const today = new Date();
+  today.setHours(today.getHours() + 9);
   const completed = noticeData
     ? noticeData.item.closed
       ? '마감 완료'
