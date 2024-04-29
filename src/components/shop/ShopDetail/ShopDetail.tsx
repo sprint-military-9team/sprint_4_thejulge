@@ -173,7 +173,7 @@ function ShopDetail() {
       setEntireApplicationData(data);
     };
     getApplicationData();
-  }, []);
+  }, [userApplicationStatus]);
 
   return (
     <>
