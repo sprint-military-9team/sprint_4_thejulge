@@ -1,0 +1,19 @@
+@import '@/styles/_index';
+@import '@/styles/_media';
+
+.wrapper {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 27rem;
+  height: 10rem;
+  margin-left: -2rem;
+}
+
+@include media(mobile) {
+  .wrapper {
+    width: 28rem;
+    height: 15rem;
+    margin: 3.5rem 5rem;
+  }
+}
