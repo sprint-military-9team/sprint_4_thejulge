@@ -17,6 +17,14 @@
   white-space: nowrap;
   cursor: pointer;
   border: 0;
+  transition:
+    transform 0.5s ease,
+    box-shadow 0.5s ease;
+
+  &:hover {
+    box-shadow: 5px 5px 5px 5px rgb(0 0 0 / 20%);
+    transform: scale(0.95);
+  }
 
   @include m.rounded-lg;
 }
