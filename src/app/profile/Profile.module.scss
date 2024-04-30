@@ -3,11 +3,16 @@
 
 .container {
   position: relative;
+  color: $black;
 }
 
 .header {
   height: 4rem;
   background-color: rgb(168 204 240);
+}
+
+.main {
+  background: $white;
 }
 
 .profile {

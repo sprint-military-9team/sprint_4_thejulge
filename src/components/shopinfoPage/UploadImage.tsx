@@ -7,9 +7,15 @@ import cn from '@/utils/classNames';
 import LoadingSpinner from './LoadingSpinner';
 import styles from './UploadImage.module.scss';
 
-export default function UploadImage({ onUploadImage }: { onUploadImage: (imageUrl: string) => void }) {
+export default function UploadImage({
+  onUploadImage,
+  imageUrl,
+}: {
+  onUploadImage: (imageUrl: string) => void;
+  imageUrl: string;
+}) {
   const [isUploading, setIsUploading] = useState(false);
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<string | undefined>(imageUrl);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleUploadButtonClick = () => {

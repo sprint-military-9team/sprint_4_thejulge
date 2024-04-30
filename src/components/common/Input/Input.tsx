@@ -54,7 +54,12 @@ export default function Input({
         </label>
         <div className={styles.inputWrapper}>
           {type === 'textArea' ? (
-            <textarea className={styles.input} value={value} onChange={handleChange} rows={4} />
+            <textarea
+              className={cn(styles.input, isError && styles.error)}
+              value={value}
+              onChange={handleChange}
+              rows={4}
+            />
           ) : (
             <input
               id={id}
