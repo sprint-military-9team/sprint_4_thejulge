@@ -114,7 +114,7 @@
 }
 
 /* mobile */
-@include media(mobile) {
+@media (width <= 780px) {
   .contentWrapper {
     grid-template:
       'logo buttonWrapper'
