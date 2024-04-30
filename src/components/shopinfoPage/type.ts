@@ -5,5 +5,5 @@ export type FormData = {
   address2: string;
   imageUrl: string;
   description: string;
-  originalHourlyPay: number;
+  originalHourlyPay: string;
 };

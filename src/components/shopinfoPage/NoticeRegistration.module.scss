@@ -18,11 +18,15 @@
 
 .modalBox {
   position: absolute;
-  inset: 8rem 0 k;
+  top: 6rem;
+  right: 0;
+  left: 0;
+  bottom: 0;
   z-index: 10;
   display: flex;
   justify-content: center;
   min-height: 100%;
+  overflow-y: scroll;
   background: $gray-100;
 }
 

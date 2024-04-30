@@ -24,6 +24,7 @@ export default function Registration({ onClose }: { onClose: () => void }) {
   const shopId = Cookies.get('shopId');
   const token = Cookies.get('token');
   const { shopData, updateShopData } = useContext(ShopDataContext);
+  const [emptyList, setEmptyList] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<FormData>({
     name: '',
     category: '',
@@ -31,11 +32,9 @@ export default function Registration({ onClose }: { onClose: () => void }) {
     address2: '',
     imageUrl: '',
     description: '',
-    originalHourlyPay: 0,
+    originalHourlyPay: '',
   });
   const { isDarkMode } = useContext(DarkModeContext);
-  const sortedCategory = FOOD_CATEGORIES.sort();
-
   const onUploadImage = (imageUrl: string) => {
     setInputValue((prevState: FormData) => ({
       ...prevState,
@@ -50,13 +49,26 @@ export default function Registration({ onClose }: { onClose: () => void }) {
     }));
   };
 
+  const onBlur = (name: string) => {
+    if (!inputValue[name].trim()) {
+      return setEmptyList((prev) => [...prev, name]);
+    }
+    return setEmptyList((prev) => prev.filter((prevName) => prevName !== name));
+  };
+
   const handleCompletionModalClick = () => {
     setShowModal(false);
     onClose();
     router.refresh();
   };
 
+  const checkEmptyError = (name: string) => emptyList.includes(name);
+  const checkNumber = (value: string) => Number.isNaN(Number(value));
   const handleButtonClick = async () => {
+    const tmpList = Object.keys(inputValue).filter((key) => !inputValue[key]);
+    setEmptyList(tmpList);
+    if (tmpList.length) return;
+
     const response = await fetch(`${BASE_URL}/shops${shopData?.id && `/${shopId}`}`, {
       method: shopData?.id ? 'PUT' : 'POST',
       headers: {
@@ -76,7 +88,15 @@ export default function Registration({ onClose }: { onClose: () => void }) {
   useEffect(() => {
     if (shopData?.id) {
       const { name, category, address1, address2, imageUrl, description, originalHourlyPay } = shopData;
-      setInputValue({ name, category, address1, address2, imageUrl, description, originalHourlyPay });
+      setInputValue({
+        name,
+        category,
+        address1,
+        address2,
+        imageUrl,
+        description,
+        originalHourlyPay: String(originalHourlyPay),
+      });
     }
   }, [shopId]);
 
@@ -106,12 +126,15 @@ export default function Registration({ onClose }: { onClose: () => void }) {
               id="name"
               value={inputValue.name}
               onChange={(value) => onValueChange('name', value)}
+              onBlur={() => onBlur('name')}
+              isError={checkEmptyError('name')}
+              errorMessage="이름을 작성해주세요."
             />
           </div>
           <div className={styles.category}>
             <p className={styles.text}>분류*</p>
             <Dropdown
-              optionList={sortedCategory}
+              optionList={FOOD_CATEGORIES}
               initialOption={inputValue.category}
               onClick={(value) => onValueChange('category', value)}
             />
@@ -120,7 +143,7 @@ export default function Registration({ onClose }: { onClose: () => void }) {
           <div className={styles.address1}>
             <p className={styles.text}>주소*</p>
             <Dropdown
-              optionList={SEOULGROUPLIST}
+              optionList={SEOULGROUPLIST.sort()}
               initialOption={inputValue.address1}
               onClick={(value) => onValueChange('address1', value)}
             />
@@ -133,6 +156,9 @@ export default function Registration({ onClose }: { onClose: () => void }) {
               id="address2"
               value={inputValue.address2}
               onChange={(value) => onValueChange('address2', value)}
+              onBlur={() => onBlur('address2')}
+              isError={checkEmptyError('address2')}
+              errorMessage="상세 주소를 작성해주세요."
             />
           </div>
           <div className={styles.originalHourlyPay}>
@@ -141,11 +167,15 @@ export default function Registration({ onClose }: { onClose: () => void }) {
               label="기본 시급*"
               id="originalHourlyPay"
               value={String(inputValue.originalHourlyPay)}
+              unit="원"
               onChange={(value) => onValueChange('originalHourlyPay', value)}
+              onBlur={() => onBlur('originalHourlyPay')}
+              isError={checkEmptyError('originalHourlyPay') || checkNumber(inputValue.originalHourlyPay)}
+              errorMessage="기본시급을 올바르게 작성해주세요."
             />
           </div>
           <div className={styles.uploadImage}>
-            <UploadImage onUploadImage={onUploadImage} />
+            <UploadImage onUploadImage={onUploadImage} imageUrl={shopData.imageUrl} />
           </div>
           <div className={styles.description}>
             <Input
@@ -154,6 +184,9 @@ export default function Registration({ onClose }: { onClose: () => void }) {
               id="description"
               value={inputValue.description}
               onChange={(value) => onValueChange('description', value)}
+              onBlur={() => onBlur('description')}
+              isError={checkEmptyError('description')}
+              errorMessage="가게 설명을 작성해 주세요."
             />
           </div>
           <div className={styles.registerButton}>

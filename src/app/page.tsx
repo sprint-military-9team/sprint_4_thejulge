@@ -5,6 +5,7 @@ import Announce from '@/components/announcelist/Announce';
 import SuggestCard from '@/components/announcelist/SuggestCard/SuggestCard';
 import RedirectToast from '@/components/common/RedirectToast/RedirectToast';
 import styles from './page.module.scss';
+import FaceSpinner from '@/components/common/FaceSpinner/FaceSpinner';
 
 type HomeProps = {
   searchParams?: { [key: string]: string | string[] | undefined };
