@@ -5,11 +5,11 @@ import Image from 'next/image';
 import styles from './FaceSpinner.module.scss';
 
 const SPINNERLIST = [
-  '/spinner/spinner-1.jpg',
-  '/spinner/spinner-2.jpg',
-  '/spinner/spinner-3.jpg',
-  '/spinner/spinner-4.png',
-  '/spinner/spinner-5.png',
+  `/spinner/spinner-1.JPG`,
+  '/spinner/spinner-2.JPG',
+  '/spinner/spinner-3.JPG',
+  '/spinner/spinner-4.PNG',
+  '/spinner/spinner-5.PNG',
   '/spinner/spinner-6.jpeg',
 ];
 
